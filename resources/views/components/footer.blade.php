@@ -1,5 +1,5 @@
             <footer class="bg-[#85A7A8]">
-                <div class="mx-auto container w-full p-4 py-6 lg:py-8">
+                <div class="mx-auto container w-full py-6 lg:py-8">
                     <div class="space-y-10 md:flex md:justify-between">
                         <div>
                             <a href="#" class="flex items-start justify-start ml-[-10px]">

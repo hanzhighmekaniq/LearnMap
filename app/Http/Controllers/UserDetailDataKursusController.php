@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 
 class UserDetailDataKursusController extends Controller
 {
-    public function show($id)
+    public function index()
     {
-        return view('user.detailDataKursus', ['id' => $id]);
+        return view('user.detailKursus');
     }
 }

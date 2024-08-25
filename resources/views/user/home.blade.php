@@ -1,7 +1,10 @@
 <x-layout>
-    <div class="py-10 bg-white ">
-        <div class="bg-[#EBFEA1] poppins-extrabold m-auto flex items-center justify-center p-2">
-            <p>Holaa, Selamat Datang Di LearnMap</p>
+    <div class="container">
+
+        <div class="py-10 bg-white ">
+            <div class="bg-[#EBFEA1] poppins-extrabold m-auto flex items-center justify-center p-2">
+                <p>Holaa, Selamat Datang Di LearnMap</p>
+            </div>
         </div>
     </div>
     <div class="flex m-auto justify-center items-center responsive-container">
@@ -68,7 +71,7 @@
                         </div>
                         <div class="flex justify-end">
                             <a href="#"
-                                class="inline-flex items-center px-6 font-extrabold py-2 text-sm text-center ring-2 text-black ring-black  hover:text-white hover:ring-blue-800 rounded-full  focus:ring-4 focus:outline-none focus:ring-blue-300 -700 ue-800">
+                                class="inline-flex items-center px-6 font-extrabold py-2 text-sm text-center ring-2 text-black ring-black  hover:text-white hover:bg-[#4F7F81] hover:ring-[#4F7F81] rounded-full  focus:ring-4 focus:outline-none focus:ring-blue-300 -700 ue-800">
                                 Lihat
                                 <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true"
                                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
@@ -127,7 +130,7 @@
                         </div>
                         <div class="flex justify-end">
                             <a href="#"
-                                class="inline-flex items-center px-6 font-extrabold py-2 text-sm text-center ring-2 text-black ring-black  hover:text-white hover:ring-blue-800 rounded-full  focus:ring-4 focus:outline-none focus:ring-blue-300 -700 ue-800">
+                                class="inline-flex items-center px-6 font-extrabold py-2 text-sm text-center ring-2 text-black ring-black  hover:text-white hover:bg-[#4F7F81] hover:ring-[#4F7F81] rounded-full  focus:ring-4 focus:outline-none focus:ring-blue-300 -700 ue-800">
                                 Lihat
                                 <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true"
                                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
@@ -186,7 +189,7 @@
                         </div>
                         <div class="flex justify-end">
                             <a href="#"
-                                class="inline-flex items-center px-6 font-extrabold py-2 text-sm text-center ring-2 text-black ring-black  hover:text-white hover:ring-blue-800 rounded-full  focus:ring-4 focus:outline-none focus:ring-blue-300 -700 ue-800">
+                                class="inline-flex items-center px-6 font-extrabold py-2 text-sm text-center ring-2 text-black ring-black  hover:text-white hover:bg-[#4F7F81] hover:ring-[#4F7F81] rounded-full  focus:ring-4 focus:outline-none focus:ring-blue-300 -700 ue-800">
                                 Lihat
                                 <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true"
                                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
@@ -227,7 +230,7 @@
         <p class="py-4 pl-2">Ulasan</p>
         <div class="grid gap-8 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 pb-10">
             <div class="rounded-xl border-black border-[1px] p-4 ">
-                <img src="{{  asset('img/petik.png') }}" alt="">
+                <img src="{{ asset('img/petik.png') }}" alt="">
                 <p class="">
                     Peta interaktifnya sangat membantu!
                 </p>
@@ -236,7 +239,7 @@
                 </p>
             </div>
             <div class="rounded-xl border-black border-[1px] p-4 ">
-                <img src="{{  asset('img/petik.png') }}" alt="">
+                <img src="{{ asset('img/petik.png') }}" alt="">
                 <p class="">
                     Peta interaktifnya sangat membantu!
                 </p>
