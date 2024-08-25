@@ -12,7 +12,11 @@ use App\Http\Controllers\UserHomeController;
 
 Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.home');
 Route::get('/admin/data-kursus', [AdminDataKursusController::class, 'index'])->name('admin.dataKursus');
-// Route::get('/admin/tambah-data-kursus', [AdminTambahDataKursusController::class, 'create'])->name('admin.tambahDataKursus');
+Route::get('/admin/tambahData', [AdminTambahDataKursusController::class, 'create'])->name('admin.tambahDataKursus');
+
+
+Route::get('/admin/courses', [AdminDataKursusController::class, 'index']);
+
 
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 // Route::post('/login', [LoginController::class, 'login'])->name('login.post');
@@ -20,3 +24,4 @@ Route::get('/', [UserHomeController::class, 'index'])->name('home');
 Route::get('/kursus', [UserKursusController::class, 'index'])->name('user.kursus'); // Perbaikan pada rute ini
 Route::get('/peta', [UserPetaController::class, 'index'])->name('user.peta');
 Route::get('/detailKursus', [UserDetailDataKursusController::class, 'index'])->name('user.detailKursus');
+
