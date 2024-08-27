@@ -9,10 +9,11 @@ use App\Http\Controllers\UserKursusController;
 use App\Http\Controllers\UserPetaController;
 use App\Http\Controllers\UserDetailDataKursusController;
 use App\Http\Controllers\UserHomeController;
+use App\Models\DataKursus;
 
 Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.home');
 Route::get('/admin/data-kursus', [AdminDataKursusController::class, 'index'])->name('admin.dataKursus');
-Route::get('/admin/tambahData', [AdminTambahDataKursusController::class, 'create'])->name('admin.tambahDataKursus');
+Route::get('/admin/tambahdata', [AdminDataKursusController::class, 'create'])->name('admin.tambahDataKursus');
 
 
 Route::get('/admin/courses', [AdminDataKursusController::class, 'index']);
@@ -23,5 +24,7 @@ Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::get('/', [UserHomeController::class, 'index'])->name('home');
 Route::get('/kursus', [UserKursusController::class, 'index'])->name('user.kursus'); // Perbaikan pada rute ini
 Route::get('/peta', [UserPetaController::class, 'index'])->name('user.peta');
-Route::get('/detailKursus', [UserDetailDataKursusController::class, 'index'])->name('user.detailKursus');
+Route::get('/detailkursus', [AdminDataKursusController::class, 'detail'])->name('user.detailKursus');
+
+
 
