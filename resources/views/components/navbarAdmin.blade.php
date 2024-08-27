@@ -22,13 +22,13 @@
 
                     <li class="">
                         <a href="{{ route('admin.home') }}"
-                            class="{{ request()->is('/') ? 'bg-[#EBFEA1] md:bg-transparent  md:text-white md:underline' : 'text-gray-900' }} block py-2 px-3 md:p-0 rounded hover:bg-[#EBFEA1] md:hover:bg-transparent md:border-0 md:hover:text-white poppins-extrabold text-sm ">
+                            class="{{ request()->is('admin/dashboard') ? 'bg-[#EBFEA1] md:bg-transparent  md:text-white md:underline' : 'text-gray-900' }} block py-2 px-3 md:p-0 rounded hover:bg-[#EBFEA1] md:hover:bg-transparent md:border-0 md:hover:text-white poppins-extrabold text-sm ">
                             Dashboard
                         </a>
                     </li>
                     <li class="">
                         <a href="{{ route('admin.dataKursus') }}"
-                            class="{{ request()->is('kursus','detailKursus') ? 'bg-[#EBFEA1] md:bg-transparent md:text-white md:underline' : 'text-gray-900' }} block py-2 px-3 md:p-0 rounded hover:bg-[#EBFEA1] md:hover:bg-transparent md:border-0 md:hover:text-white poppins-extrabold text-sm ">
+                            class="{{ request()->is('admin/data-kursus','admin/tambahdata') ? 'bg-[#EBFEA1] md:bg-transparent md:text-white md:underline' : 'text-gray-900' }} block py-2 px-3 md:p-0 rounded hover:bg-[#EBFEA1] md:hover:bg-transparent md:border-0 md:hover:text-white poppins-extrabold text-sm ">
                             Data Kursus
                         </a>
                     </li>
