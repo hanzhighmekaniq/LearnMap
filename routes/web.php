@@ -25,6 +25,7 @@ Route::get('/', [UserHomeController::class, 'index'])->name('home');
 Route::get('/kursus', [UserKursusController::class, 'index'])->name('user.kursus'); // Perbaikan pada rute ini
 Route::get('/peta', [UserPetaController::class, 'index'])->name('user.peta');
 Route::get('/detailkursus', [AdminDataKursusController::class, 'detail'])->name('user.detailKursus');
+Route::delete('/admin/delete/{id}', [AdminDataKursusController::class, 'destroy'])->name('delete');
 
 
 

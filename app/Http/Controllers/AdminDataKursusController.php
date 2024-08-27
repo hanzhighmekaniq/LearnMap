@@ -17,8 +17,22 @@ class AdminDataKursusController extends Controller
         return view('admin.tambahDataKursusAdmin');
     }
 
+    public function store(Request $request){
+        $request->validate(
+            [
+
+            ]
+        );
+    }
+
     public function detail(){
-            
+        $courses = DataKursus::all();
+        return view('user.detailKursus', compact('courses'));
+    }
+
+    public function destroy(string $id){
+        $data = DataKursus::find($id);
+        $data->delete();
     }
 
 }
