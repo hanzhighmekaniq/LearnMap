@@ -9,7 +9,16 @@ class AdminDataKursusController extends Controller
 {
     public function index()
     {
-        $courses = DataKursus::all(); // Mengambil semua data dari tabel data_kursus
-        return view('admin.dataKursusAdmin', ['courses' => $courses]); // Mengirim data ke view
+        $courses = DataKursus::all();
+        return view('admin.dataKursusAdmin', ['courses' => $courses]);
     }
+
+    public function create(){
+        return view('admin.tambahDataKursusAdmin');
+    }
+
+    public function detail(){
+            
+    }
+
 }

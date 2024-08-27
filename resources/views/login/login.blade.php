@@ -22,18 +22,19 @@
             </div>
             <div class="border border-slate-500">
                 <p class="p-8 flex justify-center items-center poppins-semibold text-4xl">Login</p>
-                <form class="px-8 mx-auto">
+                <form class="px-8 mx-auto" method="POST">
+                    @csrf
                     <div class="mb-5">
                         <label for="email" class="block mb-2 text-sm font-medium text-gray-900 ">Your
                             email</label>
-                        <input type="email" id="email"
+                        <input type="email" id="email" name="email"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                             placeholder="email@gmail.com" required />
                     </div>
                     <div class="mb-5">
                         <label for="password" class="block mb-2 text-sm font-medium text-gray-900 ">Your
                             password</label>
-                        <input type="password" id="password"
+                        <input type="password" id="password" name="password"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                             required />
                     </div>
@@ -41,7 +42,7 @@
                         <div class="flex items-center h-5">
                             <input id="remember" type="checkbox" value=""
                                 class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 "
-                                required />
+                                kjjjjjjjjjh/>
                         </div>
                         <label for="remember" class="ms-2 text-sm font-medium text-gray-900 ">Remember
                             me</label>
