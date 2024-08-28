@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 
 class AdminDataKursusController extends Controller
 {
+
+    // ADMIN FADIAS TUKANG SERVER
     public function dataKursus()
     {
         $courses = DataKursus::all();
@@ -25,12 +27,6 @@ class AdminDataKursusController extends Controller
         );
     }
 
-    public function detail()
-    {
-        $courses = DataKursus::all();
-        return view('user.detailKursus', compact('courses'));
-    }
-
     public function destroy(string $id)
     {
         $data = DataKursus::find($id);
@@ -41,21 +37,28 @@ class AdminDataKursusController extends Controller
     }
 
 
+    // PENGUNJUNG
     public function home()
     {
-        return view('user.home');
+        $landingpage = DataKursus::inRandomOrder()->limit(3)->get();
+        return view('user.home', compact('landingpage'));
     }
+
+
     public function kursus()
     {
-        return view('user.kursus');
+        $data_kursus = DataKursus::limit(6)->get();
+        return view('user.kursus', compact('data_kursus'));
     }
+    public function detail()
+    {
+        return view('user.detailKursus');
+    }
+
+
     public function maps()
-{
-    // Mengambil data dari tabel data_kursus
-    $latilongti = DataKursus::all();
-
-    // Mengirim data ke view 'user.peta'
-    return view('user.peta', compact('latilongti'));
-}
-
+    {
+        $latilongti = DataKursus::all();
+        return view('user.peta', compact('latilongti'));
+    }
 }

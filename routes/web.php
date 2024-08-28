@@ -15,16 +15,10 @@ Route::delete('/admin/delete/{id}', [AdminDataKursusController::class, 'destroy'
 
 Route::get('/admin/courses', [AdminDataKursusController::class, 'index']);
 
-
 Route::get('/login', [LoginController::class, 'index'])->name('login');
-// Route::post('/login', [LoginController::class, 'login'])->name('login.post');
-
 
 Route::get('/', [AdminDataKursusController::class, 'home'])->name('home');
 Route::get('/kursus', [AdminDataKursusController::class, 'kursus'])->name('user.kursus'); // Perbaikan pada rute ini
 Route::get('/peta', [AdminDataKursusController::class, 'maps'])->name('user.peta');
 
-Route::get('/detailkursus', [AdminDataKursusController::class, 'detail'])->name('user.detailKursus');
-
-
-
+Route::get('/detailKursus', [AdminDataKursusController::class, 'detail'])->name('user.detailKursus');
