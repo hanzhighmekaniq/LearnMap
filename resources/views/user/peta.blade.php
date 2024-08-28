@@ -2,8 +2,7 @@
     <style>
         /* Set the height of the map */
         #map {
-            height: 500px;
-            /* Adjust the height as needed */
+            /* Height will be controlled by Tailwind CSS classes */
             max-width: 100%;
         }
     </style>
@@ -14,42 +13,66 @@
             </div>
         </div>
         <div class="pb-10">
-            <div id="map" class="w-full max-w-4xl rounded-lg shadow-lg"></div>
+            <!-- Apply Tailwind CSS classes for responsive width and height -->
+            <div id="map"
+                class="w-full h-56 sm:h-64 md:h-96 lg:h-[500px] xl:h-[650px] max-w-4xl rounded-lg shadow-lg"></div>
 
             <!-- Leaflet JS -->
             <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
             <script>
-                // Initialize the map
-                const map = L.map('map').setView([-7.7530273, 112.1816449], 15); // Latitude and Longitude
+                // Initialize the map with default center and zoom level
+                const map = L.map('map').setView([-7.750835, 112.1797279], 15); // Latitude and Longitude
 
-                // Add a tile layer (OpenStreetMap)
+                // Add a tile layer from OpenStreetMap
                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 }).addTo(map);
 
-                // Manually add markers with fixed coordinates
-                const markers = [{
-                        coords: [-7.7530273, 112.1816449],
-                        popupText: 'Kampung Inggris LC'
-                    },
-                    {
-                        coords: [-7.7529288, 112.1838178],
-                        popupText: 'OKE'
-                    },
-                    {
-                        coords: [-7.7540000, 112.1800000],
-                        popupText: 'Lokasi Baru 1'
-                    },
-                    {
-                        coords: [-7.7510000, 112.1850000],
-                        popupText: 'Lokasi Baru 2'
-                    }
+                // Array to hold markers data from the database
+                const markers = [
+                    @foreach ($latilongti as $latilongti)
+                        {
+                            coords: [{{ $latilongti->latitude }}, {{ $latilongti->longtitude }}],
+                            popupText: '{{ $latilongti->nama_kursus }}'
+                        },
+                    @endforeach
                 ];
 
+                // Add markers to the map
                 markers.forEach(marker => {
                     L.marker(marker.coords).addTo(map)
                         .bindPopup(marker.popupText);
                 });
+
+                // Function to handle the successful retrieval of the user's location
+                function onLocationFound(e) {
+                    // Create a custom icon for the user's location
+                    const userIcon = L.icon({
+                        iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-red.png', // Red marker icon
+                        iconSize: [25, 41], // Size of the icon
+                        iconAnchor: [12, 41], // Point of the icon which will correspond to marker's location
+                        popupAnchor: [1, -34], // Point from which the popup should open relative to the iconAnchor
+                    });
+
+                    // Add a marker for the user's location with the custom red icon
+                    const userMarker = L.marker(e.latlng, { icon: userIcon }).addTo(map);
+                    userMarker.bindPopup("You are here").openPopup();
+
+                    // Center the map on the user's location
+                    map.setView(e.latlng, 15);
+                }
+
+                // Function to handle the error in retrieving the user's location
+                function onLocationError(e) {
+                    alert("Unable to retrieve your location.");
+                }
+
+                // Request the user's location
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(onLocationFound, onLocationError);
+                } else {
+                    alert("Geolocation is not supported by this browser.");
+                }
             </script>
         </div>
     </div>

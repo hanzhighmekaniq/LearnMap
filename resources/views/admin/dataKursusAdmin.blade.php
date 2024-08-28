@@ -31,24 +31,23 @@
                                         alt="">
                                 </td>
                                 <td class="px-6 py-4 flex space-x-2">
-                                    <form action="#" method="POST"
-                                        onsubmit="return confirm('Apakah Anda yakin ingin menghapus?');">
-                                        @csrf
-                                        @method('Edit')
-                                        <button type="submit"
-                                            class="font-medium text-white hover:underline py-2 px-4 bg-[#4F7F81] rounded-xl">Edit</button>
-                                    </form>
-                                    <form action="{{ route('delete', ['id' => $course->id]) }}" method="POST"
-                                        onsubmit="return confirm('Apakah Anda yakin ingin menghapus?');">
+                                    <a href="#"
+                                        class="font-medium text-white hover:underline py-2 px-4 bg-[#4F7F81] rounded-xl">
+                                        Edit
+                                    </a>
+                                    <!-- Hapus Link -->
+                                    <a href="#"
+                                        onclick="event.preventDefault(); if(confirm('Apakah Anda yakin ingin menghapus?')) document.getElementById('delete-form-{{ $course->id }}').submit();"
+                                        class="font-medium text-white hover:underline py-2 px-4 bg-[#4F7F81] rounded-xl">
+                                        Hapus
+                                    </a>
+                                    <form id="delete-form-{{ $course->id }}" action="{{ route('delete', ['id' => $course->id]) }}" method="POST" style="display: none;">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit"
-                                            class="font-medium text-white hover:underline py-2 px-4 bg-[#4F7F81] rounded-xl">Hapus</button>
                                     </form>
                                 </td>
                             </tr>
                         @endforeach
-
                     </tbody>
                 </table>
             </div>

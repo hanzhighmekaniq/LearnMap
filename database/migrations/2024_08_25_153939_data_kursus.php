@@ -21,7 +21,7 @@ return new class extends Migration
             $table->text('fasilitas'); // Kolom fasilitas
             $table->string('lokasi'); // Kolom lokasi
             $table->decimal('latitude', 10, 7); // Kolom latitude (10 digit, 7 desimal)
-            $table->decimal('longitude', 10, 7); // Kolom longitude (10 digit, 7 desimal)
+            $table->decimal('longtitude', 10, 7); // Kolom longitude (10 digit, 7 desimal)
             $table->timestamps(); // Kolom createbed_at dan updated_at
         });
     }

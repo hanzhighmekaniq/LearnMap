@@ -1,10 +1,10 @@
 <div class="bg-[#4F7F81]">
     <nav class="border-gray-200 container bg-[#4F7F81] ">
         <div class="max-w-screen-2xl  flex flex-wrap items-center justify-between mx-auto p-4">
-            <a href="#" class="flex items-center">
-                <img src="{{ asset('img/Rectangle 65.png') }}" class="h-20 object-cover w-20" alt="Flowbite Logo" />
-                <span
-                    class="self-center text-4xl text-white font-semibold whitespace-nowrap pt-4 aclonica-regular">LearnMap</span>
+            <a href="#" class="flex items-center  ">
+                <img src="{{ asset('img/Rectangle 65.png') }}" class="h-14 object-cover w-14 lg:mw-20 lg:h-20" alt="Flowbite Logo" />
+                <span   
+                    class="self-center text-2xl sm:text-3xl lg:text-4xl text-white font-semibold whitespace-nowrap pt-4 aclonica-regular">LearnMap</span>
             </a>
             <button data-collapse-toggle="navbar-solid-bg" type="button"
                 class="inline-flex text-white items-center p-2 w-10 h-10 justify-center text-sm rounded-lg md:hidden focus:outline-none focus:ring-2 focus:ring-gray-200 "

@@ -34,8 +34,12 @@ class AdminDataKursusController extends Controller
     public function destroy(string $id)
     {
         $data = DataKursus::find($id);
-        $data->delete();
+        if ($data) {
+            $data->delete();
+        }
+        return redirect()->route('admin.dataKursus')->with('success', 'Data berhasil dihapus.');
     }
+
 
     public function home()
     {
@@ -46,7 +50,12 @@ class AdminDataKursusController extends Controller
         return view('user.kursus');
     }
     public function maps()
-    {
-        return view('user.peta');
-    }
+{
+    // Mengambil data dari tabel data_kursus
+    $latilongti = DataKursus::all();
+
+    // Mengirim data ke view 'user.peta'
+    return view('user.peta', compact('latilongti'));
+}
+
 }
