@@ -72,7 +72,7 @@
                 <div class="max-w-max shadow-xl bg-white border border-gray-300 rounded-lg ">
                     <a href="#">
                         <img class="rounded-lg m-auto flex justify-center items-center w-full max-h-64 object-cover"
-                            src="{{ asset('img/Rectangle 288.png') }}" alt="" />
+                            src="{{ asset('storage/konten/'.$data_kursus->img ) }}" alt="" />
                             {{-- src="{{ asset($data_kursus->img) }}" alt="{{ $data_kursus->nama_kursus }}" /> --}}
                     </a>
                     <div class="p-5">
@@ -117,7 +117,7 @@
                             <p class="ms-1 text-sm text-gray-500 ">5</p>
                         </div>
                         <div class="flex justify-end">
-                            <a href="#"
+                            <a href="/kursus/{{ $data_kursus->id }}/detail"
                                 class="inline-flex items-center px-6 font-extrabold py-2 text-sm text-center ring-2 text-black ring-black  hover:text-white hover:bg-[#4F7F81] hover:ring-[#4F7F81] rounded-full  focus:ring-4 focus:outline-none focus:ring-blue-300 -700 ue-800">
                                 Lihat
                                 <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true"
