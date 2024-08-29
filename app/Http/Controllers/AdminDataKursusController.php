@@ -36,29 +36,4 @@ class AdminDataKursusController extends Controller
         return redirect()->route('admin.dataKursus')->with('success', 'Data berhasil dihapus.');
     }
 
-
-    // PENGUNJUNG
-    public function home()
-    {
-        $landingpage = DataKursus::inRandomOrder()->limit(3)->get();
-        return view('user.home', compact('landingpage'));
-    }
-
-
-    public function kursus()
-    {
-        $data_kursus = DataKursus::limit(6)->get();
-        return view('user.kursus', compact('data_kursus'));
-    }
-    public function detail()
-    {
-        return view('user.detailKursus');
-    }
-
-
-    public function maps()
-    {
-        $latilongti = DataKursus::all();
-        return view('user.peta', compact('latilongti'));
-    }
 }

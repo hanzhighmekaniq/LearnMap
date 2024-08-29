@@ -12,17 +12,18 @@ return new class extends Migration
     public function up()
     {
         Schema::create('data_kursus', function (Blueprint $table) {
-            $table->id(); // Kolom id dengan auto increment
-            $table->string('nama_kursus'); // Kolom nama_kursus
-            $table->string('img')->nullable(); // Kolom img (nullable jika tidak wajib diisi)
-            $table->text('deskripsi'); // Kolom deskripsi
-            $table->string('paket'); // Kolom paket
-            $table->string('metode'); // Kolom metode
-            $table->text('fasilitas'); // Kolom fasilitas
-            $table->string('lokasi'); // Kolom lokasi
-            $table->decimal('latitude', 10, 7); // Kolom latitude (10 digit, 7 desimal)
-            $table->decimal('longtitude', 10, 7); // Kolom longitude (10 digit, 7 desimal)
-            $table->timestamps(); // Kolom createbed_at dan updated_at
+            $table->id();
+            $table->string('nama_kursus');
+            $table->string('img')->nullable();
+            $table->longText('deskripsi');
+            $table->string('paket');
+            $table->string('metode');
+            $table->text('fasilitas');
+            $table->string('lokasi');
+            $table->decimal('latitude', 10, 7);
+            $table->decimal('longtitude', 10, 7);
+            $table->json('img_konten')->nullable();
+            $table->timestamps();
         });
     }
 
