@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\DataKursus; // Pastikan model diimport
+use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use PhpParser\Node\Stmt\TryCatch;
 
 class AdminDataKursusController extends Controller
 {
@@ -22,10 +25,84 @@ class AdminDataKursusController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate(
-            []
-        );
+        try {
+            $validator = Validator::make($request->all(), [
+                'nama_kursus' => 'required',
+                'img' => 'required|file|mimes:jpeg,png,jpg|max:2048',
+                'deskripsi' => 'required',
+                'paket' => 'required',
+                'metode' => 'required',
+                'fasilitas' => 'required',
+                'lokasi' => 'required',
+                'latitude' => 'required|numeric|between:-90,90',
+                'longitude' => 'required|numeric|between:-180,180',
+                'img_konten.*' => 'file|mimes:jpeg,png,jpg|max:2048',
+            ]);
+
+            // if ($validator->fails()) {
+            //     return redirect()->back()->withInput()->withErrors($validator);
+            // }
+            $imgPath = $request->file('img')->store('images', 'public');
+            $imgKontenPaths = [];
+            if ($request->hasFile('img_konten')) {
+                foreach ($request->file('img_konten') as $file) {
+                    $imgKontenPaths[] = $file->store('images', 'public');
+                }
+            }
+
+            // Simpan data ke dalam database
+            $result = DataKursus::create([
+                'nama_kursus' => $request->nama_kursus,
+                'img' => $imgPath,
+                'deskripsi' => $request->deskripsi,
+                'paket' => $request->paket,
+                'metode' => $request->metode,
+                'fasilitas' => $request->fasilitas,
+                'lokasi' => $request->lokasi,
+                'latitude' => $request->latitude,
+                'longitude' => $request->longitude,
+                'img_konten' => json_encode($imgKontenPaths),
+            ]);
+
+            return redirect('/admin/data-kursus');
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+        }
     }
+
+
+    public function w(Request $request)
+    {
+        // $validator = Validator::make($request->all(), [
+        //     'nama' => 'required',
+        //     'img' => 'required',
+        //     'deskripsi' => 'required',
+        //     'paket' => 'required',
+        //     'metode' => 'required',
+        //     'fasilitas' => 'required',
+        //     'lokasi' => 'required',
+        //     'latitude' => 'required',
+        //     'longtitude' => 'required',
+        //     'img_konten' => 'required',
+        // ]);
+        // DataKursus::create([
+        //    "nama_kursus" => $request->nama,
+        //    "img" => $request->img,
+        //    "deskripsi" => $request->diskripsi,
+        //    "paket" => $request->paket,
+        //    "metode" => $request->metode,
+        //    "fasilitas" => $request->fasilitas,
+        //    "lokasi" => $request->lokasi,
+        //    "latitude" => $request->latitude,
+        //    "longtitude" => $request->longtitude,
+        //    "img_konten" => $request->img_konten,
+
+        // ]);
+        // if ($validator->fails()) return redirect()->back()->withInput()->withErrors($validator);
+    }
+
+
+
 
     public function destroy(string $id)
     {
@@ -35,5 +112,4 @@ class AdminDataKursusController extends Controller
         }
         return redirect()->route('admin.dataKursus')->with('success', 'Data berhasil dihapus.');
     }
-
 }

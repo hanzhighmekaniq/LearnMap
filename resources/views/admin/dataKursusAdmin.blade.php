@@ -4,6 +4,9 @@
         <div class="py-10">
 
             <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                <div class="flex justify-end items-center pb-4">
+                    <a class="bg-[#4F7F81] py-2 px-4 rounded-xl text-white font-bold" href="{{ route ('admin.create') }}">Tambah Data</a>
+                </div>
                 <table class="w-full text-sm text-left rtl:text-right text-gray-500">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                         <tr>
@@ -41,7 +44,9 @@
                                         class="font-medium text-white hover:underline py-2 px-4 bg-[#4F7F81] rounded-xl">
                                         Hapus
                                     </a>
-                                    <form id="delete-form-{{ $course->id }}" action="{{ route('delete', ['id' => $course->id]) }}" method="POST" style="display: none;">
+                                    <form id="delete-form-{{ $course->id }}"
+                                        action="{{ route('delete', ['id' => $course->id]) }}" method="POST"
+                                        style="display: none;">
                                         @csrf
                                         @method('DELETE')
                                     </form>

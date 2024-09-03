@@ -35,7 +35,7 @@
                                     class="mb-2 text-2xl poppins-regular font-extrabold  tracking-tight text-gray-900  ">
                                     {{ $landingpage->nama_kursus }}</h5>
                             </a>
-                            <p class="mb-3 font-normal poppins-regular text-gray-700 ">{{ $landingpage->deskripsi   }}</p>
+                            <p class="mb-3 font-normal poppins-regular text-gray-700 ">{{ $landingpage->deskripsi}}</p>
 
 
                             <div class="flex items-center">

@@ -9,9 +9,20 @@ class DataKursus extends Model
 {
     use HasFactory;
 
-    // Tabel yang digunakan oleh model ini
     protected $table = 'data_kursus';
 
-    // Jika Anda menggunakan timestamp di tabel
+    protected $fillable = [
+        'nama_kursus',
+        'img',
+        'deskripsi',
+        'paket',
+        'metode',
+        'fasilitas',
+        'lokasi',
+        'latitude',
+        'longitude', // Pastikan nama kolom sesuai dengan migrasi
+        'img_konten'
+    ];
+
     public $timestamps = true;
 }
