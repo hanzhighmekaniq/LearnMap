@@ -11,7 +11,7 @@
             <div class="bg-[#EBFEA1] poppins-extrabold m-auto flex items-center justify-center p-2">
                 <p>Halaman ini berisi tentang kursus di Pare!</p>
             </div>
-        </div>
+    </div>
         <div class="pb-10">
             <!-- Apply Tailwind CSS classes for responsive width and height -->
             <div id="map"

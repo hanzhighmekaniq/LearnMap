@@ -1,6 +1,15 @@
-@include('components.navbarAdmin ')
-@include('partials.head')
-@include('partials.font')
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    @include('components.navbarAdmin')
+    @include('partials.head')
+    @include('partials.font')
+</head>
+
 <body>
-  {{ $slot }}
+    {{ $slot }}
+
 </body>
+
+</html>

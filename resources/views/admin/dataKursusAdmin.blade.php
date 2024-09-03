@@ -5,7 +5,7 @@
 
             <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                 <div class="flex justify-end items-center pb-4">
-                    <a class="bg-[#4F7F81] py-2 px-4 rounded-xl" href="{{ route ('kursus.create') }}">Tambah Data</a>
+                    <a class="bg-[#4F7F81] py-2 px-4 rounded-xl text-white font-bold" href="{{ route ('admin.create') }}">Tambah Data</a>
                 </div>
                 <table class="w-full text-sm text-left rtl:text-right text-gray-500">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50">
