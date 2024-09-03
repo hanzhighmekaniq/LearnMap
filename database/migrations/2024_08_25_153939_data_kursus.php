@@ -20,8 +20,9 @@ return new class extends Migration
             $table->string('metode');
             $table->text('fasilitas');
             $table->string('lokasi');
-            $table->decimal('latitude', 10, 8)->index(); // Increased precision
-            $table->decimal('longitude', 11, 8)->index(); // Increased precision
+
+            $table->decimal('latitude', 10, 7);
+            $table->decimal('longtitude', 10, 7);
             $table->json('img_konten')->nullable();
             $table->timestamps();
         });

@@ -70,6 +70,7 @@ class AdminDataKursusController extends Controller
         }
     }
 
+
     public function w(Request $request)
     {
         // $validator = Validator::make($request->all(), [
