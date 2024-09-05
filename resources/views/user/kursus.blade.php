@@ -72,7 +72,7 @@
                 <div class="max-w-max shadow-xl bg-white border border-gray-300 rounded-lg ">
                     <a href="#">
                         <img class="rounded-lg m-auto flex justify-center items-center w-full max-h-64 object-cover"
-                            src="{{ asset('storage/konten/'.$data_kursus->img ) }}" alt="" />
+                            src="{{ asset('storage/'.$data_kursus->img ) }}" alt="" />
                             {{-- src="{{ asset($data_kursus->img) }}" alt="{{ $data_kursus->nama_kursus }}" /> --}}
                     </a>
                     <div class="p-5">

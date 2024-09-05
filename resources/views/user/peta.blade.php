@@ -11,7 +11,7 @@
             <div class="bg-[#EBFEA1] poppins-extrabold m-auto flex items-center justify-center p-2">
                 <p>Halaman ini berisi tentang kursus di Pare!</p>
             </div>
-    </div>
+        </div>
         <div class="pb-10">
             <!-- Apply Tailwind CSS classes for responsive width and height -->
             <div id="map"
@@ -21,7 +21,7 @@
             <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
             <script>
                 // Initialize the map with default center and zoom level
-                const map = L.map('map').setView([-7.750835, 112.1797279], 15); // Latitude and Longitude
+                const map = L.map('map').setView([-7.7523414, 112.1700522], 15); // Latitude and Longitude
 
                 // Add a tile layer from OpenStreetMap
                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -32,11 +32,13 @@
                 const markers = [
                     @foreach ($latilongti as $latilongti)
                         {
-                            coords: [{{ $latilongti->latitude }}, {{ $latilongti->longtitude }}],
-                            popupText: '{{ $latilongti->nama_kursus }}'
+                            coords: [{{ $latilongti->latitude }}, {{ $latilongti->longitude }}],
+                            popupText: '{{ $latilongti->nama_kursus }}',
+                            href: '{{ route ('admin.dataKursus') }}' // Menambahkan href
                         },
                     @endforeach
                 ];
+
 
                 // Add markers to the map
                 markers.forEach(marker => {
@@ -55,7 +57,9 @@
                     });
 
                     // Add a marker for the user's location with the custom red icon
-                    const userMarker = L.marker(e.latlng, { icon: userIcon }).addTo(map);
+                    const userMarker = L.marker(e.latlng, {
+                        icon: userIcon
+                    }).addTo(map);
                     userMarker.bindPopup("You are here").openPopup();
 
                     // Center the map on the user's location
