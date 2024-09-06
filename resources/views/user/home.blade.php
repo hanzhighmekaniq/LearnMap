@@ -17,9 +17,9 @@
                 <p class="text-black poppins-semibold">
                     Kursus Populer
                 </p>
-                <p class="py-1 px-4 rounded-full bg-white ">
+                <a href="/kursus" class="py-1 px-4 rounded-full bg-white ">
                     Lihat Semua Kursus
-                </p>
+                </a>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 m-auto justify-center items-center">
@@ -27,7 +27,7 @@
                     <div class="max-w-max bg-white border border-gray-200 rounded-lg shadow ">
                         <a href="#">
                             <img class="rounded-lg m-auto flex justify-center items-center w-full max-h-64 object-cover"
-                                src="{{ asset('storage/'.$landingpage->img ) }}" alt="" />
+                                src="{{ asset('storage/' . $landingpage->img) }}" alt="" />
                         </a>
                         <div class="p-5">
                             <a href="#">
@@ -35,7 +35,10 @@
                                     class="mb-2 text-2xl poppins-regular font-extrabold  tracking-tight text-gray-900  ">
                                     {{ $landingpage->nama_kursus }}</h5>
                             </a>
-                            <p class="mb-3 font-normal poppins-regular text-gray-700 ">{{ $landingpage->deskripsi}}</p>
+                            <p class="mb-3 font-normal poppins-regular text-gray-700">
+                                {{ Str::words($landingpage->deskripsi, 30, '...') }}
+                            </p>
+
 
 
                             <div class="flex items-center">
@@ -96,7 +99,6 @@
                     Tingkatkan Kemampuan Bahasa Inggris Anda dengan LearnMap!
                 </p>
                 <p>
-
                     Selamat datang di LearnMap, aplikasi website Sistem Informasi Geografis bimbingan belajar bahasa
                     Inggris di Kecamatan Pare, yang didirikan dengan semangat memberdayakan individu melalui
                     pengetahuan. Kami menyediakan berbagai kursus berkualitas tinggi, metode belajar menarik, dan

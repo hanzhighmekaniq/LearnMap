@@ -1,4 +1,4 @@
-<x-layout>
+<x-adminlayout>
     <style>
         /* Set the height of the map */
         #map {
@@ -9,7 +9,7 @@
     <div class="container">
         <div class="py-10 bg-white">
             <div class="bg-[#EBFEA1] poppins-extrabold m-auto flex items-center justify-center p-2">
-                <p>Halaman ini berisi tentang kursus di Pare!</p>
+                <p>Halaman ini berisi Rute menuju ke MANA</p>
             </div>
         </div>
         <div class="pb-10">
@@ -30,13 +30,10 @@
 
                 // Array to hold markers data from the database
                 const markers = [
-                    @foreach ($latilongti as $latilongti)
                         {
-                            coords: [{{ $latilongti->latitude }}, {{ $latilongti->longitude }}],
-                            popupText: '{{ $latilongti->nama_kursus }}',
-                            href: '{{ route('admin.dataKursus') }}' // Menambahkan href
+                            coords: [,],
+                            popupText: '#',
                         },
-                    @endforeach
                 ];
                 // Add markers to the map
                 markers.forEach(marker => {
@@ -78,4 +75,4 @@
             </script>
         </div>
     </div>
-</x-layout>
+</x-adminlayout>

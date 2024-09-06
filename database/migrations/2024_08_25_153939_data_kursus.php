@@ -16,11 +16,10 @@ return new class extends Migration
             $table->string('nama_kursus');
             $table->string('img')->nullable();
             $table->longText('deskripsi');
-            $table->string('paket');
-            $table->string('metode');
+            $table->longText('paket');
+            $table->longText('metode');
             $table->text('fasilitas');
-            $table->string('lokasi');
-
+            $table->longText('lokasi');
             $table->decimal('latitude', 10, 7);
             $table->decimal('longitude', 10, 7);
             $table->json('img_konten')->nullable();

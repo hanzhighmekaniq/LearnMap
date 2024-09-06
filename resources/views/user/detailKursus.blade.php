@@ -58,7 +58,7 @@
         <p class="poppins-medium text-3xl text-black py-4">Kampung Inggris LC - Language Center </p>
         <button class="poppins-regular py-2 px-4 bg-[#4F7F81] text-white rounded-xl text-xl shadow-xl">Rute
             Terdekat</button>
-        <p class="text-black text-lg py-4 poppins-semibold">Deskripsi</p>
+        <p class="text-black text-2xl py-4 poppins-semibold">Deskripsi</p>
         <p class="poppins-regular text-black text-2xl pb-2 max-w-7xl">
             {{ $data->deskripsi }}
         </p>
