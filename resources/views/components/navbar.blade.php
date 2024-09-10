@@ -21,8 +21,8 @@
                     class="flex flex-col font-medium mt-4 rounded-lg bg-white md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-transparent">
 
                     <li class="">
-                        <a href="{{ route('home') }}"
-                            class="{{ request()->is('/') ? 'bg-[#EBFEA1] md:bg-transparent  md:text-white md:underline' : 'text-gray-900' }} block py-2 px-3 md:p-0 rounded hover:bg-[#EBFEA1] md:hover:bg-transparent md:border-0 md:hover:text-white poppins-extrabold text-sm ">
+                        <a href="{{ route('user.home') }}"
+                            class="{{ request()->is('beranda') ? 'bg-[#EBFEA1] md:bg-transparent  md:text-white md:underline' : 'text-gray-900' }} block py-2 px-3 md:p-0 rounded hover:bg-[#EBFEA1] md:hover:bg-transparent md:border-0 md:hover:text-white poppins-extrabold text-sm ">
                             Beranda
                         </a>
                     </li>

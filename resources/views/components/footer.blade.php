@@ -17,25 +17,28 @@
                             <div>
                                 <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase">Resources
                                 </h2>
-                                <ul class="text-gray-600 font-medium">
-                                    <li class="mb-4">
-                                        <a href="https://flowbite.com/" class="hover:underline">Flowbite</a>
+                                <ul class="text-gray-600 font-medium space-y-4">
+                                    <li class="">
+                                        <a href="/beranda" class="hover:underline">Beranda</a>
                                     </li>
                                     <li>
-                                        <a href="https://tailwindcss.com/" class="hover:underline">Tailwind CSS</a>
+                                        <a href="/kursus" class="hover:underline">Kursus</a>
+                                    </li>
+                                    <li>
+                                        <a href="/peta" class="hover:underline">Peta</a>
                                     </li>
                                 </ul>
                             </div>
                             <div>
                                 <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase">Follow us
                                 </h2>
-                                <ul class="text-gray-600 font-medium">
-                                    <li class="mb-4">
-                                        <a href="https://github.com/themesberg/flowbite"
+                                <ul class="text-gray-600 font-medium space-y-4">
+                                    <li class="">
+                                        <a href="#"
                                             class="hover:underline ">Github</a>
                                     </li>
                                     <li>
-                                        <a href="https://discord.gg/4eeurUVvTy" class="hover:underline">Discord</a>
+                                        <a href="#" class="hover:underline">Discord</a>
                                     </li>
                                 </ul>
                             </div>

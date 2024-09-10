@@ -36,7 +36,7 @@
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
                         <button type="submit"
-                            class="{{ request()->is('peta') ? 'bg-[#EBFEA1] md:bg-transparent md:text-white md:underline' : 'text-gray-900' }} block py-2 px-3 md:p-0 rounded hover:bg-[#EBFEA1] text-red-800 md:hover:bg-transparent md:border-0 md:hover:text-white poppins-extrabold text-sm ">
+                            class="{{ request()->is('peta') ? 'bg-[#EBFEA1] md:bg-transparent md:text-white md:underline' : 'text-gray-900' }} block py-2 px-3 md:p-0 rounded hover:bg-[#EBFEA1]  md:hover:bg-transparent md:border-0 md:hover:text-white poppins-extrabold text-sm ">
                             Keluar
                         </button>
                     </form>

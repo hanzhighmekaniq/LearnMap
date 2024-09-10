@@ -20,8 +20,8 @@ return new class extends Migration
             $table->longText('metode');
             $table->text('fasilitas');
             $table->longText('lokasi');
-            $table->decimal('latitude', 10, 7);
-            $table->decimal('longitude', 10, 7);
+            $table->string('latitude');
+            $table->string('longitude');
             $table->json('img_konten')->nullable();
             $table->timestamps();
         });
