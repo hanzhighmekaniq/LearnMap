@@ -12,13 +12,11 @@ class AdminDashboardController extends Controller
         // Ambil semua data kursus
         $allLandingPages = DataKursus::all();
 
-        // Ambil satu gambar secara acak untuk bagian atas
-        $randomLandingPage = $allLandingPages->random();
+        // Pastikan ada data sebelum mencoba mengambil item acak
+        $randomLandingPage = $allLandingPages->isEmpty() ? null : $allLandingPages->random();
+        $randomLandingPages = $allLandingPages->isEmpty() ? collect() : $allLandingPages->random(min($allLandingPages->count(), 5));
 
-        // Ambil maksimal 6 gambar secara acak untuk bagian bawah
-        $randomLandingPages = $allLandingPages->random(min(count($allLandingPages), 6));
-
-        return view('admin.dahsboard', [
+        return view('admin.dashboard', [ // Pastikan nama view sesuai dengan yang Anda gunakan
             'randomLandingPage' => $randomLandingPage,
             'randomLandingPages' => $randomLandingPages,
             'allLandingPages' => $allLandingPages

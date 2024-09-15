@@ -8,22 +8,24 @@
     <div class="container flex justify-end items-center pb-16">
         <div id="default-carousel" class="relative w-full" data-carousel="slide">
             <!-- Carousel wrapper -->
-                <div class="relative h-48 sm:h-[250px] md:h-[350px] lg:h-[450px] xl:h-[500px] 2xl:h-[600px] overflow-hidden rounded-lg">
-                    @foreach ($imageNames as $index => $imageName)
-                        <div class="hidden duration-1000 ease-in-out" data-carousel-item>
-                            <img src="{{ asset('storage/' . $imageName) }}"
-                                class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-                                alt="...">
-                        </div>
-                    @endforeach
+            <div
+                class="relative h-48 sm:h-[250px] md:h-[350px] lg:h-[450px] xl:h-[500px] 2xl:h-[600px] overflow-hidden rounded-lg">
+                @foreach ($imageNames as $index => $imageName)
+                    <div class="hidden duration-1000 ease-in-out" data-carousel-item>
+                        <img src="{{ asset('storage/' . $imageName) }}"
+                            class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+                            alt="...">
+                    </div>
+                @endforeach
 
-                </div>
-                <!-- Slider indicators -->
-                <div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
-                    @for ($i = 0; $i < count($imageNames); $i++)
-                        <button type="button" class="w-3 h-3 rounded-full" aria-current="{{ $i === 0 ? 'true' : 'false' }}" aria-label="Slide {{ $i + 1 }}" data-carousel-slide-to="{{ $i }}"></button>
-                    @endfor   
-                </div>
+            </div>
+            <!-- Slider indicators -->
+            <div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
+                @for ($i = 0; $i < count($imageNames); $i++)
+                    <button type="button" class="w-3 h-3 rounded-full" aria-current="{{ $i === 0 ? 'true' : 'false' }}"
+                        aria-label="Slide {{ $i + 1 }}" data-carousel-slide-to="{{ $i }}"></button>
+                @endfor
+            </div>
             <!-- Slider controls -->
             <button type="button"
                 class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
@@ -55,15 +57,16 @@
         </div>
     </div>
     <div class="container">
-        <p class="poppins-medium text-3xl text-black py-4">Kampung Inggris LC - Language Center </p>
-        <button class="poppins-regular py-2 px-4 bg-[#4F7F81] text-white rounded-xl text-xl shadow-xl">Rute
-            Terdekat</button>
-        <p class="text-black text-2xl py-4 poppins-semibold">Deskripsi</p>
+        <p class="poppins-medium text-3xl xl:text-4xl text-black pb-4">Kampung Inggris LC - Language Center </p>
+        <a href="/kursus/{{ $data->id }}/rute" target="_blank"
+            class="poppins-regular py-2 px-4 bg-[#4F7F81] text-white rounded-xl text-xl shadow-xl">Rute Terdekat</a>
+
+        <p class="text-black text-2xl pt-10 xl:pt-16 poppins-semibold">Deskripsi</p>
         <p class="poppins-regular text-black text-2xl pb-2 max-w-7xl">
             {{ $data->deskripsi }}
         </p>
         <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-20 py-14">
-            
+
             <div class="max-w-max space-y-2">
                 <p class="poppins-semibold text-2xl text-black underline">
                     Paket
@@ -95,7 +98,7 @@
                 </h1>
             </div>
         </div>
-        
+
     </div>
 
 </x-layout>

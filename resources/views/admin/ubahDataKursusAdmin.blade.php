@@ -36,7 +36,7 @@
                             <div class="ml-2">
                                 <!-- Modal toggle -->
                                 <button data-modal-target="file-upload-modal" data-modal-toggle="file-upload-modal"
-                                    class="block w-20 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm py-3 text-center"
+                                    class="block w-20 text-white bg-[#4F7F81] hover:bg-[#3F6A6B] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm py-3 text-center"
                                     type="button">
                                     Detail
                                 </button>
@@ -79,24 +79,29 @@
                                 <!-- Modal toggle -->
                                 <button data-modal-target="multiple-files-modal"
                                     data-modal-toggle="multiple-files-modal"
-                                    class="block w-20 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm py-3 text-center"
+                                    class="block w-20 text-white bg-[#4F7F81] hover:bg-[#3F6A6B] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm py-3 text-center"
                                     type="button">
                                     Detail
                                 </button>
 
                                 <!-- Multiple Files Modal -->
                                 <div id="multiple-files-modal" tabindex="-1" aria-hidden="true"
-                                    class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-                                    <div class="relative overflow-x-auto p-10 w-full max-w-2xl max-h-full bg-white rounded-lg shadow-lg">
+                                    class="hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                                    <div
+                                        class="relative overflow-x-auto py-10 w-full max-w-2xl max-h-full bg-white rounded-lg shadow-lg">
+                                        <div class="flex space-x-4">
+                                            <!-- Flex container to arrange images horizontally -->
                                             @if (!empty($dataKursus->img_konten))
                                                 @foreach (json_decode($dataKursus->img_konten, true) as $image)
-                                                    <img src="{{ asset('storage/' . $image) }}" class="object-cover m-auto"
-                                                        alt="Gambar">
+                                                    <img src="{{ asset('storage/' . $image) }}"
+                                                        class="object-cover h-64 w-auto px-5 flex-shrink-0 " alt="Gambar">
                                                 @endforeach
                                             @else
                                                 <p>Tidak ada gambar yang tersedia.</p>
                                             @endif
+                                        </div>
                                     </div>
+
                                 </div>
                             </div>
                         </div>
@@ -161,7 +166,7 @@
                     </div>
                 </div>
                 <button type="submit"
-                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Submit</button>
+                    class="text-white bg-[#4F7F81] hover:bg-[#3F6A6B] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Submit</button>
             </form>
         </div>
     </div>

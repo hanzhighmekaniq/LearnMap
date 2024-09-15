@@ -1,78 +1,118 @@
-<x-adminlayout>
-    <style>
-        /* Set the height of the map */
-        #map {
-            /* Height will be controlled by Tailwind CSS classes */
-            max-width: 100%;
+<div class="">
+
+</div>
+
+<link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.js"></script>
+@vite('resources/css/app.css')
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+@stack('script')
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css" />
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
+
+
+<div id="map" class="w-full h-full object-cover">
+</div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Inisialisasi peta
+        var map = L.map('map').setView([-7.7523414, 112.1700522], 13);
+
+        // Menambahkan tile layer dari OpenStreetMap
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        }).addTo(map);
+
+        // Variabel untuk menyimpan marker lokasi pengguna
+        var userMarker;
+        if (L.Browser.ielt9) {
+            alert('Upgrade your browser, dude!');
         }
-    </style>
-    <div class="container">
-        <div class="py-10 bg-white">
-            <div class="bg-[#EBFEA1] poppins-extrabold m-auto flex items-center justify-center p-2">
-                <p>Halaman ini berisi Rute menuju ke MANA</p>
-            </div>
-        </div>
-        <div class="pb-10">
-            <!-- Apply Tailwind CSS classes for responsive width and height -->
-            <div id="map"
-                class="w-full h-56 sm:h-64 md:h-96 lg:h-[500px] xl:h-[650px] max-w-4xl rounded-lg shadow-lg"></div>
+        // Cek jika browser mendukung geolocation
+        if (navigator.geolocation) {
+            // Menemukan lokasi awal pengguna
+            map.locate({
+                setView: true,
+                maxZoom: 16.5
+            });
 
-            <!-- Leaflet JS -->
-            <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-            <script>
-                // Initialize the map with default center and zoom level
-                const map = L.map('map').setView([-7.7523414, 112.1700522], 15); // Latitude and Longitude
-
-                // Add a tile layer from OpenStreetMap
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                }).addTo(map);
-
-                // Array to hold markers data from the database
-                const markers = [
-                        {
-                            coords: [,],
-                            popupText: '#',
-                        },
-                ];
-                // Add markers to the map
-                markers.forEach(marker => {
-                    L.marker(marker.coords).addTo(map)
-                        .bindPopup(marker.popupText);
-                });
-
-                // Function to handle the successful retrieval of the user's location
-                function onLocationFound(e) {
-                    // Create a custom icon for the user's location
-                    const userIcon = L.icon({
-                        iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-red.png', // Red marker icon
-                        iconSize: [25, 41], // Size of the icon
-                        iconAnchor: [12, 41], // Point of the icon which will correspond to marker's location
-                        popupAnchor: [1, -34], // Point from which the popup should open relative to the iconAnchor
-                    });
-
-                    // Add a marker for the user's location with the custom red icon
-                    const userMarker = L.marker(e.latlng, {
-                        icon: userIcon
-                    }).addTo(map);
-                    userMarker.bindPopup("You are here").openPopup();
-
-                    // Center the map on the user's location
-                    map.setView(e.latlng, 15);
-                }
-
-                // Function to handle the error in retrieving the user's location
-                function onLocationError(e) {
-                    alert("Unable to retrieve your location.");
-                }
-
-                // Request the user's location
-                if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(onLocationFound, onLocationError);
+            // Mengatur fungsi callback ketika lokasi ditemukan
+            map.on('locationfound', function(e) {
+                if (userMarker) {
+                    userMarker.setLatLng(e.latlng);
                 } else {
-                    alert("Geolocation is not supported by this browser.");
+                    // Tambahkan marker untuk lokasi pengguna jika belum ada
+                    userMarker = L.marker(e.latlng, {
+                            interactive: false
+                        }).addTo(map)
+                        .bindPopup("Lokasi Anda")
+                        .openPopup();
                 }
-            </script>
-        </div>
-    </div>
-</x-adminlayout>
+                // Pindahkan peta ke lokasi pengguna dengan smooth pan
+                map.panTo(e.latlng);
+
+                // Tambahkan marker untuk lokasi tujuan
+                var latLng2 = L.latLng({{ $ruteTerdekat->latitude }}, {{ $ruteTerdekat->longitude }});
+                L.marker(latLng2, {
+                        interactive: false
+                    }).addTo(map)
+                    .bindPopup("{{ $ruteTerdekat->nama_kursus }}")
+                    .openPopup();
+
+                // Tambahkan kontrol routing
+                L.Routing.control({
+                    waypoints: [e.latlng, latLng2],
+                    routeWhileDragging: false, // Nonaktifkan drag
+                    collapsible: true, // Kontrol tetap bisa diperlihatkan tapi tidak bisa diubah
+                    createMarker: function() {
+                        return null;
+                    } // Tidak membuat marker tambahan
+                }).addTo(map);
+            });
+
+            L.Control.CustomControl = L.Control.extend({
+                onAdd: function(map) {
+                    var div = L.DomUtil.create('div', 'custom-control');
+                    div.innerHTML = '<p class="p-4" >Kontrol Kustom</p>';
+                    return div;
+                },
+                onRemove: function(map) {
+                    // nothing to do here
+                }
+            });
+            L.control.customControl = function(opts) {
+                return new L.Control.CustomControl(opts);
+            }
+            L.control.customControl({
+                position: 'topleft'
+            }).addTo(map);
+            // Tangani error jika geolocation tidak tersedia
+            map.on('locationerror', function(e) {
+                console.error("Geolocation error: " + e.message);
+                // Informasikan pengguna jika terjadi kesalahan
+                L.popup()
+                    .setLatLng([-7.7523414, 112.1700522])
+                    .setContent("Unable to retrieve your location.")
+                    .openOn(map);
+            });
+
+        } else {
+            // Informasikan pengguna jika geolocation tidak didukung
+            L.popup()
+                .setLatLng([-7.7523414, 112.1700522])
+                .setContent("Geolocation is not supported by this browser.")
+                .openOn(map);
+        }
+    });
+</script>
+
+</div>

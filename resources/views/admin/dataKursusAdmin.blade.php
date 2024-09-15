@@ -3,14 +3,14 @@
     <div class="container">
         <div class="py-10">
 
+            <div class="flex justify-end items-center pb-4 ">
+                <a class="bg-[#4F7F81] py-2 px-4 rounded-xl shadow-md shadow-gray-600 hover:bg-[#3F6A6B] text-white font-bold"
+                    href="{{ route('admin.create') }}">Tambah Data</a>
+            </div>
             <div class="relative overflow-x-auto sm:rounded-lg">
-                <div class="flex justify-end items-center pb-4 ">
-                    <a class="bg-[#4F7F81] py-2 px-4 rounded-xl shadow-md shadow-black text-white font-bold"
-                        href="{{ route('admin.create') }}">Tambah Data</a>
-                </div>
 
-                <table class="w-full text-sm text-left rtl:text-right shadow-md shadow-black  text-gray-500">
-                    <thead class="text-xs text-gray-700 uppercase shadow-md shadow-black bg-gray-50">
+                <table class="w-full text-sm text-left rtl:text-right shadow-md shadow-gray-600  text-gray-500">
+                    <thead class="text-xs text-gray-700 uppercase shadow-md shadow-gray-600 bg-gray-50">
                         <tr>
                             <th scope="col" class="px-6 py-3">No</th>
                             <th scope="col" class="px-6 py-3">Nama Kursus</th>
@@ -19,34 +19,40 @@
                             <th scope="col" class="px-6 py-3">Aksi</th>
                         </tr>
                     </thead>
-                    <tbody class="shadow-md shadow-black">
+                    <tbody class="shadow-md shadow-gray-600">
                         @foreach ($courses as $index => $course)
-                            <tr class="odd:bg-white even:bg-gray-50 shadow-md shadow-black">
-                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                                    {{ $index + 1 }}
+                            <tr class="odd:bg-white even:bg-gray-50 shadow-md shadow-gray-600">
+                                <th scope="row"
+                                    class="justify-center items-center  px6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                                    <p class="m-auto space-x-2 flex justify-center">
+                                        {{ $index + 1 }}
+                                    </p>
                                 </th>
-                                <td class="px-6 py-4">
+                                <td class="px-6 py-4 m-auto">
                                     {{ $course->nama_kursus }}
                                 </td>
-                                <td class="px-6 py-4">
+                                <td class="px-6 py-4 m-auto">
                                     {{ $course->deskripsi }}
                                 </td>
-                                <td class="px-6 py-4">
-                                    <img src="{{ asset('storage/' . $course->img) }}" class="w-72 h-auto object-cover"
-                                        alt="">
+                                <td class="px-6 py-4 m-auto">
+                                    <img src="{{ asset('storage/' . $course->img) }}"
+                                        class="w-72 h-14 shadow-md shadow-gray-500 object-cover" alt="">
                                 </td>
-                                <td class="px-6 py-4 flex space-x-2">
-                                    <a href="/admin/{{ $course->id }}/edit-kursus"
-                                        class="font-medium text-white hover:underline py-2 px-4 bg-[#4F7F81] rounded-xl">
-                                        Edit
-                                    </a>
-                                    <!-- Tombol DELETE -->
-                                    <button data-modal-target="popup-modal-{{ $course->id }}"
-                                        data-modal-toggle="popup-modal-{{ $course->id }}"
-                                        class="font-medium text-white hover:underline py-2 px-4 bg-[#4F7F81] rounded-xl"
-                                        type="button">
-                                        Hapus
-                                    </button>
+                                <td class="justify-center items-center  px6 py-4">
+                                    <div class="m-auto space-x-2 flex justify-center">
+
+                                        <a href="/admin/{{ $course->id }}/edit-kursus"
+                                            class="font-medium shadow-md shadow-gray-600 hover:bg-[#3F6A6B] text-white py-2 px-4 bg-[#4F7F81] rounded-xl">
+                                            Edit
+                                        </a>
+                                        <!-- Tombol DELETE -->
+                                        <button data-modal-target="popup-modal-{{ $course->id }}"
+                                            data-modal-toggle="popup-modal-{{ $course->id }}"
+                                            class="font-medium shadow-md shadow-gray-600 hover:bg-[#3F6A6B] text-white py-2 px-4 bg-[#4F7F81] rounded-xl"
+                                            type="button">
+                                            Hapus
+                                        </button>
+                                    </div>
                                     <!-- Modal Konfirmasi -->
                                     <div id="popup-modal-{{ $course->id }}" tabindex="-1"
                                         class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
@@ -112,16 +118,8 @@
                                         });
                                     </script>
 
-
-
-
-
-
-
-
-
-
                                 </td>
+
                             </tr>
                         @endforeach
                     </tbody>

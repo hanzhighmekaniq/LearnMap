@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\DataKursus;
+use Dflydev\DotAccessData\Data;
 use Illuminate\Http\Request;
 
 class PengunjungController extends Controller
@@ -21,7 +22,7 @@ class PengunjungController extends Controller
 
     public function kursus()
     {
-        $data_kursus = DataKursus::limit(6)->get();
+        $data_kursus = DataKursus::all();
         foreach ($data_kursus as $item) {
             $item->deskripsi = \Illuminate\Support\Str::words($item->deskripsi, 26,);
         }
@@ -39,6 +40,11 @@ class PengunjungController extends Controller
 
         return response()->json($kursus);
     }
+    public function maps()
+    {
+        $latilongti = DataKursus::all();
+        return view('user.peta', compact('latilongti'));
+    }
 
 
     public function detail(string $id)
@@ -49,15 +55,14 @@ class PengunjungController extends Controller
         return view('user.detailKursus', compact(['data', 'imageNames']));
     }
 
-
-
-    public function maps()
+    public function rute(string $id)
     {
-        $latilongti = DataKursus::all();
-        return view('user.peta', compact('latilongti'));
-    }
-    public function rute()
-    {
-        return view('user.rute');
+        // Ambil kursus berdasarkan ID
+        $ruteTerdekat = DataKursus::find($id);
+
+        // Jika data tidak ditemukan, bisa menampilkan halaman error atau redirect
+        
+
+        return view('user.rute', compact('ruteTerdekat'));
     }
 }

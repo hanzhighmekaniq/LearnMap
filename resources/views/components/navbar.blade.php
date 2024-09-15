@@ -1,9 +1,10 @@
 <div class="bg-[#4F7F81]">
     <nav class="border-gray-200 container bg-[#4F7F81] ">
         <div class="max-w-screen-2xl  flex flex-wrap items-center justify-between mx-auto p-4">
-            <a href="#" class="flex items-center  ">
-                <img src="{{ asset('img/Rectangle 65.png') }}" class="h-14 object-cover w-14 lg:mw-20 lg:h-20" alt="Flowbite Logo" />
-                <span   
+            <a href="{{ route('user.home') }}" class="flex items-center  ">
+                <img src="{{ asset('img/Rectangle 65.png') }}" class="h-14 object-cover w-14 lg:mw-20 lg:h-20"
+                    alt="Flowbite Logo" />
+                <span
                     class="self-center text-2xl sm:text-3xl lg:text-4xl text-white font-semibold whitespace-nowrap pt-4 aclonica-regular">LearnMap</span>
             </a>
             <button data-collapse-toggle="navbar-solid-bg" type="button"
@@ -28,7 +29,7 @@
                     </li>
                     <li class="">
                         <a href="{{ route('user.kursus') }}"
-                            class="{{ request()->is('kursus','detailKursus') ? 'bg-[#EBFEA1] md:bg-transparent md:text-white md:underline' : 'text-gray-900' }} block py-2 px-3 md:p-0 rounded hover:bg-[#EBFEA1] md:hover:bg-transparent md:border-0 md:hover:text-white poppins-extrabold text-sm ">
+                            class="{{ request()->is('kursus', 'kursus/*/detail','kursus/*/rute') ? 'bg-[#EBFEA1] md:bg-transparent md:text-white md:underline' : 'text-gray-900' }} block py-2 px-3 md:p-0 rounded hover:bg-[#EBFEA1] md:hover:bg-transparent md:border-0 md:hover:text-white poppins-extrabold text-sm ">
                             Kursus
                         </a>
                     </li>

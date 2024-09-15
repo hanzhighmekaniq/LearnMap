@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+
     @include('components.navbarAdmin')
     @include('partials.head')
     @include('partials.font')
