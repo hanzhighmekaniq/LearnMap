@@ -70,7 +70,7 @@
                         d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                 </svg>
                 <h3 class="mb-5 text-lg font-normal text-black">
-                    Apakah Anda yakin ingin mengirimkan formulir ini?
+                    Apakah Anda yakin ingin keluar?
                 </h3>
                 <div class="flex justify-center">
                     <form id="logout-form" method="POST" action="{{ route('logout') }}">

@@ -13,7 +13,7 @@ class PengunjungController extends Controller
     {
         $landingpage = DataKursus::inRandomOrder()->limit(3)->get();
         foreach ($landingpage as $item) {
-            $item->deskripsi = \Illuminate\Support\Str::words($item->deskripsi, 26, '...');
+            $item->deskripsi = \Illuminate\Support\Str::words($item->deskripsi, 22, '...');
         }
         return view('user.home', compact('landingpage'));
     }
@@ -24,7 +24,7 @@ class PengunjungController extends Controller
     {
         $data_kursus = DataKursus::all();
         foreach ($data_kursus as $item) {
-            $item->deskripsi = \Illuminate\Support\Str::words($item->deskripsi, 26,);
+            $item->deskripsi = \Illuminate\Support\Str::words($item->deskripsi, 22,);
         }
         return view('user.kursus', compact('data_kursus'));
     }
