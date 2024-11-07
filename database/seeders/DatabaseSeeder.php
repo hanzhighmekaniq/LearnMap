@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\DataKursus;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -20,5 +21,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@gmail.com',
             'password' => 'admin123',
         ]);
+
+        DataKursus::factory(10)->create();
     }
 }

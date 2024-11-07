@@ -94,7 +94,8 @@
                                             @if (!empty($dataKursus->img_konten))
                                                 @foreach (json_decode($dataKursus->img_konten, true) as $image)
                                                     <img src="{{ asset('storage/' . $image) }}"
-                                                        class="object-cover h-64 w-auto px-5 flex-shrink-0 " alt="Gambar">
+                                                        class="object-cover h-64 w-auto px-5 flex-shrink-0 "
+                                                        alt="Gambar">
                                                 @endforeach
                                             @else
                                                 <p>Tidak ada gambar yang tersedia.</p>

@@ -52,10 +52,10 @@
                 } else {
                     // Tambahkan marker untuk lokasi pengguna jika belum ada
                     userMarker = L.marker(e.latlng, {
-                            interactive: false
+                            interactive: true
                         }).addTo(map)
                         .bindPopup("Lokasi Anda")
-                        .openPopup();
+                        .openPopup(); // Buka popup "Lokasi Anda" saat marker ditambahkan
                 }
                 // Pindahkan peta ke lokasi pengguna dengan smooth pan
                 map.panTo(e.latlng);
@@ -82,7 +82,7 @@
             L.Control.CustomControl = L.Control.extend({
                 onAdd: function(map) {
                     var div = L.DomUtil.create('div', 'custom-control');
-                    div.innerHTML = '<p class="p-4" >Kontrol Kustom</p>';
+                    div.innerHTML = '<p class="p-4" ></p>';
                     return div;
                 },
                 onRemove: function(map) {
@@ -92,6 +92,8 @@
             L.control.customControl = function(opts) {
                 return new L.Control.CustomControl(opts);
             }
+
+            
             L.control.customControl({
                 position: 'topleft'
             }).addTo(map);
