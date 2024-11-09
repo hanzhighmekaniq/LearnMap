@@ -15,12 +15,28 @@
                 @csrf
                 <div class="grid gap-6 mb-6 md:grid-cols-2">
                     <!-- Nama Kursus -->
-                    <div>
-                        <label for="nama_kursus" class="block mb-2 text-sm font-medium text-gray-900">Nama
-                            Kursus</label>
-                        <input type="text" id="nama_kursus" name="nama_kursus"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                            placeholder="Kampung Inggris LC - Language Center" required />
+                    <div class="grid gap-6 md:grid-cols-2">
+                        <div>
+                            <label for="nama_kursus" class="block mb-2 text-sm font-medium text-gray-900">Nama
+                                Kursus</label>
+                            <input type="text" id="nama_kursus" name="nama_kursus"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                placeholder="Kampung Inggris LC - Language Center" required />
+                        </div>
+                        <div>
+                            <form class="max-w-sm mx-auto">
+                                <label for="countries"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pilih
+                                    Popular</label>
+                                <select id="popular" name="popular"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    <option value="Tidak">Tidak</option>
+                                    <option value="Popular">Popular</option>
+                                </select>
+                            </form>
+                        </div>
+
+
                     </div>
 
                     <!-- File Upload -->

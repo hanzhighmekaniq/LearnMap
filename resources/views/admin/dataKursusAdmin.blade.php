@@ -14,7 +14,8 @@
                         <tr>
                             <th scope="col" class="px-6 py-3">No</th>
                             <th scope="col" class="px-6 py-3">Nama Kursus</th>
-                            <th scope="col" class="px-6 py-3">Deskripsi</th>
+                            {{-- <th scope="col" class="px-6 py-3">Deskripsi</th> --}}
+                            <th scope="col" class="px-6 py-3">Popular</th>
                             <th scope="col" class="px-6 py-3">Gambar</th>
                             <th scope="col" class="px-6 py-3">Aksi</th>
                         </tr>
@@ -31,16 +32,24 @@
                                 <td class="px-6 py-4 m-auto">
                                     {{ $course->nama_kursus }}
                                 </td>
+                                {{-- <td class="px-6 py-4 m-auto">
+                                    {{ Str::limit($course->deskripsi, 20, '...') }}
+
+                                </td> --}}
                                 <td class="px-6 py-4 m-auto">
-                                    {{ $course->deskripsi }}
+                                    {{ $course->popular }}
                                 </td>
                                 <td class="px-6 py-4 m-auto">
                                     <img src="{{ asset('storage/' . $course->img) }}"
-                                        class="w-72 h-14 shadow-md shadow-gray-500 object-cover" alt="">
+                                        class="w-72 h-44 shadow-md shadow-gray-500 object-cover" alt="">
                                 </td>
                                 <td class="justify-center items-center  px6 py-4">
                                     <div class="m-auto space-x-2 flex justify-center">
-
+                                        <button data-modal-target="modal-detail{{ $course->id }}"
+                                            data-modal-toggle="modal-detail{{ $course->id }}"
+                                            class="font-medium shadow-md shadow-gray-600 hover:bg-[#3F6A6B] text-white py-2 px-4 bg-[#4F7F81] rounded-xl">
+                                            Detail
+                                        </button>
                                         <a href="/admin/{{ $course->id }}/edit-kursus"
                                             class="font-medium shadow-md shadow-gray-600 hover:bg-[#3F6A6B] text-white py-2 px-4 bg-[#4F7F81] rounded-xl">
                                             Edit
@@ -152,6 +161,38 @@
             }
         });
     </script>
+    <!-- Main modal -->
 
-
+    <div id="modal-detail{{ $course->id }}" tabindex="-1" aria-hidden="true"
+        class="hidden overflow-y-auto fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative p-4 w-full max-w-2xl xl:max-w-5xl max-h-full">
+            <!-- Modal content -->
+            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                <!-- Modal header -->
+                <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                    <h2 class="text-lg font-semibold">Detail Gambar</h2>
+                </div>
+                <!-- Modal body -->
+                <div class="p-4 md:p-5">
+                    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+                        @if (!empty($course->imageNames))
+                            @foreach ($course->imageNames as $img_konten)
+                                <div class="border border-slate-300 rounded-md p-2">
+                                    <img src="{{ asset('storage/' . $img_konten) }}"
+                                        class="w-full h-auto object-contain" alt="Image">
+                                </div>
+                            @endforeach
+                        @else
+                            <p>Tidak ada gambar yang tersedia.</p>
+                        @endif
+                    </div>
+                </div>
+                <!-- Modal footer -->
+                <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
+                    <button data-modal-hide="modal-detail{{ $course->id }}" type="button"
+                        class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Oke</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </x-adminlayout>

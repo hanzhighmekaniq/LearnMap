@@ -10,6 +10,8 @@ use App\Http\Controllers\PengunjungController;
 Route::middleware('auth')->group(function () {
     // ADMIN
 Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.home'); // SHOW DASHBOARD
+
+
 Route::get('/admin/data-kursus', [AdminDataKursusController::class, 'dataKursus'])->name('admin.dataKursus'); //SHOW DATA
 Route::get('/admin/create-data', [AdminDataKursusController::class, 'create'])->name('admin.create'); // SHOW TAMBAH DATA
 Route::get('/admin/{id}/edit-kursus', [AdminDataKursusController::class, 'edit'])->name('admin.edit'); // SHOW EDIT DATA

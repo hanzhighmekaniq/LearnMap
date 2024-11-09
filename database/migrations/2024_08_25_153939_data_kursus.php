@@ -22,6 +22,7 @@ return new class extends Migration
             $table->longText('lokasi');
             $table->string('latitude');
             $table->string('longitude');
+            $table->string('popular');
             $table->json('img_konten')->nullable();
             $table->timestamps();
         });

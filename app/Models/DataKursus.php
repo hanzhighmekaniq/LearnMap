@@ -21,6 +21,7 @@ class DataKursus extends Model
         'lokasi',
         'latitude',
         'longitude', // Pastikan nama kolom sesuai dengan migrasi
+        'popular', // Pastikan nama kolom sesuai dengan migrasi
         'img_konten'
     ];
 

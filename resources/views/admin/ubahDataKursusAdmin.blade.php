@@ -17,14 +17,32 @@
                 <div class="grid gap-6 mb-6 md:grid-cols-2">
 
                     <!-- Nama Kursus -->
-                    <div>
-                        <label for="nama_kursus" class="block mb-2 text-sm font-medium text-gray-900">Nama
-                            Kursus</label>
-                        <input type="text" id="nama_kursus"
-                            value="{{ old('nama_kursus', $dataKursus->nama_kursus) }}" name="nama_kursus"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                            placeholder="Kampung Inggris LC - Language Center" required />
+                    <div class="grid gap-6 md:grid-cols-2">
+                        <div>
+
+                            <label for="nama_kursus" class="block mb-2 text-sm font-medium text-gray-900">Nama
+                                Kursus</label>
+                            <input type="text" id="nama_kursus"
+                                value="{{ old('nama_kursus', $dataKursus->nama_kursus) }}" name="nama_kursus"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                placeholder="Kampung Inggris LC - Language Center" required />
+                        </div>
+                        <div>
+                                <label for="countries"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pilih
+                                    Popular</label>
+                                <select id="countries" name="popular"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    <option selected>{{ $dataKursus->popular }}</option>
+                                    @if ($dataKursus->popular === 'popular')
+                                        <option value="Tidak">Tidak</option>
+                                    @else
+                                        <option value="popular">Popular</option>
+                                    @endif
+                                </select>
+                        </div>
                     </div>
+
 
                     <!-- File Upload -->
                     <div>

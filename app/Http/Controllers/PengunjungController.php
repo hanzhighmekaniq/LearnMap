@@ -11,12 +11,21 @@ class PengunjungController extends Controller
     // PENGUNJUNG
     public function home()
     {
-        $landingpage = DataKursus::inRandomOrder()->limit(3)->get();
+        // Ambil 3 data yang populer dari tabel DataKursus
+        $landingpage = DataKursus::where('popular', 'Popular')
+            ->limit(3)
+            ->get();
+
+        // Potong deskripsi agar hanya terdiri dari 22 kata
         foreach ($landingpage as $item) {
             $item->deskripsi = \Illuminate\Support\Str::words($item->deskripsi, 22, '...');
         }
+
+        // Kembalikan view dengan data yang sudah diproses
         return view('user.home', compact('landingpage'));
     }
+    
+
 
 
 
@@ -61,7 +70,7 @@ class PengunjungController extends Controller
         $ruteTerdekat = DataKursus::find($id);
 
         // Jika data tidak ditemukan, bisa menampilkan halaman error atau redirect
-        
+
 
         return view('user.rute', compact('ruteTerdekat'));
     }

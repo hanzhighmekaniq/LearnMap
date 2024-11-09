@@ -25,6 +25,7 @@ class DataKursusFactory extends Factory
             'lokasi' => fake()->city,
             'latitude' => fake()->latitude,
             'longitude' => fake()->longitude,
+            'popular' => 'Tidak',
         ];
     }
 }

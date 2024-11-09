@@ -17,9 +17,18 @@ class AdminDataKursusController extends Controller
     // ADMIN FADIAS TUKANG SERVER
     public function dataKursus()
     {
+        // Mengambil semua data kursus dari model DataKursus
         $courses = DataKursus::all();
+
+        // Mengambil gambar untuk setiap course, jika ada
+        foreach ($courses as $course) {
+            $course->imageNames = $course->img_konten ? json_decode($course->img_konten, true) : [];
+        }
+
+        // Mengirim data courses dengan gambar ke view
         return view('admin.dataKursusAdmin', ['courses' => $courses]);
     }
+
 
     public function create()
     {
@@ -40,7 +49,8 @@ class AdminDataKursusController extends Controller
                 'lokasi' => 'required',
                 'latitude' => 'nullable', // Ubah aturan validasi
                 'longitude' => 'nullable', // Ubah aturan validasi
-                'img_konten.*' => 'file|mimes:jpeg,png,jpg|max:2048',
+                'popular' => 'required', // Ubah aturan validasi
+                'img_konten.*' => 'required|file|mimes:jpeg,png,jpg|max:2048',
             ]);
 
             // Cek apakah validasi gagal
@@ -70,6 +80,7 @@ class AdminDataKursusController extends Controller
                 'lokasi' => $request->lokasi,
                 'latitude' => $request->latitude, // Menyimpan nilai latitude bebas
                 'longitude' => $request->longitude, // Menyimpan nilai longitude bebas
+                'popular' => $request->popular, // Menyimpan nilai longitude bebas
                 'img_konten' => json_encode($imgKontenPaths),
             ]);
 
@@ -96,52 +107,59 @@ class AdminDataKursusController extends Controller
 
     public function update(Request $request, $id)
     {
-        // Validasi request
-        $request->validate([
-            'nama_kursus' => 'required|string|max:255',
-            'deskripsi' => 'required|string',
-            'img' => 'nullable|image|max:2048',
-            'img_konten.*' => 'nullable|image|max:2048',
-            'latitude' => 'required|numeric',
-            'longitude' => 'nullable|numeric',
-            'paket' => 'nullable|string',
-            'metode' => 'nullable|string',
-            'fasilitas' => 'nullable|string',
-            'lokasi' => 'nullable|string',
-        ]);
+        try {
+            $request->validate([
+                'nama_kursus' => 'required|string|max:255',
+                'deskripsi' => 'required|string',
+                'img' => 'nullable|image|max:2048',
+                'img_konten.*' => 'nullable|image|max:2048',
+                'latitude' => 'required|numeric',
+                'longitude' => 'nullable|numeric',
+                'popular' => 'required|string',
+                'paket' => 'nullable|string',
+                'metode' => 'nullable|string',
+                'fasilitas' => 'nullable|string',
+                'lokasi' => 'nullable|string',
+            ]);
 
-        // Ambil record DataKursus berdasarkan ID-nya
-        $dataKursus = DataKursus::findOrFail($id);
+            // Ambil record DataKursus berdasarkan ID-nya
+            $dataKursus = DataKursus::findOrFail($id);
 
-        // Update fields
-        $dataKursus->nama_kursus = $request->input('nama_kursus');
-        $dataKursus->deskripsi = $request->input('deskripsi');
-        $dataKursus->latitude = $request->input('latitude');
-        $dataKursus->longitude = $request->input('longitude');
-        $dataKursus->paket = $request->input('paket');
-        $dataKursus->metode = $request->input('metode');
-        $dataKursus->fasilitas = $request->input('fasilitas');
-        $dataKursus->lokasi = $request->input('lokasi');
+            // Update fields
+            $dataKursus->nama_kursus = $request->input('nama_kursus');
+            $dataKursus->deskripsi = $request->input('deskripsi');
+            $dataKursus->latitude = $request->input('latitude');
+            $dataKursus->longitude = $request->input('longitude');
+            $dataKursus->popular = $request->input('popular');
+            $dataKursus->paket = $request->input('paket');
+            $dataKursus->metode = $request->input('metode');
+            $dataKursus->fasilitas = $request->input('fasilitas');
+            $dataKursus->lokasi = $request->input('lokasi');
 
-        // Handle single image upload
-        if ($request->hasFile('img')) {
-            $dataKursus->img = $request->file('img')->store('images', 'public');
-        }
-
-        // Handle multiple image uploads
-        if ($request->hasFile('img_konten')) {
-            $images = [];
-            foreach ($request->file('img_konten') as $file) {
-                $images[] = $file->store('images', 'public');
+            // Handle single image upload
+            if ($request->hasFile('img')) {
+                $dataKursus->img = $request->file('img')->store('images', 'public');
             }
-            $dataKursus->img_konten = json_encode($images);
+
+            // Handle multiple image uploads
+            if ($request->hasFile('img_konten')) {
+                $images = [];
+                foreach ($request->file('img_konten') as $file) {
+                    $images[] = $file->store('images', 'public');
+                }
+                $dataKursus->img_konten = json_encode($images);
+            }
+
+            // Save updated record
+            $dataKursus->save();
+
+            // Redirect with success message
+            return redirect()->route('admin.dataKursus')->with('success', 'Data berhasil diperbarui.');
+        } catch (\Exception $e) {
+            dd($e->getMessage());
         }
+        // Validasi request
 
-        // Save updated record
-        $dataKursus->save();
-
-        // Redirect with success message
-        return redirect()->route('admin.dataKursus')->with('success', 'Data berhasil diperbarui.');
     }
 
 
