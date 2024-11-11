@@ -90,16 +90,10 @@
         <!-- Main modal -->
         <div id="default-modal-detail-gambar" tabindex="-1" aria-hidden="true"
             class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-            <div class="relative p-4 w-full max-w-2xl xl:max-w-5xl max-h-full">
-                <!-- Modal content -->
+            <div class="relative p-4 w-full max-w-2xl xl:max-w-3xl 2xl:max-w-4xl max-h-full">
                 <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                    <!-- Modal header -->
-                    <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-                        <img src="" alt="">
-                    </div>
-                    <!-- Modal body -->
                     <div class="p-4 md:p-5 space-y-4">
-                        <div class="relative overflow-hidden rounded-lg gap-4 space-y-4 ">
+                        <div class="relative  overflow-hidden rounded-lg gap-4 space-y-4 ">
                             @if (!empty($imageNames) && count($imageNames) > 0)
                                 @foreach ($imageNames as $index => $img_konten)
                                     <div class="border border-slate-300 rounded-md p-4">
@@ -115,11 +109,6 @@
                             @endif
                         </div>
                     </div>
-                    <!-- Modal footer -->
-                    <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
-                        <button data-modal-hide="default-modal-detail-gambar" type="button"
-                            class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Oke</button>
-                    </div>
                 </div>
             </div>
         </div>
@@ -129,8 +118,7 @@
         <p class="poppins-regular text-black text-2xl pb-2 max-w-7xl">
             {{ $data->deskripsi }}
         </p>
-        <div
-            class="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-20 py-10">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-20 py-10">
             <div class="w-auto  xl:max-w-max space-y-2">
                 <p class="poppins-semibold text-2xl text-black underline">
                     Paket

@@ -31,7 +31,7 @@ class PengunjungController extends Controller
 
     public function kursus()
     {
-        $data_kursus = DataKursus::all();
+        $data_kursus = DataKursus::inRandomOrder()->get();
         foreach ($data_kursus as $item) {
             $item->deskripsi = \Illuminate\Support\Str::words($item->deskripsi, 22,);
         }

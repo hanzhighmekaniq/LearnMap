@@ -27,7 +27,7 @@ Route::delete('/admin/delete/{id}', [AdminDataKursusController::class, 'destroy'
 Route::get('/login', [LoginController::class, 'index'])->name('login'); // SHOW LOGIN
 
 // USER
-Route::get('/beranda', [PengunjungController::class, 'home'])->name('user.home'); // SHOW TAMPILAN AWAL
+Route::get('/', [PengunjungController::class, 'home'])->name('user.home'); // SHOW TAMPILAN AWAL
 Route::get('/kursus', [PengunjungController::class, 'kursus'])->name('user.kursus'); //SHOW TAMPILAN SELURUH KHURSUS
 Route::get('/peta', [PengunjungController::class, 'maps'])->name('user.peta'); //SHOW PETA SELURUH TITIK KURSUS
 Route::get('/kursus/{id}/rute', [PengunjungController::class, 'rute'])->name('user.rute'); //SHOW PETA SELURUH TITIK KURSUS

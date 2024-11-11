@@ -18,7 +18,7 @@ class AdminDataKursusController extends Controller
     public function dataKursus()
     {
         // Mengambil semua data kursus dari model DataKursus
-        $courses = DataKursus::all();
+        $courses = DataKursus::paginate(5);
 
         // Mengambil gambar untuk setiap course, jika ada
         foreach ($courses as $course) {
@@ -28,6 +28,7 @@ class AdminDataKursusController extends Controller
         // Mengirim data courses dengan gambar ke view
         return view('admin.dataKursusAdmin', ['courses' => $courses]);
     }
+
 
 
     public function create()

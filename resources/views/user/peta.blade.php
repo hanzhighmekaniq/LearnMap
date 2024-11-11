@@ -27,7 +27,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Inisialisasi peta dengan koordinat dan tingkat zoom
-            const map = L.map('map1').setView([-8.1675862,113.68492], 13); // Gunakan 'map1' untuk ID peta yang sesuai
+            const map = L.map('map1').setView([-7.7517397,112.1780461], 13); // Gunakan 'map1' untuk ID peta yang sesuai
 
             // Tambahkan lapisan ubin dari OpenStreetMap
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
