@@ -22,6 +22,6 @@ class DatabaseSeeder extends Seeder
             'password' => 'admin123',
         ]);
 
-        DataKursus::factory(10)->create();
+        // DataKursus::factory(10)->create();
     }
 }

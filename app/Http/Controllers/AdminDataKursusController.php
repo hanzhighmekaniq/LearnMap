@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\DataKursus; // Pastikan model diimport
+use Nette\Utils\Strings;
+use Illuminate\Http\Request;
+use PhpParser\Node\Stmt\TryCatch;
 use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use Nette\Utils\Strings;
 use PhpParser\Node\Expr\Cast\String_;
-use PhpParser\Node\Stmt\TryCatch;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
+use App\Models\DataKursus; // Pastikan model diimport
 
 class AdminDataKursusController extends Controller
 {
@@ -137,18 +138,42 @@ class AdminDataKursusController extends Controller
             $dataKursus->fasilitas = $request->input('fasilitas');
             $dataKursus->lokasi = $request->input('lokasi');
 
-            // Handle single image upload
+
             if ($request->hasFile('img')) {
-                $dataKursus->img = $request->file('img')->store('images', 'public');
+                // Hapus gambar lama jika ada
+                if ($dataKursus->img) {
+                    Storage::delete('public/' . $dataKursus->img);
+                }
+
+
+                // Simpan gambar baru
+                $imgPath = $request->file('img')->store('konten', 'public');
+                $dataKursus->img = $imgPath;
             }
 
-            // Handle multiple image uploads
+
             if ($request->hasFile('img_konten')) {
-                $images = [];
-                foreach ($request->file('img_konten') as $file) {
-                    $images[] = $file->store('images', 'public');
+                // Hapus gambar menu lama jika ada
+                if ($dataKursus->img_konten) {
+                    // Decode JSON untuk mendapatkan array path dari gambar lama
+                    $oldImages = json_decode($dataKursus->img_konten, true);
+                    foreach ($oldImages as $oldImage) {
+                        // Hapus setiap file lama dari penyimpanan
+                        Storage::delete('public/' . $oldImage);
+                    }
                 }
-                $dataKursus->img_konten = json_encode($images);
+
+                // Proses setiap file yang di-upload untuk gambar menu baru
+                $menuImages = [];
+                foreach ($request->file('img_konten') as $file) {
+                    // Simpan file di folder 'images/kuliner/detail' dalam disk 'public'
+                    $imgKontenPaths = $file->store('logo', 'public');
+                    // Menambahkan path ke array baru
+                    $menuImages[] = $imgKontenPaths;
+                }
+
+                // Simpan array path gambar menu baru ke database
+                $dataKursus->img_konten = json_encode($menuImages);
             }
 
             // Save updated record
