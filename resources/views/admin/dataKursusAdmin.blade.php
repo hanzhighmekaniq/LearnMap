@@ -8,6 +8,8 @@
                 <a class="bg-[#4F7F81] py-2 px-4 rounded-xl shadow-md shadow-gray-600 hover:bg-[#3F6A6B] text-white font-bold"
                     href="{{ route('admin.create') }}">Tambah Data</a>
             </div>
+
+            {{ $courses->links() }}
             <div class="relative overflow-x-auto sm:rounded-lg">
                 <table class="w-full text-sm text-left rtl:text-right  shadow-gray-600  text-gray-500">
                     <thead class="text-xs text-gray-700 uppercase  shadow-gray-600 bg-gray-50">

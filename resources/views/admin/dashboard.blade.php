@@ -10,12 +10,12 @@
 
             <!-- Bagian bawah menampilkan maksimal 6 gambar secara acak -->
             <div class="py-2">
-                <div class="grid grid-cols-5 gap-2">
+                <div class="grid grid-cols-3 lg:grid-cols-6 gap-2">
                     @if ($randomLandingPages->isNotEmpty())
                         @foreach ($randomLandingPages as $page)
                             <div
                                 class="relative group rounded-lg overflow-hidden shadow-md transition-transform transform hover:scale-105">
-                                <img src="{{ asset('storage/' . $page->img) }}" class="object-cover w-full h-full"
+                                <img src="{{ asset('storage/' . $page->img) }}" class="object-contain w-full h-24 lg:h-56"
                                     alt="">
                                 <div
                                     class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">

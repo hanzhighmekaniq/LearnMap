@@ -19,7 +19,7 @@ class AdminDataKursusController extends Controller
     public function dataKursus()
     {
         // Mengambil semua data kursus dari model DataKursus
-        $courses = DataKursus::paginate(5);
+        $courses = DataKursus::paginate(10);
 
         // Mengambil gambar untuk setiap course, jika ada
         foreach ($courses as $course) {
@@ -40,7 +40,6 @@ class AdminDataKursusController extends Controller
     public function store(Request $request)
     {
         try {
-            // Perbarui aturan validasi
             $validator = Validator::make($request->all(), [
                 'nama_kursus' => 'required',
                 'img' => 'required|file|mimes:jpeg,png,jpg|max:2048',
@@ -49,11 +48,28 @@ class AdminDataKursusController extends Controller
                 'metode' => 'required',
                 'fasilitas' => 'required',
                 'lokasi' => 'required',
-                'latitude' => 'nullable', // Ubah aturan validasi
-                'longitude' => 'nullable', // Ubah aturan validasi
-                'popular' => 'required', // Ubah aturan validasi
-                'img_konten.*' => 'required|file|mimes:jpeg,png,jpg|max:2048',
+                'latitude' => 'required', // Ubah menjadi wajib diisi
+                'longitude' => 'required', // Ubah menjadi wajib diisi
+                'popular' => 'required',
+                'img_konten.*' => 'nullable|file', // Gambar konten tetap opsional
+            ], [
+                'nama_kursus.required' => 'Nama kursus wajib diisi.',
+                'img.required' => 'Gambar utama wajib di-upload.',
+                'img.file' => 'File yang di-upload harus berupa gambar.',
+                'img.mimes' => 'Gambar harus berekstensi jpeg, png, atau jpg.',
+                'img.max' => 'Ukuran gambar tidak boleh lebih dari 2MB.',
+                'deskripsi.required' => 'Deskripsi wajib diisi.',
+                'paket.required' => 'Paket wajib diisi.',
+                'metode.required' => 'Metode wajib diisi.',
+                'fasilitas.required' => 'Fasilitas wajib diisi.',
+                'lokasi.required' => 'Lokasi wajib diisi.',
+                'latitude.required' => 'Latitude wajib diisi.', // Pesan error custom
+                'longitude.required' => 'Longitude wajib diisi.', // Pesan error custom
+                'popular.required' => 'Status popular wajib diisi.',
+                'img_konten.*.nullable' => 'Gambar konten bersifat opsional.',
+                'img_konten.*.file' => 'File yang di-upload harus berupa gambar.',
             ]);
+
 
             // Cek apakah validasi gagal
             if ($validator->fails()) {
@@ -109,21 +125,38 @@ class AdminDataKursusController extends Controller
 
     public function update(Request $request, $id)
     {
-        try {
-            $request->validate([
-                'nama_kursus' => 'required|string|max:255',
-                'deskripsi' => 'required|string',
-                'img' => 'nullable|image|max:2048',
-                'img_konten.*' => 'nullable|image|max:2048',
-                'latitude' => 'required|numeric',
-                'longitude' => 'nullable|numeric',
-                'popular' => 'required|string',
-                'paket' => 'nullable|string',
-                'metode' => 'nullable|string',
-                'fasilitas' => 'nullable|string',
-                'lokasi' => 'nullable|string',
-            ]);
+        // Validasi request
+        $request->validate([
+            'nama_kursus' => 'required|string|max:255',
+            'deskripsi' => 'required|string',
+            'img' => 'nullable|image|max:2048',
+            'img_konten.*' => 'nullable|image|max:2048',
+            'latitude' => 'required|numeric',
+            'longitude' => 'required|numeric',
+            'popular' => 'required|string',
+            'paket' => 'required|string',
+            'metode' => 'required|string',
+            'fasilitas' => 'required|string',
+            'lokasi' => 'required|string',
+        ], [
+            'nama_kursus.required' => 'Nama kursus wajib diisi.',
+            'nama_kursus.max' => 'Nama kursus tidak boleh lebih dari 255 karakter.',
+            'deskripsi.required' => 'Deskripsi wajib diisi.',
+            'img.image' => 'File yang di-upload harus berupa gambar.',
+            'img.max' => 'Ukuran gambar tidak boleh lebih dari 2MB.',
+            'latitude.required' => 'Latitude wajib diisi.',
+            'latitude.numeric' => 'Latitude harus berupa angka.',
+            'longitude.required' => 'Longitude wajib diisi.',
+            'longitude.numeric' => 'Longitude harus berupa angka.',
+            'popular.required' => 'Status popular wajib diisi.',
+            'paket.required' => 'Paket wajib diisi.',
+            'metode.required' => 'Metode wajib diisi.',
+            'fasilitas.required' => 'Fasilitas wajib diisi.',
+            'lokasi.required' => 'Lokasi wajib diisi.',
+        ]);
 
+
+        try {
             // Ambil record DataKursus berdasarkan ID-nya
             $dataKursus = DataKursus::findOrFail($id);
 
@@ -138,55 +171,46 @@ class AdminDataKursusController extends Controller
             $dataKursus->fasilitas = $request->input('fasilitas');
             $dataKursus->lokasi = $request->input('lokasi');
 
-
+            // Update gambar utama jika ada file baru
             if ($request->hasFile('img')) {
-                // Hapus gambar lama jika ada
                 if ($dataKursus->img) {
+                    // Hapus file lama
                     Storage::delete('public/' . $dataKursus->img);
                 }
-
-
                 // Simpan gambar baru
                 $imgPath = $request->file('img')->store('konten', 'public');
                 $dataKursus->img = $imgPath;
             }
 
-
+            // Update multiple file upload jika ada file baru
             if ($request->hasFile('img_konten')) {
-                // Hapus gambar menu lama jika ada
                 if ($dataKursus->img_konten) {
-                    // Decode JSON untuk mendapatkan array path dari gambar lama
                     $oldImages = json_decode($dataKursus->img_konten, true);
                     foreach ($oldImages as $oldImage) {
-                        // Hapus setiap file lama dari penyimpanan
                         Storage::delete('public/' . $oldImage);
                     }
                 }
 
-                // Proses setiap file yang di-upload untuk gambar menu baru
                 $menuImages = [];
                 foreach ($request->file('img_konten') as $file) {
-                    // Simpan file di folder 'images/kuliner/detail' dalam disk 'public'
                     $imgKontenPaths = $file->store('logo', 'public');
-                    // Menambahkan path ke array baru
                     $menuImages[] = $imgKontenPaths;
                 }
-
-                // Simpan array path gambar menu baru ke database
                 $dataKursus->img_konten = json_encode($menuImages);
             }
 
-            // Save updated record
+            // Simpan perubahan
             $dataKursus->save();
 
-            // Redirect with success message
+            // Redirect dengan pesan sukses
             return redirect()->route('admin.dataKursus')->with('success', 'Data berhasil diperbarui.');
         } catch (\Exception $e) {
-            dd($e->getMessage());
+            // Tangani error dan kirimkan pesan error
+            return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }
-        // Validasi request
-
     }
+
+
 
 
     public function destroy($id)

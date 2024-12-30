@@ -14,7 +14,7 @@ class AdminDashboardController extends Controller
 
         // Pastikan ada data sebelum mencoba mengambil item acak
         $randomLandingPage = $allLandingPages->isEmpty() ? null : $allLandingPages->random();
-        $randomLandingPages = $allLandingPages->isEmpty() ? collect() : $allLandingPages->random(min($allLandingPages->count(), 5));
+        $randomLandingPages = $allLandingPages->isEmpty() ? collect() : $allLandingPages->random(min($allLandingPages->count(), 6));
 
         return view('admin.dashboard', [ // Pastikan nama view sesuai dengan yang Anda gunakan
             'randomLandingPage' => $randomLandingPage,

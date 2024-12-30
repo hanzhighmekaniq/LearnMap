@@ -1,6 +1,6 @@
 <x-layout>
     <style>
-        #map1 { 
+        #map1 {
             max-width: 100%;
         }
     </style>
@@ -27,7 +27,8 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Inisialisasi peta dengan koordinat dan tingkat zoom
-            const map = L.map('map1').setView([-7.7517397,112.1780461], 13); // Gunakan 'map1' untuk ID peta yang sesuai
+            const map = L.map('map1').setView([-7.7517397, 112.1780461],
+                13); // Gunakan 'map1' untuk ID peta yang sesuai
 
             // Tambahkan lapisan ubin dari OpenStreetMap
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -38,9 +39,19 @@
             @foreach ($latilongti as $latilongti)
                 L.marker([{{ $latilongti->latitude }}, {{ $latilongti->longitude }}])
                     .addTo(map)
-                    .bindPopup('<a href="/kursus/{{ $latilongti->id }}/detail"><b>{{ $latilongti->nama_kursus }}</b><br>Location: {{ $latilongti->latitude }}, {{ $latilongti->longitude }}')
+                    .bindPopup(
+                        '<div class="h-auto w-full">' +
+                        '<img src="{{ asset('storage/' . $latilongti->img) }}" alt="" class="w-full h-20 object-contain">' +
+                        '</div>' +
+                        '<p>' +
+                        '{{ $latilongti->nama_kursus }} <br>' +
+                        
+                        '<a href="/kursus/{{ $latilongti->id }}/detail">Selengkapnya</a>'
+                    )
                     .openPopup();
             @endforeach
+
+
         });
     </script>
 </x-layout>

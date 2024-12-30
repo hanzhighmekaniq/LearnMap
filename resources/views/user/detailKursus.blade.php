@@ -8,7 +8,7 @@
     <div class="container flex justify-center items-center pb-16">
         <section id="gambarutama">
             <div class="h-auto w-full   ">
-                <img src=" {{ asset('storage/' . $data->img) }}" alt="" class="h-auto w-full">
+                <img src=" {{ asset('storage/' . $data->img) }}" alt="" class="h-[350px] sm:h-[400px] md:h-[450px] lg:h-[500px] xl:h-[  ] w-full">
             </div>
 
         </section>
@@ -19,7 +19,7 @@
         <a href="/kursus/{{ $data->id }}/rute" target="_blank"
             class="poppins-regular py-2 px-4 bg-[#4F7F81] text-white rounded-xl text-xl shadow-xl">Rute Terdekat</a>
         <button data-modal-target="default-modal-detail-gambar" data-modal-toggle="default-modal-detail-gambar"
-            class="poppins-regular py-2 px-4 bg-[#4F7F81] text-white rounded-xl text-xl shadow-xl">Detail</button>
+            class="poppins-regular py-2 px-4 bg-[#4F7F81] text-white rounded-xl text-xl shadow-xl">Foto Detail</button>
 
 
         <!-- Main modal -->

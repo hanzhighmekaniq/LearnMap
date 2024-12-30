@@ -1,7 +1,7 @@
 <x-adminlayout>
     <div class="container">
         <div class="py-10">
-            <div class="pb-4 flex">
+            <div class="pb-4 px-4 flex">
                 <a class="px-4 flex text-white text-lg justify-center items-center py-2 rounded-xl bg-[#4F7F81]"
                     href="{{ route('admin.dataKursus') }}">
                     <svg class="w-5 h-5 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -14,7 +14,7 @@
             <form action="{{ route('admin.update', $dataKursus->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT') <!-- Add this if you are updating an existing resource -->
-                <div class="grid gap-6 mb-6 md:grid-cols-2">
+                <div class="grid gap-6 mb-6 md:grid-cols-2 px-4">
 
                     <!-- Nama Kursus -->
                     <div class="grid gap-6 md:grid-cols-2">
@@ -28,18 +28,18 @@
                                 placeholder="Kampung Inggris LC - Language Center" required />
                         </div>
                         <div>
-                                <label for="countries"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pilih
-                                    Popular</label>
-                                <select id="countries" name="popular"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                    <option selected>{{ $dataKursus->popular }}</option>
-                                    @if ($dataKursus->popular === 'popular')
-                                        <option value="Tidak">Tidak</option>
-                                    @else
-                                        <option value="popular">Popular</option>
-                                    @endif
-                                </select>
+                            <label for="countries"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pilih
+                                Popular</label>
+                            <select id="countries" name="popular"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                <option selected>{{ $dataKursus->popular }}</option>
+                                @if ($dataKursus->popular === 'popular')
+                                    <option value="Tidak">Tidak</option>
+                                @else
+                                    <option value="popular">Popular</option>
+                                @endif
+                            </select>
                         </div>
                     </div>
 
@@ -184,8 +184,24 @@
                             placeholder="Write your thoughts here..."></trix-editor>
                     </div>
                 </div>
-                <button type="submit"
-                    class="text-white bg-[#4F7F81] hover:bg-[#3F6A6B] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Submit</button>
+                <div class="px-4 space-y-4">
+
+                    <button type="submit"
+                        class="text-white bg-[#4F7F81] hover:bg-[#3F6A6B] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Submit</button>
+
+                    @if ($errors->any())
+                        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4 mt-4">
+                            <strong>Oops! Ada beberapa kesalahan:</strong>
+                            <ul class="mt-2">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                </div>
+
+
             </form>
         </div>
     </div>
