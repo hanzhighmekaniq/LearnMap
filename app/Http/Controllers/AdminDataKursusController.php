@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DataKategori;
 use Nette\Utils\Strings;
 use Illuminate\Http\Request;
 use PhpParser\Node\Stmt\TryCatch;
@@ -19,7 +20,7 @@ class AdminDataKursusController extends Controller
     public function dataKursus()
     {
         // Mengambil semua data kursus dari model DataKursus
-        $courses = DataKursus::paginate(10);
+        $courses = DataKursus::with('kategoris')->paginate(10);
 
         // Mengambil gambar untuk setiap course, jika ada
         foreach ($courses as $course) {
@@ -34,7 +35,8 @@ class AdminDataKursusController extends Controller
 
     public function create()
     {
-        return view('admin.tambahDataKursusAdmin');
+        $kategori = DataKategori::all();
+        return view('admin.tambahDataKursusAdmin', compact('kategori'));
     }
 
     public function store(Request $request)
@@ -42,7 +44,8 @@ class AdminDataKursusController extends Controller
         try {
             $validator = Validator::make($request->all(), [
                 'nama_kursus' => 'required',
-                'img' => 'required|file|mimes:jpeg,png,jpg|max:2048',
+                'kategori_id' => 'required',
+                'img' => 'required|image',
                 'deskripsi' => 'required',
                 'paket' => 'required',
                 'metode' => 'required',
@@ -51,9 +54,10 @@ class AdminDataKursusController extends Controller
                 'latitude' => 'required', // Ubah menjadi wajib diisi
                 'longitude' => 'required', // Ubah menjadi wajib diisi
                 'popular' => 'required',
-                'img_konten.*' => 'nullable|file', // Gambar konten tetap opsional
+                'img_konten.*' => 'nullable|image', // Gambar konten tetap opsional
             ], [
                 'nama_kursus.required' => 'Nama kursus wajib diisi.',
+                'kategori_id.required' => 'Kategori kursus wajib diisi.',
                 'img.required' => 'Gambar utama wajib di-upload.',
                 'img.file' => 'File yang di-upload harus berupa gambar.',
                 'img.mimes' => 'Gambar harus berekstensi jpeg, png, atau jpg.',
@@ -90,6 +94,7 @@ class AdminDataKursusController extends Controller
             // Simpan data ke dalam database
             $result = DataKursus::create([
                 'nama_kursus' => $request->nama_kursus,
+                'kategori_id' => $request->kategori_id,
                 'img' => $imgPath,
                 'deskripsi' => $request->deskripsi,
                 'paket' => $request->paket,
@@ -103,7 +108,7 @@ class AdminDataKursusController extends Controller
             ]);
 
             // Redirect setelah berhasil
-            return redirect('/admin/data-kursus')->with('success', 'Data berhasil disimpan.');
+            return redirect('admin/data-kursus')->with('success', 'Data berhasil disimpan.');
         } catch (\Exception $e) {
             // Tangani kesalahan
             return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
@@ -114,13 +119,14 @@ class AdminDataKursusController extends Controller
     public function edit($id)
     {
         // Ambil record DataKursus berdasarkan ID-nya
+        $kategori = DataKategori::all();
         $dataKursus = DataKursus::findOrFail($id);
 
         // Decode field JSON untuk nama gambar jika ada
         $imageName = $dataKursus->img_konten ? json_decode($dataKursus->img_konten, true) : [];
 
         // Kirim data ke view
-        return view('admin.ubahDataKursusAdmin', compact('dataKursus', 'imageName'));
+        return view('admin.ubahDataKursusAdmin', compact('dataKursus', 'imageName', 'kategori'));
     }
 
     public function update(Request $request, $id)
@@ -128,9 +134,10 @@ class AdminDataKursusController extends Controller
         // Validasi request
         $request->validate([
             'nama_kursus' => 'required|string|max:255',
+            'kategori_id' => 'required',
             'deskripsi' => 'required|string',
-            'img' => 'nullable|image|max:2048',
-            'img_konten.*' => 'nullable|image|max:2048',
+            'img' => 'nullable|image',
+            'img_konten.*' => 'nullable|image',
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
             'popular' => 'required|string',
@@ -140,10 +147,10 @@ class AdminDataKursusController extends Controller
             'lokasi' => 'required|string',
         ], [
             'nama_kursus.required' => 'Nama kursus wajib diisi.',
+            'kategori_id.required' => 'Kategori kursus wajib diisi.',
             'nama_kursus.max' => 'Nama kursus tidak boleh lebih dari 255 karakter.',
             'deskripsi.required' => 'Deskripsi wajib diisi.',
             'img.image' => 'File yang di-upload harus berupa gambar.',
-            'img.max' => 'Ukuran gambar tidak boleh lebih dari 2MB.',
             'latitude.required' => 'Latitude wajib diisi.',
             'latitude.numeric' => 'Latitude harus berupa angka.',
             'longitude.required' => 'Longitude wajib diisi.',
@@ -162,6 +169,7 @@ class AdminDataKursusController extends Controller
 
             // Update fields
             $dataKursus->nama_kursus = $request->input('nama_kursus');
+            $dataKursus->kategori_id = $request->input('kategori_id');
             $dataKursus->deskripsi = $request->input('deskripsi');
             $dataKursus->latitude = $request->input('latitude');
             $dataKursus->longitude = $request->input('longitude');

@@ -25,6 +25,12 @@ return new class extends Migration
             $table->string('popular');
             $table->json('img_konten')->nullable();
             $table->timestamps();
+
+            $table->foreignId('kategori_id')
+                ->nullable() // Membuat kolom ini bisa NULL
+                ->constrained('kategori') // Nama tabel yang dijadikan referensi
+                ->onDelete('set null') // Aturan saat data dihapus
+                ->onUpdate('cascade'); // Aturan saat data diupdate
         });
     }
 

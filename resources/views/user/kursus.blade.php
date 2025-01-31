@@ -5,46 +5,54 @@
         </div>
     </div>
 
-    <div class="container">
-        <div class="flex justify-end py-4">
-            <div class="flex space-x-2">
-                <div class="flex">
-                    <div class="relative w-full">
-                        <input type="search" id="search-dropdown"
-                            class="block pr-14 pl-4 p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-s-lg rounded-e-lg focus:ring-blue-500 focus:border-blue-500"
-                            placeholder="Pencarian Nama Kursus" />
-                        <div
-                            class="absolute top-0 end-0 px-4 pt-3 pb-2.5 text-sm font-medium h-full text-white bg-[#4F7F81] rounded-e-lg border border-[#4F7F81]">
-                            <svg class="w-4 h-4 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                viewBox="0 0 20 20">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-                            </svg>
-                            <span class="sr-only">Search</span>
-                        </div>
-                    </div>
+    <div class="container pb-20">
+        <div class="flex justify-end space-x-2 py-4">
+            <form method="GET" action="{{ route('user.kursus') }}" class="flex space-x-2">
+                <!-- Dropdown Kategori -->
+                <select name="kategori" onchange="this.form.submit()"
+                    class="p-2 border border-gray-300 rounded-md text-gray-700 text-sm">
+                    <option value="">Semua Kategori</option>
+                    @foreach ($kategori as $item)
+                        <option value="{{ $item->id }}" {{ request('kategori') == $item->id ? 'selected' : '' }}>
+                            {{ $item->nama_kategori }}
+                        </option>
+                    @endforeach
+                </select>
+
+                <!-- Search Input -->
+                <div class="relative">
+                    <input type="text" name="search" id="search-dropdown"
+                        class="pr-14 pl-4 p-2.5 w-full text-sm text-gray-900 bg-gray-50 border border-gray-300 rounded-md"
+                        placeholder="Pencarian Nama Kursus" value="{{ request('search') }}" />
+                    <button type="submit"
+                        class="absolute top-0 end-0 px-4 h-full text-sm font-medium text-white bg-[#4F7F81] rounded-e-lg">
+                        🔍
+                    </button>
                 </div>
-            </div>
+            </form>
         </div>
 
-        <div id="kursus-container"
-            class="pb-20 m-auto grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8  justify-center items-center">
+
+        <div class="grid md:grid-cols-1 lg:grid-cols-3 justify-center items-center gap-4 !important">
             @foreach ($data_kursus as $kursus)
-                <div
-                    class="kursus-item w-full h-ful shadow-2xl rounded-lg transition ease-in-out delay-0 hover:-translate-y-1 hover:scale-100 duration-300">
+                <div class="kursus-item h-ful shadow-2xl rounded-lg ">
                     <div>
-                        <div href="#">
+                        <div>
                             <img class=" flex justify-center items-center w-full h-64 object-cover"
                                 src="{{ asset('storage/' . $kursus->img) }}" alt="" />
                         </div>
                         <div class="p-5 h-44">
-                            <a href="#">
+                            <div>
                                 <h5
-                                    class="nama-kursus mb-2 text-2xl poppins-regular font-extrabold tracking-tight text-gray-900">
+                                    class="nama-kursus mb-2 text-xl poppins-regular font-extrabold tracking-tight text-gray-900">
                                     {{ $kursus->nama_kursus }}
                                 </h5>
-                            </a>
-                            <p class="mb-3 font-normal poppins-regular text-gray-700">
+                                <h5
+                                    class="nama-kursus mb-2 text-sm poppins-regular font-extrabold tracking-tight text-gray-900">
+                                    {{ optional($kursus->kategoris)->nama_kategori ?? 'Kategori tidak tersedia' }}
+                                </h5>
+                            </div>
+                            <p class="mb-3 font-normal text-sm poppins-regular text-gray-700">
                                 {{ Str::words($kursus->deskripsi, 30, '...') }}
                             </p>
                         </div>
@@ -65,10 +73,9 @@
                 </div>
             @endforeach
         </div>
-
     </div>
 
-    <script>
+    {{-- <script>
         // Ambil elemen input dan container kursus
         const searchInput = document.getElementById('search-dropdown');
         const kursusContainer = document.getElementById('kursus-container');
@@ -90,5 +97,5 @@
                 }
             });
         });
-    </script>
+    </script> --}}
 </x-layout>

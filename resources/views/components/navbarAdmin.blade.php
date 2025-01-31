@@ -1,7 +1,7 @@
 <div class="bg-[#4F7F81]">
     <nav class="border-gray-200 container bg-[#4F7F81]">
         <div class="max-w-screen-2xl flex flex-wrap items-center justify-between mx-auto p-4">
-            <a href="{{ route('admin.home') }}" class="flex items-center">
+            <a href="{{ route('user.home') }}" class="flex items-center">
                 <img src="{{ asset('img/Rectangle 65.png') }}" class="h-14 object-cover w-14 lg:mw-20 lg:h-20"
                     alt="Flowbite Logo" />
                 <span
@@ -19,31 +19,73 @@
                         d="M1 1h15M1 7h15M1 13h15" />
                 </svg>
             </button>
-            <div class="hidden w-full md:block md:w-auto" id="navbar-solid-bg">
+            <div class="hidden w-full md:block md:w-auto py-4" id="navbar-solid-bg">
                 <ul
-                    class="flex flex-col font-medium mt-4 rounded-lg bg-white md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-transparent">
+                    class="flex flex-col py-2 md:px-4 items-center font-medium  rounded-lg bg-white md:space-x-8 space-y-2 md:space-y-0 md:flex-row md:mt-0 md:border-0 md:bg-transparent">
                     <li class="">
                         <a href="{{ route('admin.home') }}"
-                            class="{{ request()->is('admin/dashboard') ? 'bg-[#EBFEA1] md:bg-transparent md:text-white md:underline' : 'text-gray-900' }} block py-2 px-3 md:p-0  hover:bg-[#EBFEA1] rounded-lg md:hover:bg-transparent md:border-0 md:hover:text-white poppins-extrabold text-sm">
+                            class="{{ request()->is('admin/dashboard') ? 'bg-[#EBFEA1] md:bg-transparent md:text-white md:underline' : 'text-gray-900' }} block py-2 px-3 md:p-0 hover:bg-[#EBFEA1] rounded-lg md:hover:bg-transparent md:border-0 md:hover:text-white poppins-extrabold text-sm">
                             Dashboard
                         </a>
                     </li>
                     <li class="">
+                        <a href="{{ route('kategori.index') }}"
+                            class="{{ request()->is('admin/kategori') ? 'bg-[#EBFEA1] md:bg-transparent md:text-white md:underline' : 'text-gray-900' }} block py-2 px-3 md:p-0 hover:bg-[#EBFEA1] rounded-lg md:hover:bg-transparent md:border-0 md:hover:text-white poppins-extrabold text-sm">
+                            Kategori
+                        </a>
+                    </li>
+                    <li class="">
                         <a href="{{ route('admin.dataKursus') }}"
-                            class="{{ request()->is('admin/data-kursus', 'admin/create-data', 'admin/*/edit-kursus') ? 'bg-[#EBFEA1] md:bg-transparent md:text-white md:underline' : 'text-gray-900' }} block py-2 px-3 md:p-0  hover:bg-[#EBFEA1] md:hover:bg-transparent md:border-0 md:hover:text-white poppins-extrabold text-sm">
+                            class="{{ request()->is('admin/data-kursus', 'admin/create-data', 'admin/*/edit-kursus') ? 'bg-[#EBFEA1] md:bg-transparent md:text-white md:underline' : 'text-gray-900' }} block py-2 px-3 md:p-0 hover:bg-[#EBFEA1] md:hover:bg-transparent md:border-0 md:hover:text-white poppins-extrabold text-sm">
                             Data Kursus
                         </a>
                     </li>
                     <li class="">
-                        <div
-                            class="text-gray-900 block py-2 px-3 md:p-0 rounded-lg hover:bg-[#EBFEA1] md:hover:bg-transparent md:border-0 md:hover:text-white poppins-extrabold text-sm">
-                            <button type="button" data-modal-target="popup-modal" data-modal-toggle="popup-modal">
-                                Keluar
-                            </button>
-                        </div>
+                        <button type="button"
+                            class="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+                            id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown"
+                            data-dropdown-placement="bottom">
+                            <span class="sr-only">Open user menu</span>
+                            <img class="w-8 h-8 rounded-full"
+                                src="{{ Auth::user()->avatar ?: 'https://www.gravatar.com/avatar/' . md5(strtolower(trim(Auth::user()->email))) }}?d=identicon"
+                                alt="user photo">
+                        </button>
                     </li>
+
+                    <!-- Dropdown menu -->
+                    <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600"
+                        id="user-dropdown">
+                        <div class="px-4 py-3">
+                            <span class="block text-sm text-gray-900 dark:text-white">{{ Auth::user()->name }}</span>
+                            <span
+                                class="block text-sm text-gray-500 truncate dark:text-gray-400">{{ Auth::user()->email }}</span>
+                        </div>
+                        <ul class="py-2" aria-labelledby="user-menu-button">
+                            <li>
+                                <a href="{{ route('admin.home') }}">
+                                    <button type="submit"
+                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Dashboard</button>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('password.edit') }}">
+                                    <button type="submit"
+                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Setting</button>
+                                </a>
+                            </li>
+                            <li>
+                                <form action="{{ route('logout') }}" method="POST">
+                                    @csrf
+                                    <button type="submit"
+                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign
+                                        out</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
                 </ul>
             </div>
+
         </div>
     </nav>
 </div>

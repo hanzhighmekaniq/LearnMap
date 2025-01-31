@@ -6,6 +6,7 @@
                 <p>Holaa, Selamat Datang Di LearnMap</p>
             </div>
         </div>
+
     </div>
     <div class="flex m-auto justify-center items-center responsive-container">
         <img src="{{ asset('img/Rectangle 227.png') }}" class="w-full h-full" alt="">
@@ -22,7 +23,7 @@
                 </a>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 m-auto justify-center items-center">
+            <div class="grid grid-cols-1 md:grid-cols-1 xl:grid-cols-3 gap-8 m-auto justify-center items-center">
                 @if ($landingpage->isNotEmpty())
                     @foreach ($landingpage as $landingpage)
                         <div

@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class DataKursus extends Model
 {
@@ -12,6 +14,7 @@ class DataKursus extends Model
     protected $table = 'data_kursus';
 
     protected $fillable = [
+        'kategori_id',
         'nama_kursus',
         'img',
         'deskripsi',
@@ -26,4 +29,13 @@ class DataKursus extends Model
     ];
 
     public $timestamps = true;
+    
+    public function kategoris(): BelongsTo
+    {
+        return $this->belongsTo(DataKategori::class, 'kategori_id', 'id'); // Menentukan foreign key dan local key
+    }
+    public function ulasan(): HasMany
+    {
+        return $this->hasMany(DataUlasan::class, 'kursus_id', 'id'); // Menentukan foreign key dan local key
+    }
 }

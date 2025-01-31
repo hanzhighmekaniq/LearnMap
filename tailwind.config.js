@@ -14,7 +14,7 @@ export default {
                 sm: "0rem",
                 lg: "2rem",
                 xl: "3rem",
-                "2xl": "0rem",
+                "2xl": "4rem",
             },
             // Tambahkan opsi `center` untuk margin auto
             center: true,
