@@ -32,10 +32,11 @@
             </form>
         </div>
 
+        {{ $data_kursus->links() }}
 
-        <div class="grid md:grid-cols-1 lg:grid-cols-3 justify-center items-center gap-4 !important">
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 justify-center py-4 items-center gap-4 !important">
             @foreach ($data_kursus as $kursus)
-                <div class="kursus-item h-ful shadow-2xl rounded-lg ">
+                <div class="kursus-item max-w-xl h-ful mx-auto shadow-2xl rounded-lg ">
                     <div>
                         <div>
                             <img class=" flex justify-center items-center w-full h-64 object-cover"
@@ -73,6 +74,10 @@
                 </div>
             @endforeach
         </div>
+
+        {{ $data_kursus->links() }}
+
+
     </div>
 
     {{-- <script>

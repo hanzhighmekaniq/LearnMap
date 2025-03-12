@@ -13,6 +13,7 @@ use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AdminDataKursusController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
+use App\Http\Controllers\KunjunganController;
 
 Route::get('/login', [LoginController::class, 'index'])->name('login'); // Halaman login
 Route::post('/login', [LoginController::class, 'authenticate'])->name('login.process'); // Proses login
@@ -64,6 +65,8 @@ Route::get('/peta', [PengunjungController::class, 'maps'])->name('user.peta');
 Route::get('/kursus/{id}/rute', [PengunjungController::class, 'rute'])->name('user.rute');
 Route::get('/kursus/{id}/detail', [PengunjungController::class, 'detail'])->name('kursus.detail');
 Route::post('/store-ulasan', [PengunjungController::class, 'storeUlasann'])->name('storeUlasan');
+Route::post('/kursus/{id}/detail', [KunjunganController::class, 'visitCourse'])->name('kursus.visit');
+
 
 
 Route::middleware(['auth'])->group(function () {

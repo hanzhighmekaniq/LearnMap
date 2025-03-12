@@ -23,7 +23,7 @@
                                 required />
                         </div>
 
-                        <div>
+                        <div class="hidden">
                             <label for="popular" class="block mb-2 text-sm font-medium text-gray-900">Pilih
                                 Popular</label>
                             <select id="popular" name="popular"

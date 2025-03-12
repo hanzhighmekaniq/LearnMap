@@ -69,7 +69,7 @@
             <p>Deskripsi</p>
         </div>
         <div>
-            <p class="poppins-medium text-black text-lg pb-2" id="deskripsi-text">
+            <p class="poppins-regular text-black text-lg pb-2" id="deskripsi-text">
                 {{ Str::limit($data->deskripsi, 500, '...') }}
             </p>
             @if (strlen($data->deskripsi) > 500)
@@ -81,15 +81,15 @@
 
         <div class="grid grid-cols-1 gap-4 py-10">
             {{-- Bagian Paket --}}
-            <div class="w-auto xl:max-w-max space-y-2">
+            <div class="w-auto xl:max-w-max space-y-4">
                 <p class="poppins-semibold font-semibold text-2xl text-black underline">
                     Paket
                 </p>
-                <p class="poppins-medium text-lg text-black" id="paket-text">
+                <p class="pl-4 poppins-regular text-lg text-black" id="paket-text">
                     {!! htmlspecialchars_decode(Str::limit(strip_tags($data->paket, '<br><p><strong><em>'), 250, '...')) !!}
                 </p>
-                @if (strlen(strip_tags($data->paket)) > 250)
-                    <button id="toggle-paket" class="text-blue-500 hover:underline poppins-medium text-sm mt-2">
+                @if (strlen(strip_tags($data->paket)) > 200)
+                    <button id="toggle-paket" class="pl-4 text-blue-500 hover:underline poppins-medium text-sm mt-2">
                         Lihat Selengkapnya
                     </button>
                 @endif
@@ -97,30 +97,30 @@
 
 
             {{-- Bagian Metode Pembelajaran --}}
-            <div class="w-auto xl:max-w-max space-y-2">
+            <div class="w-auto xl:max-w-max space-y-4">
                 <p class="poppins-semibold font-semibold text-2xl text-black underline">
                     Metode Pembelajaran
                 </p>
-                <p class="poppins-medium text-lg text-black" id="metode-text">
+                <p class="pl-4 poppins-regular text-lg text-black" id="metode-text">
                     {!! htmlspecialchars_decode(Str::limit(strip_tags($data->metode, '<br><p><strong><em>'), 250, '...')) !!}
                 </p>
                 @if (strlen(strip_tags($data->metode)) > 250)
-                    <button id="toggle-metode" class="text-blue-500 hover:underline poppins-medium text-sm mt-2">
+                    <button id="toggle-metode" class="pl-4 text-blue-500 hover:underline poppins-medium text-sm mt-2">
                         Lihat Selengkapnya
                     </button>
                 @endif
             </div>
 
             {{-- Bagian Fasilitas --}}
-            <div class="w-auto xl:max-w-max space-y-2">
+            <div class="w-auto xl:max-w-max space-y-4">
                 <p class="poppins-semibold font-semibold text-2xl text-black underline">
                     Fasilitas
                 </p>
-                <p class="poppins-medium text-lg text-black" id="fasilitas-text">
+                <p class="pl-4 poppins-regular text-lg text-black" id="fasilitas-text">
                     {!! htmlspecialchars_decode(Str::limit(strip_tags($data->fasilitas, '<br><p><strong><em>'), 250, '...')) !!}
                 </p>
                 @if (strlen(strip_tags($data->fasilitas)) > 250)
-                    <button id="toggle-fasilitas" class="text-blue-500 hover:underline poppins-medium text-sm mt-2">
+                    <button id="toggle-fasilitas" class="pl-4 text-blue-500 hover:underline poppins-medium text-sm mt-2">
                         Lihat Selengkapnya
                     </button>
                 @endif
@@ -128,15 +128,15 @@
 
 
             {{-- Bagian Lokasi --}}
-            <div class="w-auto xl:max-w-max space-y-2">
+            <div class="w-auto xl:max-w-max space-y-4">
                 <p class="poppins-semibold font-semibold text-2xl text-black underline">
                     Lokasi
                 </p>
-                <p class="poppins-medium text-lg text-black" id="lokasi-text">
+                <p class="pl-4 poppins-regular text-lg text-black" id="lokasi-text">
                     {!! htmlspecialchars_decode(Str::limit(strip_tags($data->lokasi, '<br><p><strong><em>'), 250, '...')) !!}
                 </p>
                 @if (strlen(strip_tags($data->lokasi)) > 250)
-                    <button id="toggle-lokasi" class="text-blue-500 hover:underline poppins-medium text-sm mt-2">
+                    <button id="toggle-lokasi" class="pl-4 text-blue-500 hover:underline poppins-medium text-sm mt-2">
                         Lihat Selengkapnya
                     </button>
                 @endif

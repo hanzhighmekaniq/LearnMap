@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.js', 'public/css/font.css'])
     @include('components.navbar')
     @include('partials.font')
 

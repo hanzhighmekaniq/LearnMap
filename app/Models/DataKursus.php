@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Kunjungan;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -29,11 +30,17 @@ class DataKursus extends Model
     ];
 
     public $timestamps = true;
-    
+
     public function kategoris(): BelongsTo
     {
         return $this->belongsTo(DataKategori::class, 'kategori_id', 'id'); // Menentukan foreign key dan local key
     }
+    
+    public function kunjungan(): HasMany
+    {
+        return $this->hasMany(Kunjungan::class, 'kursus_id', 'id'); // Menentukan foreign key dan local key
+    }
+
     public function ulasan(): HasMany
     {
         return $this->hasMany(DataUlasan::class, 'kursus_id', 'id'); // Menentukan foreign key dan local key
