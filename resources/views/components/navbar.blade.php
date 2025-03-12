@@ -89,9 +89,9 @@
                         </div>
                     @else
                         <a href="{{ route('login') }}"
-                            class="{{ request()->is('peta') ? 'bg-[#EBFEA1] text-gray-800' : 'bg-white text-gray-900' }} 
-                           block py-2 px-3 rounded-2xl border-2 border-gray-300 hover:bg-[#EBFEA1] 
-                           hover:text-gray-800 hover:border-gray-500 transition-all duration-200 md:inline-block 
+                            class="{{ request()->is('peta') ? 'bg-[#EBFEA1] text-gray-800' : 'bg-white text-gray-900' }}
+                           block py-2 px-3 rounded-2xl border-2 border-gray-300 hover:bg-[#EBFEA1]
+                           hover:text-gray-800 hover:border-gray-500 transition-all duration-200 md:inline-block
                            poppins-extrabold text-sm">
                             Login
                         </a>

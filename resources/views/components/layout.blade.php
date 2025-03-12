@@ -5,10 +5,10 @@
     @vite(['resources/css/app.css', 'resources/js/app.js', 'public/css/font.css'])
     @include('components.navbar')
     @include('partials.font')
-
+    @include('partials.head')
 </head>
 
-<body>
+<body class="">
     @if (session('success'))
         <div
             class="fixed top-4 left-1/2 transform -translate-x-1/2 p-4 text-sm text-green-700 bg-green-100 rounded-lg shadow-lg z-50">
@@ -24,6 +24,7 @@
     @endif
 
 
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <script src="../path/to/flowbite/dist/flowbite.min.js"></script>
     {{ $slot }}

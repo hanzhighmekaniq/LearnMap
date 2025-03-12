@@ -10,7 +10,7 @@ export default {
     theme: {
         container: {
             padding: {
-                DEFAULT: "0rem",
+                DEFAULT: "1rem",
                 sm: "0rem",
                 lg: "2rem",
                 xl: "3rem",

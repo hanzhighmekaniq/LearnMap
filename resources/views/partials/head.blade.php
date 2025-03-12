@@ -3,7 +3,8 @@
 
 <!-- CSS Aplikasi -->
 @vite(['resources/css/app.css', 'resources/js/app.js'])
-
+<script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+{{-- <link href="{{ mix('css/app.css') }}" rel="stylesheet"> --}}
 
 <!-- Viewport untuk Responsif -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
