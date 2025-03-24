@@ -1,11 +1,4 @@
 <x-layout>
-    <div class="py-10 bg-white ">
-        <div class="bg-[#EBFEA1] container poppins-extrabold m-auto flex items-center justify-center p-2">
-            <p>Halaman ini berisi tentang kursus di Pare! </p>
-        </div>
-    </div>
-
-
     @if (session('error'))
         <div
             class="fixed top-5 left-1/2 transform -translate-x-1/2 bg-red-500 text-white px-6 py-3 rounded-md shadow-lg z-50">
@@ -15,27 +8,47 @@
     @error('rating')
         <div
             class="fixed top-5 left-1/2 transform -translate-x-1/2 bg-red-500 text-white px-6 py-3 rounded-md shadow-lg z-50">
-            {{ $message }}</div>
+            {{ $message }}
+        </div>
     @enderror
-    <div class="container flex justify-center items-center pb-16">
-        <section id="gambarutama">
-            <div class="h-auto w-full   ">
-                <img src=" {{ asset('storage/' . $data->img) }}" alt=""
-                    class="h-[350px] sm:h-[400px] md:h-[450px] lg:h-[500px] xl:h-[  ] w-full">
-            </div>
 
-        </section>
+    <div class="flex justify-center items-center pb-16 p-4">
+        <div class="h-auto w-full relative">
+            <img src="{{ asset('storage/' . $data->img) }}" alt="" class="aspect-[4/2] w-full object-cover rounded-2xl">
+            <figcaption class="container w-full">
+
+                <div class="absolute container bottom-8 left-1/2 transform -translate-x-1/2 space-y-10 text-center">
+                    <p class="poppins-bold text-start text-6xl xl:text-8xl text-white pr-16 w-1/2">
+                        {{ $data->nama_kursus }}
+                    </p>
+
+                    <div class="flex justify-start space-x-4">
+                        <a href="/kursus/{{ $data->id }}/rute" target="_blank"
+                            class="poppins-medium py-3 px-8 bg-[#4F7F81] text-white rounded-xl text-sm shadow-xl">Rute
+                            Terdekat</a>
+                        <button data-modal-target="default-modal-detail-gambar"
+                            data-modal-toggle="default-modal-detail-gambar"
+                            class="poppins-medium py-3 px-8 bg-[#4F7F81] text-white rounded-xl text-sm shadow-xl">Foto
+                            Detail</button>
+                    </div>
+                    <div class="flex justify-between w-full text-white">
+                        <button class="px-20 py-3 poppins-regular bg-gradient-to-tr from-[#60BC9D] to-[#12372A] rounded-3xl">Deskripsi</button>
+                        <button class="px-20 py-3 poppins-regular bg-gradient-to-tr from-[#60BC9D] to-[#12372A] rounded-3xl">Paket</button>
+                        <button class="px-20 py-3 poppins-regular bg-gradient-to-tr from-[#60BC9D] to-[#12372A] rounded-3xl">Metode</button>
+                        <button class="px-20 py-3 poppins-regular bg-gradient-to-tr from-[#60BC9D] to-[#12372A] rounded-3xl">Fasilitas</button>
+                        <button class="px-20 py-3 poppins-regular bg-gradient-to-tr from-[#60BC9D] to-[#12372A] rounded-3xl">Lokasi</button>
+                    </div>
+                </div>
+        </div>
+    </div>
     </div>
 
     <div class="container">
-        <p class="poppins-medium font-semibold text-3xl xl:text-4xl text-black">{{ $data->nama_kursus }}</p>
+
         <p class="poppins-medium font-semibold text-sm xl:text-xl text-black pb-4">
             ({{ optional($data->kategoris)->nama_kategori ?? 'Kategori tidak tersedia' }}
             )</p>
-        <a href="/kursus/{{ $data->id }}/rute" target="_blank"
-            class="poppins-medium py-2 px-4 bg-[#4F7F81] text-white rounded-xl text-sm shadow-xl">Rute Terdekat</a>
-        <button data-modal-target="default-modal-detail-gambar" data-modal-toggle="default-modal-detail-gambar"
-            class="poppins-medium py-2 px-4 bg-[#4F7F81] text-white rounded-xl text-sm shadow-xl">Foto Detail</button>
+
 
 
         <!-- Main modal -->
@@ -48,8 +61,8 @@
                             @if (!empty($imageNames) && count($imageNames) > 0)
                                 @foreach ($imageNames as $index => $img_konten)
                                     <div class="border border-slate-300 rounded-md p-4">
-                                        <img src="{{ asset('storage/' . $img_konten) }}"
-                                            class="w-full h-auto object-contain" alt="Image {{ $index + 1 }}">
+                                        <img src="{{ asset('storage/' . $img_konten) }}" class="w-full h-auto object-contain"
+                                            alt="Image {{ $index + 1 }}">
                                     </div>
                                 @endforeach
                             @else
@@ -98,7 +111,7 @@
 
             {{-- Bagian Metode Pembelajaran --}}
             <div class="w-auto xl:max-w-max space-y-4">
-                <p class="poppins-semibold font-semibold text-2xl text-black underline">
+                <p class="poppins-semibold text-2xl text-black underline">
                     Metode Pembelajaran
                 </p>
                 <p class="pl-4 poppins-regular text-lg text-black" id="metode-text">
@@ -144,7 +157,7 @@
         </div>
 
         <script>
-            document.addEventListener('DOMContentLoaded', function() {
+            document.addEventListener('DOMContentLoaded', function () {
                 // Fungsi reusable untuk mengatur toggle teks
                 function toggleText(elementId, buttonId, fullText) {
                     const textElement = document.getElementById(elementId);
@@ -152,7 +165,7 @@
 
                     if (toggleButton) {
                         const shortText = textElement.innerHTML; // Teks pendek yang sudah dirender
-                        toggleButton.addEventListener('click', function() {
+                        toggleButton.addEventListener('click', function () {
                             if (textElement.innerHTML === shortText) {
                                 // Tampilkan teks penuh
                                 textElement.innerHTML = fullText;
@@ -193,7 +206,7 @@
                                 <span class="text-sm pl-4">Rata-rata: {{ round($averageRating, 1) }} / 5</span>
                             </div>
                             <div class=" md:ml-4">
-                                <p class="poppins-medium font-semibold text-sm xl:text-xl text-black">
+                                <p class="poppins-medium poppins-regular text-sm xl:text-xl text-black">
                                     (Total: {{ $totalRatings }} ulasan)
                                 </p>
                             </div>
@@ -263,11 +276,9 @@
                                 <div class="flex items-center space-x-2" id="rating-stars">
                                     @for ($i = 1; $i <= 5; $i++)
                                         <label class="cursor-pointer">
-                                            <input type="radio" name="rating" value="{{ $i }}"
-                                                class="hidden" />
+                                            <input type="radio" name="rating" value="{{ $i }}" class="hidden" />
                                             <svg class="w-6 h-6 text-gray-300 hover:text-yellow-400 transition-colors duration-200"
-                                                xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                                                viewBox="0 0 22 20">
+                                                xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
                                                 <path
                                                     d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
                                             </svg>
@@ -312,8 +323,8 @@
                 @endauth
 
                 @guest
-                    <p class="text-sm text-gray-500">
-                        Anda harus <a href="{{ route('login') }}" class="text-blue-600 hover:underline">login</a> untuk
+                    <p class="text-sm poppins-regular text-gray-500">
+                        Anda harus <a href="{{ route('login') }}" class="text-green-800 poppins-semibold hover:underline">login</a> untuk
                         memberikan ulasan.
                     </p>
                 @endguest
@@ -321,9 +332,9 @@
 
 
                 <!-- Community Guidelines -->
-                <p class="ms-auto text-xs text-gray-500">
+                <p class="ms-auto text-xs poppins-regular text-gray-500">
                     Remember, contributions to this topic should follow our
-                    <a href="#" class="text-blue-600 hover:underline">Community Guidelines</a>.
+                    <a href="#" class="text-green-800 poppins-semibold hover:underline">Community Guidelines</a>.
                 </p>
             </div>
 

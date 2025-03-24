@@ -1,99 +1,147 @@
 <x-layout>
-    <div class="container">
+    <div class="bg-gray-100">
 
-        <div class="py-10 bg-white ">
-            <div class="bg-[#EBFEA1] poppins-extrabold m-auto flex items-center justify-center p-2">
-                <p>Holaa, Selamat Datang Di LearnMap</p>
+        <!-- Hero Section -->
+        <div class="relative">
+            <!-- Gambar -->
+            <img alt="LearnMap Hero Image" class="w-full object-cover" src="{{ asset('img/bg-home.jpg') }}" />
+
+            <!-- Overlay Teks -->
+            <div class="absolute inset-0 flex items-center justify-center pl-8">
+                <div class="text-white">
+                    <div>
+                        <h1 class="text-9xl font-bold mb-4 text-center barlow-condensed-semibold">
+                            PARE EDUCATION <br> ENGLISH LANGUAGE
+                        </h1>
+                        <!-- <p class="text-lg mb-6">
+                            Belajar bahasa Inggris dengan metode menarik dan akses mudah di LearnMap.
+                        </p> -->
+                    </div>
+                    <div class="flex justify-center">
+
+                        <a class=" text-white px-6 py-3 rounded-md bg-gradient-to-tr from-[#60BC9D] to-[#12372A]" href="{{route('user.kursus')}}">
+                            Jelajahi
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
 
-    </div>
-    <div class="flex m-auto justify-center items-center responsive-container">
-        <img src="{{ asset('img/Rectangle 227.png') }}" class="w-full h-full" alt="">
-    </div>
-    <div class="pt-8 bg-[#86A7A8]  ">
-        <div class="container pb-20">
+        <!-- About Section -->
 
-            <div class="flex justify-between items-center pb-4 ">
-                <p class="text-black poppins-semibold text-xl">
-                    Kursus Populer
-                </p>
-                <a href="/kursus" class="py-1 px-4 rounded-full bg-white font-bold text-lg ">
-                    Lihat Semua Kursus
-                </a>
-            </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-1 xl:grid-cols-3 gap-8 m-auto justify-center items-center">
-                @if ($landingpage->isNotEmpty())
-                    @foreach ($landingpage as $landingpage)
-                        <div
-                            class="w-full h-full bg-white border border-gray-200 rounded-lg transition ease-in-out delay-0 hover:-translate-y-1 hover:scale-100  duration-300">
-                            <div class="">
-                                <a href="#">
-                                    <img class="rounded-lg m-auto flex justify-center items-center w-full h-72 object-cover"
-                                        src="{{ asset('storage/' . $landingpage->img) }}" alt="" />
-                                </a>
-                                <div class="p-5 h-44">
-                                    <a href="#">
-                                        <h5
-                                            class="mb-2 text-2xl poppins-regular font-extrabold  tracking-tight text-gray-900  ">
-                                            {{ $landingpage->nama_kursus }}</h5>
-                                    </a>
-                                    <p class="mb-3 font-normal poppins-regular text-gray-700">
-                                        {{ Str::words($landingpage->deskripsi, 30, '...') }}
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="flex items-end justify-end bg-white rounded-b-lg ">
-                                <div class="mb-4 mr-4 ">
-                                    <a href="/kursus/{{ $landingpage->id }}/detail"
-                                        class="inline-flex items-center px-6 py-2 text-sm font-extrabold text-black ring-2 ring-black rounded-full hover:text-white hover:bg-[#4F7F81] hover:ring-[#4F7F81] focus:ring-4 focus:outline-none focus:ring-blue-300">
-                                        Lihat
-                                        <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true"
-                                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                                stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
-                                        </svg>
-                                    </a>
-                                </div>
-                            </div>
+        <!-- Popular Courses Section -->
+        <div class="container mx-auto px-4 py-12">
+            <div class=" py-12">
+                <div class="flex ">
+                    <div class="space-y-4">
+                        <h2 class="text-5xl barlow-condensed-semibold text-green-800 font-bold ">
+                            TENTANG KAMI
+                        </h2>
+                        <h2 class="text-start poppins-regular mb-12 text-xl text-gray-600">
 
-                        </div>
-                    @endforeach
-                @else
-                    <div class="py-10 flex col-span-3">
-                        <div class="bg-[#EBFEA1] w-full poppins-extrabold m-auto flex items-center justify-center p-2">
-                            <p>Tidak Tersedia Kursus</p>
+                            LearnMap adalah sebuah aplikasi website Sistem Informasi Geografis (SIG) yang dirancang khusus
+                            untuk memudahkan Anda menemukan tempat bimbingan belajar bahasa Inggris terbaik di Kecamatan Pare, 
+                            Kabupaten Kediri. Kami menyediakan berbagai pilihan kursus berkualitas tinggi dengan tutor berpengalaman, 
+                            metode pembelajaran yang interaktif dan menarik, serta akses yang mudah dan cepat melalui platform digital 
+                            kami. Dengan LearnMap, Anda dapat menjelajahi informasi lengkap tentang lokasi, program, dan fasilitas 
+                            bimbingan belajar, sehingga membantu Anda meningkatkan keterampilan bahasa Inggris secara efektif dan 
+                            mewujudkan mimpi Anda untuk menguasai bahasa internasional ini dengan lebih percaya diri.
+                        </h2>
+                        <div class="flex ">
+
+                            <a class="poppins-regular bg-gradient-to-tr from-[#60BC9D] to-[#12372A] text-white px-6 py-3 rounded-md"
+                                href="">
+                                Pelajari Lebih Lanjut
+                            </a>
                         </div>
                     </div>
-                @endif
-
-
-
-
-
+                    <img alt="About LearnMap" class="w-auto h-128 object-contain "
+                        src="{{ asset('img/tentang kami2.jpg') }}" />
+                </div>
             </div>
-        </div>
-    </div>
-    <div class="container py-16">
-        <p class="text-xl poppins-semibold  ">Tentang Kami</p>
-        <div class="grid xl:grid-cols-2 grid-cols-1  ">
-            <div class="text-xl poppins-semibold">
-                <p class="py-4">
-                    Tingkatkan Kemampuan Bahasa Inggris Anda dengan LearnMap!
+
+            <!-- PETA -->
+            <div id="" class="container px-4 mt-10 relative z-[1] ">
+                <div class="mb-4 flex justify-between">
+                    <!-- Section Title -->
+                    <div>
+                        <p class="text-5xl font-bold text-start mb-4 barlow-condensed-semibold text-green-800">PERSEBARAN KURSUS</p>
+                        <h5 class="text-start poppins-regular mb-12 text-xl text-gray-600">Berikut adalah persebaran seluruh wisata saat ini
+                        </h5>
+                        <div class="p-20 " id="map"></div>
+                    </div>
+                </div>
+
+
+                <style>
+                    #map {
+                        width: 100%;
+                        height: 400px;
+                        /* Bisa disesuaikan */
+                        border-radius: 10px;
+                    }
+                </style>
+                <!-- LEAFLET JS -->
+                <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+                    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        // Pastikan elemen "map" ada di dalam HTML
+                        var map = L.map('map').setView([51.505, -0.09], 13);
+
+                        // Tambahkan tile layer dari OpenStreetMap
+                        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                        }).addTo(map);
+
+                        // Tambahkan marker
+                        L.marker([51.5, -0.09]).addTo(map)
+                            .bindPopup('<b>Ini Popup</b><br>Anda bisa menyesuaikan teks di sini.')
+                            .openPopup();
+                    });
+                </script>
+
+
+                <h2 class="text-5xl font-bold text-start mb-4 barlow-condensed-semibold text-green-800">
+                    KURSUS POPULER
+                </h2>
+                <p class="text-start poppins-regular mb-12 text-xl text-gray-600">
+                    Pilih kursus yang sesuai dengan kebutuhan Anda
                 </p>
-                <p>
-                    Selamat datang di LearnMap, aplikasi website Sistem Informasi Geografis bimbingan belajar bahasa
-                    Inggris di Kecamatan Pare, yang didirikan dengan semangat memberdayakan individu melalui
-                    pengetahuan. Kami menyediakan berbagai kursus berkualitas tinggi, metode belajar menarik, dan
-                    akses mudah untuk membantu Anda meningkatkan keterampilan dan mencapai mimpi. Mulailah
-                    perjalanan Anda untuk menguasai bahasa Inggris
-                </p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    @if ($landingpage->isNotEmpty())
+                        @foreach ($landingpage as $landingpage)
+                            <div
+                                class="bg-white rounded-lg shadow-md overflow-hidden transition ease-in-out delay-0 hover:-translate-y-1 hover:scale-100 duration-300">
+                                <a href="#">
+                                    <img class="w-full h-48 object-cover" src="{{ asset('storage/' . $landingpage->img) }}"
+                                        alt="{{ $landingpage->nama_kursus }}" />
+                                </a>
+                                <div class="p-4">
+                                    <h3 class="text-xl font-semibold poppins-bold uppercase text-green-800">
+                                        {{ $landingpage->nama_kursus }}
+                                    </h3>
+                                    <p class="mt-2 text-gray-700 poppins-regular text-gray-600">
+                                        {{ Str::words($landingpage->deskripsi, 20, '...') }}
+                                    </p>
+                                    <a class="poppins-regular mt-4 inline-block bg-gradient-to-tr from-[#60BC9D] to-[#12372A] text-white px-4 py-2 rounded-md"
+                                        href="/kursus/{{ $landingpage->id }}/detail">
+                                        Lihat Detail
+                                    </a>
+                                </div>
+                            </div>
+                        @endforeach
+                    @else
+                        <div
+                            class="poppins-regular text-graycol-span-3 py-10 bg-[#EBFEA1] poppins-extrabold flex items-center justify-center p-2">
+                            <p>Tidak Tersedia Kursus</p>
+                        </div>
+                    @endif
+                </div>
             </div>
-            <div class="flex items-center justify-center">
-                <img src="{{ asset('img/imgcewe.png') }}" alt="">
-            </div>
-        </div>
-    </div>
 
+
+        </div>
 </x-layout>

@@ -1,29 +1,27 @@
-@include('partials.head')
-@include('partials.font')
-
-<div class="bg-[#4F7F81]">
-    <nav class="border-gray-200 container bg-[#4F7F81] ">
-        <div class="max-w-screen-2xl  flex flex-wrap items-center justify-between mx-auto p-4">
-            <a href="/" class="flex items-center">
-                <img src="{{ asset('img/Rectangle 65.png') }}" class="h-20 object-cover w-20" alt="Flowbite Logo" />
-                <span
-                    class="self-center text-4xl text-white font-semibold whitespace-nowrap pt-4 aclonica-regular">LearnMap</span>
-            </a>
-        </div>
-    </nav>
-</div>
-
-<body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet"/>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
     @if (session('success'))
-        <div
-            class="fixed top-5 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-6 py-3 rounded-md shadow-lg z-50">
+        <div class="fixed top-5 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-6 py-3 rounded-md shadow-lg z-50">
             {{ session('success') }}
         </div>
     @endif
 
     @if ($errors->any())
-        <div
-            class="fixed top-5 left-1/2 transform -translate-x-1/2 bg-red-500 text-white px-6 py-3 rounded-md shadow-lg z-50">
+        <div class="fixed top-5 left-1/2 transform -translate-x-1/2 bg-red-500 text-white px-6 py-3 rounded-md shadow-lg z-50">
             <ul>
                 @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>
@@ -32,47 +30,45 @@
         </div>
     @endif
 
-    <div class="container py-10 px-8 lg:px-0">
-        <div class="grid lg:grid-cols-2 grid-cols-1">
-            <div class="hidden lg:block justify-center items-center">
-                <img src="{{ asset('img/login.png') }}" alt="">
-            </div>
-            <div class="border border-slate-500">
-                <p class="p-8 flex justify-center font-semibold items-center poppins-semibold text-4xl">Login</p>
-                <form class="px-8 mx-auto" method="POST">
-                    @csrf
-                    <div class="mb-5">
-                        <label for="email" class="block mb-2 text-sm font-medium text-gray-900 ">Your email</label>
-                        <input type="email" id="email" name="email"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                            placeholder="email@gmail.com" required />
-                    </div>
-                    <div class="mb-5">
-                        <label for="password" class="block mb-2 text-sm font-medium text-gray-900 ">Your
-                            password</label>
-                        <input type="password" id="password" name="password"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                            required placeholder="********" />
-                    </div>
-                    <div class="flex items-ded justify-end mb-5">
-
-
-                        <!-- Lupa Password -->
-                        <a href="{{ route('password.forget') }}"
-                            class="text-blue-600 hover:text-blue-800 text-sm font-medium">Forgot password?</a>
-                    </div>
-                    <button type="submit"
-                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Log In</button>
-                </form>
-                <!-- Tombol Register -->
-                <div class="text-center mt-4">
-                    <p class="text-sm text-gray-600">Don't have an account?</p>
-                    <a href="{{ route('register.index') }}"
-                        class="text-blue-600 hover:text-blue-800 font-semibold">Register here</a>
+    <div class="flex min-h-screen">
+        <!-- Left Side -->
+        <div class="w-full lg:w-1/2 flex flex-col justify-center items-center bg-white p-8">
+            <div class="w-full max-w-md">
+                <div class="mb-8">
+                    <!--
+                    <a href="/" class="flex items-center">
+                        <img src="{{ asset('img/Rectangle 65.png') }}" class="h-20 object-cover w-20" alt="Logo"/>
+                        <span class="self-center text-2xl text-[#4F7F81] font-semibold whitespace-nowrap pt-4 aclonica-regular">LearnMap</span>
+                    </a> -->
+                    <h1 class="text-5xl text-green-800 barlow-condensed-semibold mt-4">LOGIN</h1>
                 </div>
-
+                <form method="POST">
+                    @csrf
+                    <div class="mb-4">
+                        <label class="block text-sm poppins-regular mb-1" for="email">Email*</label>
+                        <input class="w-full border border-gray-300 rounded-lg py-2 px-3" id="email" name="email" placeholder="Enter your email" type="email" required/>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm poppins-regular mb-1" for="password">Password*</label>
+                        <input class="w-full border border-gray-300 rounded-lg py-2 px-3" id="password" name="password" placeholder="Enter your password" type="password" required/>
+                        <a href="{{ route('password.forget') }}" class="text-sm text-green-800 poppins-regular mt-2 inline-block">Forgot password?</a>
+                    </div>
+                    <button class="w-full bg-gradient-to-tr from-[#60BC9D] to-[#12372A] text-white rounded-lg py-2 poppins-regular" type="submit">Log In</button>
+                </form>
+                <p class="mt-4 poppins-regula text-sm text-gray-500">
+                    Don't have an account?
+                    <a href="{{ route('register.index') }}" class="text-black poppins-regular">Register here</a>
+                </p>
+            </div>
+        </div>
+        <!-- Right Side -->
+        <div class="hidden lg:flex lg:w-1/2 flex items-center justify-center bg-cover bg-center relative" style="background-image: url('{{ asset('img/bg-login.jpg') }}'); background-size: object-contain;">
+            <div class="absolute inset-0  opacity-25"></div>
+            <div class="relative z-10 p-8">
+                <h2 class="text-5xl barlow-condensed-semibold text-green-800 mb-4">MARI TEMUKAN KURSUS IMPIANMU BERSAMA LEARN MAP.</h2>
+                <p class="text-black poppins-regular ">Jelajahi kursus berkualitas bersama Learn Map, sekarang juga. Temukan berbagai pilihan kursus yang dirancang untuk meningkatkan keterampilan dan pengetahuanmu.</p>
             </div>
         </div>
     </div>
-
 </body>
+</html>

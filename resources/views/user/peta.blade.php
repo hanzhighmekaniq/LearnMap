@@ -6,11 +6,12 @@
     </style>
     <div class="container flex flex-col">
         <div class="py-10 bg-white">
+            <!--
             <div class="bg-[#EBFEA1] poppins-extrabold m-auto flex items-center justify-center p-2">
                 <p>Halaman ini berisi tentang kursus di Pare!</p>
-            </div>
+            </div> -->
         </div>
-        <div class="pb-10">
+        <div class="pb-10"> 
             <!-- Peta Leaflet -->
             <div id="map1"
                 class="w-full h-56 sm:h-64 md:h-96 lg:h-[500px] xl:h-[650px] max-w-4xl rounded-lg shadow-lg"></div>
@@ -53,5 +54,6 @@
 
 
         });
+        
     </script>
 </x-layout>

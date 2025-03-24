@@ -4,7 +4,7 @@
             <!-- Bagian atas menampilkan satu gambar secara acak -->
             <div class="relative">
                 <div class="flex m-auto justify-center items-center responsive-container">
-                    <img src="{{ asset('img/Rectangle 227.png') }}" class="w-full h-full" alt="">
+                    <img src="{{ asset('img/bg-home.jpg') }}" class="w-full h-full" alt="">
                 </div>
             </div>
 

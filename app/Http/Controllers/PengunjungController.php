@@ -28,8 +28,10 @@ class PengunjungController extends Controller
             $item->deskripsi = \Illuminate\Support\Str::words($item->deskripsi, 22, '...');
         }
 
+        $peta = DataKursus::with('kategoris')->get();
+
         // Kembalikan view dengan data yang sudah diproses
-        return view('user.home', compact('landingpage'));
+        return view('user.home', compact('landingpage','peta'));
     }
 
 

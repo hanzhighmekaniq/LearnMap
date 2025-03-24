@@ -5,14 +5,14 @@
 
 
             <div class="flex justify-end items-center pb-4 ">
-                <a class="bg-[#4F7F81] py-2 px-4 rounded-xl shadow-md shadow-gray-600 hover:bg-[#3F6A6B] text-white text-xs font-bold"
+                <a class="bg-gradient-to-tr from-[#60BC9D] to-[#12372A] py-2 px-4 rounded-xl shadow-md shadow-gray-600 hover:bg-[#3F6A6B] text-white text-5x1 poppins-regular"
                     href="{{ route('admin.create') }}">Tambah Data</a>
             </div>
 
             {{ $courses->links() }}
             <div class="relative overflow-x-auto sm:rounded-lg">
                 <table class="w-full text-sm text-right rtl:text-right shadow-gray-600 text-gray-500">
-                    <thead class="text-xs text-gray-700 uppercase shadow-gray-600 bg-gray-50">
+                    <thead class="text-6x1 poppins-regular text-gray-700 uppercase shadow-gray-600 bg-gray-50">
                         <tr>
                             <th scope="col" class=" py-3 px-4 text-end">No</th>
                             <th scope="col" class=" py-3 px-4 text-end">Nama Kursus</th>
@@ -27,7 +27,7 @@
                     <tbody class="shadow-gray-600">
                         @foreach ($courses as $index => $course)
                             <tr class="odd:bg-white even:bg-gray-50 shadow-gray-600 ">
-                                <th scope="row" class="px-4 py-4 text-end font-medium text-gray-900 whitespace-nowrap">
+                                <th scope="row" class="px-4 py-4 text-end poppins-regular text-gray-900 whitespace-nowrap">
                                     {{ ($courses->currentPage() - 1) * $courses->perPage() + $loop->iteration }}
                                 </th>
                                 <td class=" py-4 text-end px-4">
@@ -47,7 +47,7 @@
                                     </div>
                                 </td>
                                 <td class=" py-4 text-end px-4">
-                                    <div class="flex flex-col justify-center text-end">
+                                    <div class="flex flex-col justify-center text-end poppins-regular">
                                         <span class="mb-2">
                                             {{ $course->kategoris ? $course->kategoris->nama_kategori : 'Kategori tidak tersedia' }}
                                         </span>
@@ -72,14 +72,14 @@
                                         <div>
                                             <button data-modal-target="modal-detail{{ $course->id }}"
                                                 data-modal-toggle="modal-detail{{ $course->id }}"
-                                                class="font-extrabold text-xs shadow-md shadow-gray-600 hover:bg-[#3F6A6B] text-white py-2 px-2 bg-[#4F7F81] rounded-lg h-fit">
+                                                class="font-extrabold text-xs shadow-md shadow-gray-600 hover:bg-green-800 text-white py-2 px-2 bg-gradient-to-tr from-[#60BC9D] to-[#12372A] rounded-lg h-fit">
                                                 <i class="fas fa-info-circle text-xs"></i> <!-- Icon Detail -->
                                             </button>
                                         </div>
                                         <!-- Edit Button with Icon -->
                                         <div>
                                             <a href="/admin/{{ $course->id }}/edit-kursus"
-                                                class="font-extrabold text-xs shadow-md shadow-gray-600 hover:bg-[#3F6A6B] text-white py-2 px-2 bg-[#4F7F81] rounded-lg h-fit">
+                                                class="font-extrabold text-xs shadow-md shadow-gray-600 hover:bg-green-800 text-white py-2 px-2 bg-gradient-to-tr from-[#60BC9D] to-[#12372A] rounded-lg h-fit">
                                                 <i class="fas fa-edit text-xs"></i> <!-- Icon Edit -->
                                             </a>
                                         </div>
@@ -87,7 +87,7 @@
                                         <div>
                                             <button data-modal-target="popup-modal-{{ $course->id }}"
                                                 data-modal-toggle="popup-modal-{{ $course->id }}"
-                                                class="font-extrabold text-xs shadow-md shadow-gray-600 hover:bg-[#3F6A6B] text-white py-2 px-2 bg-[#4F7F81] rounded-lg h-fit">
+                                                class="font-extrabold text-xs shadow-md shadow-gray-600 hover:bg-green-800 text-white py-2 px-2 bg-gradient-to-tr from-[#60BC9D] to-[#12372A] rounded-lg h-fit">
                                                 <i class="fas fa-trash-alt text-xs"></i> <!-- Icon Delete -->
                                             </button>
                                         </div>
@@ -121,7 +121,7 @@
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                         stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                                 </svg>
-                                <h3 class="text-black mb-5 text-lg font-normal  ">
+                                <h3 class="text-black mb-5 text-lg poppins-regular  ">
                                     Apakah Anda yakin ingin menghapus kursus ini?</h3>
                                 <!-- Form Hapus -->
                                 <form id="delete-form-{{ $course->id }}"
@@ -132,11 +132,11 @@
                                 </form>
                                 <button type="button"
                                     onclick="document.getElementById('delete-form-{{ $course->id }}').submit()"
-                                    class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-start">
+                                    class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 poppins-regular rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-start">
                                     Hapus
                                 </button>
                                 <button type="button"
-                                    class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-gray-800 focus:z-10 focus:ring-4 focus:ring-gray-100 "
+                                    class="py-2.5 px-5 ms-3 text-sm poppins-regular text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-gray-800 focus:z-10 focus:ring-4 focus:ring-gray-100 "
                                     data-modal-hide="popup-modal-{{ $course->id }}">Tidak,
                                     Batal</button>
                             </div>

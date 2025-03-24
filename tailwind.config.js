@@ -12,12 +12,18 @@ export default {
             padding: {
                 DEFAULT: "0rem",
                 sm: "0rem",
-                lg: "2rem",
-                xl: "3rem",
-                "2xl": "4rem",
+                lg: "1rem",
+                xl: "2rem",
+                "2xl": "3rem",
             },
             // Tambahkan opsi `center` untuk margin auto
             center: true,
+        },
+        extend: {
+            // Tambahkan font Bebas Neue di sini
+            fontFamily: {
+                'bebas-neue': ['"Bebas Neue"', 'sans-serif'],
+            },
             dropShadow: {
                 "1xl": "0 10px 20px rgba(0, 0, 0, 0.15)", // Light shadow for minimal depth
                 "2xl": "0 20px 30px rgba(0, 0, 0, 0.2)", // More noticeable shadow
@@ -28,7 +34,6 @@ export default {
                 ],
             },
         },
-        extend: {},
     },
     plugins: [require("flowbite/plugin")],
 };
