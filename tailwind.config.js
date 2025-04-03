@@ -22,7 +22,7 @@ export default {
         extend: {
             // Tambahkan font Bebas Neue di sini
             fontFamily: {
-                'bebas-neue': ['"Bebas Neue"', 'sans-serif'],
+                "bebas-neue": ['"Bebas Neue"', "sans-serif"],
             },
             dropShadow: {
                 "1xl": "0 10px 20px rgba(0, 0, 0, 0.15)", // Light shadow for minimal depth

@@ -1,6 +1,6 @@
 <x-adminlayout>
 
-    <div class="container">
+    <div class="lg:px-10">
         <div class="py-10 px-4 md:px-0">
 
 
@@ -11,94 +11,104 @@
 
             {{ $courses->links() }}
             <div class="relative overflow-x-auto sm:rounded-lg">
-                <table class="w-full text-sm text-right rtl:text-right shadow-gray-600 text-gray-500">
-                    <thead class="text-6x1 poppins-regular text-gray-700 uppercase shadow-gray-600 bg-gray-50">
+                <table class="w-full text-sm text-gray-700 shadow-md border border-gray-300 rounded-lg overflow-hidden">
+                    <thead class="text-xs uppercase bg-gray-100 border-b border-gray-300">
                         <tr>
-                            <th scope="col" class=" py-3 px-4 text-end">No</th>
-                            <th scope="col" class=" py-3 px-4 text-end">Nama Kursus</th>
-                            <th scope="col" class=" py-3 px-4 text-end">Kategori</th>
-                            <th scope="col" class=" py-3 px-4 text-end">Paket</th>
-                            <th scope="col" class=" py-3 px-4 text-end">Metode</th>
-                            <th scope="col" class=" py-3 px-4 text-end">Fasilitas</th>
-                            <th scope="col" class=" py-3 px-4 text-end">Lokasi</th>
-                            <th scope="col" class=" py-3 px-4 text-end">Aksi</th>
+                            <th scope="col" class="py-3 px-4 text-end border-r border-gray-300">No</th>
+                            <th scope="col" class="py-3 px-4 text-end border-r border-gray-300">Nama Kursus</th>
+                            <th scope="col" class="py-3 px-4 text-end border-r border-gray-300">Kategori</th>
+                            {{-- <th scope="col" class="py-3 px-4 text-end border-r border-gray-300">Paket</th>
+                            <th scope="col" class="py-3 px-4 text-end border-r border-gray-300">Metode</th>
+                            <th scope="col" class="py-3 px-4 text-end border-r border-gray-300">Lokasi</th> --}}
+                            <th scope="col" class="py-3 px-4 text-end border-r border-gray-300">Fasilitas</th>
+                            <th scope="col" class="py-3 px-4 text-end border-r border-gray-300">Latitude-Longitude
+                            </th>
+                            <th scope="col" class="py-3 px-4 text-end">Aksi</th>
                         </tr>
                     </thead>
-                    <tbody class="shadow-gray-600">
+                    <tbody class="divide-y divide-gray-300">
                         @foreach ($courses as $index => $course)
-                            <tr class="odd:bg-white even:bg-gray-50 shadow-gray-600 ">
-                                <th scope="row" class="px-4 py-4 text-end poppins-regular text-gray-900 whitespace-nowrap">
+                            <tr
+                                class="odd:bg-white even:bg-gray-50 hover:bg-gray-200 transition border-b border-gray-300">
+                                <th scope="row"
+                                    class="px-4 py-4 text-end poppins-regular text-gray-900 whitespace-nowrap border-r border-gray-300">
                                     {{ ($courses->currentPage() - 1) * $courses->perPage() + $loop->iteration }}
                                 </th>
-                                <td class=" py-4 text-end px-4">
-                                    <div class="flex justify-end flex-row gap-3 items-center w-full h-full">
+                                <td class="py-4 text-end px-4 border-r border-gray-300">
+                                    <div class="flex justify-end flex-row gap-3 items-center">
                                         <div class="form-control flex-1">
                                             <span class="text-sm uppercase font-semibold">
                                                 {{ $course->nama_kursus }}
                                             </span>
-                                            <span class="text-xs text-gray-400 line-clamp-2">
-                                                {{ Str::limit($course->deskripsi, 200, '...') }}
+                                            @php
+                                                $words = explode(' ', Str::limit($course->deskripsi, 200, '...'));
+                                                $firstPart = implode(' ', array_slice($words, 0, 15)); // Ambil 15 kata pertama
+                                                $secondPart = implode(' ', array_slice($words, 15)); // Sisanya
+                                            @endphp
+
+                                            <span
+                                                class="text-xs text-gray-400 break-words whitespace-normal leading-tight max-w-xs sm:max-w-sm md:max-w-md">
+                                                <br> {{ $firstPart }} <br> {{ $secondPart }}
                                             </span>
+
+
                                         </div>
-                                        <div class="w-8 h-8 rounded-md overflow-hidden">
+                                        <div
+                                            class="sm:w-14 lg:w-24 2xl:w-32 sm:h-14 lg:h-24 2xl:h-32 rounded-md overflow-hidden border border-gray-300">
                                             <img src="{{ asset('storage/' . $course->img) }}"
-                                                class="aspect-square shadow-md shadow-gray-500 object-cover" alt="">
+                                                class="aspect-square shadow-md shadow-gray-500 object-cover"
+                                                alt="">
                                         </div>
                                     </div>
                                 </td>
-                                <td class=" py-4 text-end px-4">
+                                <td class="py-4 text-end px-4 border-r border-gray-300">
                                     <div class="flex flex-col justify-center text-end poppins-regular">
                                         <span class="mb-2">
                                             {{ $course->kategoris ? $course->kategoris->nama_kategori : 'Kategori tidak tersedia' }}
                                         </span>
-                                        <span>{{ $course->popular }}</span>
                                     </div>
                                 </td>
-                                <td class=" py-4 text-end items-center px-4">
-                                    <div> {!! Str::limit($course->paket, 50, '...') !!}</div>
+                                {{-- <td class="py-4 text-end px-4 border-r border-gray-300">{!! Str::limit($course->paket, 50, '...') !!}</td>
+                                <td class="py-4 text-end px-4 border-r border-gray-300">{!! Str::limit($course->metode, 50, '...') !!}</td>
+                                <td class="py-4 text-end px-4 border-r border-gray-300">{!! Str::limit($course->lokasi, 50, '...') !!}</td> --}}
+                                <td class="py-4 text-end px-4 border-r border-gray-300 uppercase">
+                                    @php
+                                        $fasilitasArray = json_decode($course->fasilitas, true);
+                                        $fasilitasText = $fasilitasArray ? implode(', ', $fasilitasArray) : '-';
+                                    @endphp
+                                    {!! Str::limit($fasilitasText, 50, '...') !!}
                                 </td>
-                                <td class=" py-4 text-end items-center px-4">
-                                    <div> {!! Str::limit($course->metode, 50, '...') !!}</div>
-                                </td>
-                                <td class=" py-4 text-end items-center px-4">
-                                    <div> {!! Str::limit($course->fasilitas, 50, '...') !!}</div>
-                                </td>
-                                <td class=" py-4 text-end items-center px-4">
-                                    <div> {!! Str::limit($course->lokasi, 50, '...') !!}</div>
-                                </td>
-                                <td class=" py-4 text-end items-center px-4">
+
+                                <td class="py-4 text-end px-4 border-r border-gray-300">
+                                    {{ $course->latitude }},{{ $course->longitude }}</td>
+                                <td class="py-4 text-end px-4">
                                     <div class="flex justify-end items-center space-x-1 md:space-x-2">
                                         <!-- Detail Button with Icon -->
-                                        <div>
-                                            <button data-modal-target="modal-detail{{ $course->id }}"
-                                                data-modal-toggle="modal-detail{{ $course->id }}"
-                                                class="font-extrabold text-xs shadow-md shadow-gray-600 hover:bg-green-800 text-white py-2 px-2 bg-gradient-to-tr from-[#60BC9D] to-[#12372A] rounded-lg h-fit">
-                                                <i class="fas fa-info-circle text-xs"></i> <!-- Icon Detail -->
-                                            </button>
-                                        </div>
+                                        <button data-modal-target="modal-detail{{ $course->id }}"
+                                            data-modal-toggle="modal-detail{{ $course->id }}"
+                                            class="font-extrabold text-xs shadow-md hover:bg-blue-600 text-white py-2 px-2 bg-blue-500 rounded-lg transition">
+                                            <i class="fas fa-info-circle text-xs"></i>
+                                        </button>
                                         <!-- Edit Button with Icon -->
-                                        <div>
-                                            <a href="/admin/{{ $course->id }}/edit-kursus"
-                                                class="font-extrabold text-xs shadow-md shadow-gray-600 hover:bg-green-800 text-white py-2 px-2 bg-gradient-to-tr from-[#60BC9D] to-[#12372A] rounded-lg h-fit">
-                                                <i class="fas fa-edit text-xs"></i> <!-- Icon Edit -->
-                                            </a>
-                                        </div>
+                                        <a href="/admin/{{ $course->id }}/edit-kursus"
+                                            class="font-extrabold text-xs shadow-md hover:bg-yellow-600 text-white py-2 px-2 bg-yellow-500 rounded-lg transition">
+                                            <i class="fas fa-edit text-xs"></i>
+                                        </a>
                                         <!-- Delete Button with Icon -->
-                                        <div>
-                                            <button data-modal-target="popup-modal-{{ $course->id }}"
-                                                data-modal-toggle="popup-modal-{{ $course->id }}"
-                                                class="font-extrabold text-xs shadow-md shadow-gray-600 hover:bg-green-800 text-white py-2 px-2 bg-gradient-to-tr from-[#60BC9D] to-[#12372A] rounded-lg h-fit">
-                                                <i class="fas fa-trash-alt text-xs"></i> <!-- Icon Delete -->
-                                            </button>
-                                        </div>
+                                        <button data-modal-target="popup-modal-{{ $course->id }}"
+                                            data-modal-toggle="popup-modal-{{ $course->id }}"
+                                            class="font-extrabold text-xs shadow-md hover:bg-red-600 text-white py-2 px-2 bg-red-500 rounded-lg transition">
+                                            <i class="fas fa-trash-alt text-xs"></i>
+                                        </button>
                                     </div>
                                 </td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
+
             </div>
-            
+
             @foreach ($courses as $course)
                 <!-- Modal Konfirmasi -->
                 <div id="popup-modal-{{ $course->id }}" tabindex="-1"
@@ -170,7 +180,7 @@
     </div>
 
 
-   
+
     <!-- Main modal -->
 
     @foreach ($courses as $course)

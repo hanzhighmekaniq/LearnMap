@@ -20,7 +20,7 @@ class Role
             return $next($request);
         }
 
-        // Redirect jika tidak memiliki akses
-        return redirect()->route('gagal.home')->with('error', 'You do not have access to this page.');
+        // Redirect kembali ke halaman sebelumnya dengan pesan error
+        return back()->with('error', 'You do not have access to this page.');
     }
 }

@@ -4,10 +4,11 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -24,12 +25,17 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $fillable = [
         'name',
         'email',
+        'username',
         'password',
         'role'
     ];
     public function ulasans(): HasMany
     {
         return $this->hasMany(DataUlasan::class, 'user_id', 'id'); // Menentukan foreign key dan local key
+    }
+    public function users(): HasMany
+    {
+        return $this->hasMany(User::class, 'user_id', 'id'); // Menentukan foreign key dan local key
     }
 
     /**

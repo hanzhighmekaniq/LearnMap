@@ -18,18 +18,22 @@ return new class extends Migration
             $table->longText('deskripsi');
             $table->longText('paket');
             $table->longText('metode');
-            $table->text('fasilitas');
             $table->longText('lokasi');
-            $table->string('latitude');
-            $table->string('longitude');
-            $table->string('popular');
+            $table->json('fasilitas')->nullable();
+            $table->string('latitude')->nullable();
+            $table->string('longitude')->nullable();
             $table->json('img_konten')->nullable();
             $table->timestamps();
 
+            $table->foreignId('user_id')
+                ->nullable() // Membuat kolom ini bisa NULL
+                ->constrained('users') // Nama tabel yang dijadikan referensi
+                ->onDelete('restrict') // Aturan saat data dihapus
+                ->onUpdate('cascade'); // Aturan saat data diupdate
             $table->foreignId('kategori_id')
                 ->nullable() // Membuat kolom ini bisa NULL
                 ->constrained('kategori') // Nama tabel yang dijadikan referensi
-                ->onDelete('set null') // Aturan saat data dihapus
+                ->onDelete('restrict') // Aturan saat data dihapus
                 ->onUpdate('cascade'); // Aturan saat data diupdate
         });
     }

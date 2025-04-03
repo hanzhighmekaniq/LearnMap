@@ -17,17 +17,18 @@ return new class extends Migration
             $table->text('comment')->nullable();
             $table->timestamps();
 
-            // Foreign key constraint
+            // Foreign key constraint untuk kursus_id
             $table->foreignId('kursus_id')
                 ->nullable() // Membuat kolom ini bisa NULL
-                ->constrained('kategori') // Nama tabel yang dijadikan referensi
-                ->onDelete('set null') // Aturan saat data dihapus
+                ->constrained('data_kursus') // Mengarah ke tabel kursus, bukan kategori
+                ->onDelete('cascade') // Aturan saat data dihapus, akan menghapus ulasan terkait
                 ->onUpdate('cascade'); // Aturan saat data diupdate
 
+            // Foreign key constraint untuk user_id
             $table->foreignId('user_id')
                 ->nullable() // Membuat kolom ini bisa NULL
                 ->constrained('users') // Nama tabel yang dijadikan referensi
-                ->onDelete('set null') // Aturan saat data dihapus
+                ->onDelete('cascade') // Aturan saat data dihapus, akan menghapus ulasan terkait
                 ->onUpdate('cascade'); // Aturan saat data diupdate
         });
     }

@@ -1,11 +1,5 @@
 <x-layout>
-    <div class="py-10 bg-white container">
-        <!-- <div class="bg-[#EBFEA1] poppins-extrabold m-auto flex items-center justify-center p-2">
-            <p>Halaman ini berisi tentang kursus di Pare! </p>
-        </div> -->
-    </div>
-
-    <div class="container pb-20">
+    <div class="container pb-20 pt-20 px-4">
         <div class="flex justify-end space-x-2 py-4">
             <form method="GET" action="{{ route('user.kursus') }}" class="flex space-x-2">
                 <!-- Dropdown Kategori -->
@@ -32,9 +26,9 @@
             </form>
         </div>
 
-        {{ $data_kursus->links() }}
+        {{-- {{ $data_kursus->links() }} --}}
 
-        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 justify-center py-4 items-center gap-4 !important">
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 justify-center pb-4 items-center gap-4 !important">
             @foreach ($data_kursus as $kursus)
                 <div class="kursus-item max-w-xl h-ful mx-auto shadow-2xl rounded-lg">
                     <div>
@@ -45,11 +39,11 @@
                         <div class="p-5 h-44">
                             <div>
                                 <h5
-                                    class="barlow-condensed-semibold text-green-800 nama-kursus mb-2 text-2xl poppins-regular font-extrabold tracking-tight text-gray-900">
+                                    class="barlow-condensed-semibold text-green-800 nama-kursus mb-2 text-2xl poppins-regular font-extrabold tracking-tight ">
                                     {{ $kursus->nama_kursus }}
                                 </h5>
                                 <h5
-                                    class="poppins-regular text-black nama-kursus mb-2 text-sm poppins-regular font-extrabold tracking-tight text-gray-900">
+                                    class="poppins-regular text-black nama-kursus mb-2 text-sm poppins-regular font-extrabold tracking-tight ">
                                     {{ optional($kursus->kategoris)->nama_kategori ?? 'Kategori tidak tersedia' }}
                                 </h5>
                             </div>

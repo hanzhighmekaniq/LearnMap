@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\DataKategori;
 use Nette\Utils\Strings;
+use App\Models\DataKategori;
 use Illuminate\Http\Request;
 use PhpParser\Node\Stmt\TryCatch;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\RedirectResponse;
 use PhpParser\Node\Expr\Cast\String_;
@@ -20,7 +22,9 @@ class AdminDataKursusController extends Controller
     public function dataKursus()
     {
         // Mengambil semua data kursus dari model DataKursus
-        $courses = DataKursus::with('kategoris')->paginate(10);
+        $courses = DataKursus::with('kategoris')
+            ->where('user_id', auth()->id()) // Filter berdasarkan user yang login
+            ->paginate(10);
 
         // Mengambil gambar untuk setiap course, jika ada
         foreach ($courses as $course) {
@@ -53,7 +57,6 @@ class AdminDataKursusController extends Controller
                 'lokasi' => 'required',
                 'latitude' => 'required', // Ubah menjadi wajib diisi
                 'longitude' => 'required', // Ubah menjadi wajib diisi
-                'popular' => 'required',
                 'img_konten.*' => 'nullable|image', // Gambar konten tetap opsional
             ], [
                 'nama_kursus.required' => 'Nama kursus wajib diisi.',
@@ -69,7 +72,6 @@ class AdminDataKursusController extends Controller
                 'lokasi.required' => 'Lokasi wajib diisi.',
                 'latitude.required' => 'Latitude wajib diisi.', // Pesan error custom
                 'longitude.required' => 'Longitude wajib diisi.', // Pesan error custom
-                'popular.required' => 'Status popular wajib diisi.',
                 'img_konten.*.nullable' => 'Gambar konten bersifat opsional.',
                 'img_konten.*.file' => 'File yang di-upload harus berupa gambar.',
             ]);
@@ -92,6 +94,7 @@ class AdminDataKursusController extends Controller
             }
 
             // Simpan data ke dalam database
+            // Simpan data ke dalam database
             $result = DataKursus::create([
                 'nama_kursus' => $request->nama_kursus,
                 'kategori_id' => $request->kategori_id,
@@ -99,12 +102,12 @@ class AdminDataKursusController extends Controller
                 'deskripsi' => $request->deskripsi,
                 'paket' => $request->paket,
                 'metode' => $request->metode,
-                'fasilitas' => $request->fasilitas,
+                'fasilitas' => json_encode(json_decode($request->fasilitas, true)), // Pastikan data tersimpan sebagai JSON valid
                 'lokasi' => $request->lokasi,
-                'latitude' => $request->latitude, // Menyimpan nilai latitude bebas
-                'longitude' => $request->longitude, // Menyimpan nilai longitude bebas
-                'popular' => $request->popular, // Menyimpan nilai longitude bebas
+                'latitude' => $request->latitude,
+                'longitude' => $request->longitude,
                 'img_konten' => json_encode($imgKontenPaths),
+                'user_id' => Auth::id(),
             ]);
 
             // Redirect setelah berhasil
@@ -118,16 +121,22 @@ class AdminDataKursusController extends Controller
 
     public function edit($id)
     {
-        // Ambil record DataKursus berdasarkan ID-nya
+        // Ambil data kategori
         $kategori = DataKategori::all();
+
+        // Ambil data kursus berdasarkan ID
         $dataKursus = DataKursus::findOrFail($id);
 
-        // Decode field JSON untuk nama gambar jika ada
+        // Decode JSON fasilitas agar bisa ditampilkan dalam bentuk array
+        $fasilitas = json_decode($dataKursus->fasilitas, true) ?? [];
+
+        // Decode JSON untuk daftar gambar konten (jika ada)
         $imageName = $dataKursus->img_konten ? json_decode($dataKursus->img_konten, true) : [];
 
         // Kirim data ke view
-        return view('admin.ubahDataKursusAdmin', compact('dataKursus', 'imageName', 'kategori'));
+        return view('admin.ubahDataKursusAdmin', compact('dataKursus', 'imageName', 'kategori', 'fasilitas'));
     }
+
 
     public function update(Request $request, $id)
     {
@@ -140,10 +149,10 @@ class AdminDataKursusController extends Controller
             'img_konten.*' => 'nullable|image',
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
-            'popular' => 'required|string',
             'paket' => 'required|string',
             'metode' => 'required|string',
-            'fasilitas' => 'required|string',
+            'fasilitas' => 'required|array', // Mengizinkan array
+            'fasilitas.*' => 'required|string', // Setiap elemen harus string
             'lokasi' => 'required|string',
         ], [
             'nama_kursus.required' => 'Nama kursus wajib diisi.',
@@ -155,29 +164,32 @@ class AdminDataKursusController extends Controller
             'latitude.numeric' => 'Latitude harus berupa angka.',
             'longitude.required' => 'Longitude wajib diisi.',
             'longitude.numeric' => 'Longitude harus berupa angka.',
-            'popular.required' => 'Status popular wajib diisi.',
             'paket.required' => 'Paket wajib diisi.',
             'metode.required' => 'Metode wajib diisi.',
             'fasilitas.required' => 'Fasilitas wajib diisi.',
+            'fasilitas.array' => 'Fasilitas harus dalam format array.',
             'lokasi.required' => 'Lokasi wajib diisi.',
         ]);
 
-
         try {
+            // Gunakan transaksi database untuk memastikan data aman
+            DB::beginTransaction();
+
             // Ambil record DataKursus berdasarkan ID-nya
             $dataKursus = DataKursus::findOrFail($id);
 
             // Update fields
-            $dataKursus->nama_kursus = $request->input('nama_kursus');
-            $dataKursus->kategori_id = $request->input('kategori_id');
-            $dataKursus->deskripsi = $request->input('deskripsi');
-            $dataKursus->latitude = $request->input('latitude');
-            $dataKursus->longitude = $request->input('longitude');
-            $dataKursus->popular = $request->input('popular');
-            $dataKursus->paket = $request->input('paket');
-            $dataKursus->metode = $request->input('metode');
-            $dataKursus->fasilitas = $request->input('fasilitas');
-            $dataKursus->lokasi = $request->input('lokasi');
+            $dataKursus->update([
+                'nama_kursus' => $request->input('nama_kursus'),
+                'kategori_id' => $request->input('kategori_id'),
+                'deskripsi' => $request->input('deskripsi'),
+                'latitude' => $request->input('latitude'),
+                'longitude' => $request->input('longitude'),
+                'paket' => $request->input('paket'),
+                'metode' => $request->input('metode'),
+                'fasilitas' => json_encode($request->input('fasilitas')), // Simpan sebagai JSON
+                'lokasi' => $request->input('lokasi'),
+            ]);
 
             // Update gambar utama jika ada file baru
             if ($request->hasFile('img')) {
@@ -193,7 +205,7 @@ class AdminDataKursusController extends Controller
             // Update multiple file upload jika ada file baru
             if ($request->hasFile('img_konten')) {
                 if ($dataKursus->img_konten) {
-                    $oldImages = json_decode($dataKursus->img_konten, true);
+                    $oldImages = json_decode($dataKursus->img_konten, true) ?? [];
                     foreach ($oldImages as $oldImage) {
                         Storage::delete('public/' . $oldImage);
                     }
@@ -201,8 +213,8 @@ class AdminDataKursusController extends Controller
 
                 $menuImages = [];
                 foreach ($request->file('img_konten') as $file) {
-                    $imgKontenPaths = $file->store('logo', 'public');
-                    $menuImages[] = $imgKontenPaths;
+                    $imgKontenPath = $file->store('logo', 'public');
+                    $menuImages[] = $imgKontenPath;
                 }
                 $dataKursus->img_konten = json_encode($menuImages);
             }
@@ -210,10 +222,14 @@ class AdminDataKursusController extends Controller
             // Simpan perubahan
             $dataKursus->save();
 
+            // Commit transaksi
+            DB::commit();
+
             // Redirect dengan pesan sukses
             return redirect()->route('admin.dataKursus')->with('success', 'Data berhasil diperbarui.');
         } catch (\Exception $e) {
-            // Tangani error dan kirimkan pesan error
+            // Rollback jika terjadi error
+            DB::rollBack();
             return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }
     }
@@ -223,8 +239,13 @@ class AdminDataKursusController extends Controller
 
     public function destroy($id)
     {
-        $dataKursus = DataKursus::findOrFail($id);
-        $dataKursus->delete();
-        return redirect()->route('admin.dataKursus')->with('success', 'Data berhasil dihapus.');
+        try {
+            $dataKursus = DataKursus::findOrFail($id);
+            $dataKursus->delete();
+
+            return redirect()->route('admin.dataKursus')->with('success', 'Data berhasil dihapus.');
+        } catch (\Exception $e) {
+            return redirect()->route('admin.dataKursus')->with('error', 'Gagal Menghapus Kursus, Periksa  ');
+        }
     }
 }

@@ -26,7 +26,9 @@ class DataKursus extends Model
         'latitude',
         'longitude', // Pastikan nama kolom sesuai dengan migrasi
         'popular', // Pastikan nama kolom sesuai dengan migrasi
-        'img_konten'
+        'img_konten',
+        'user_id'
+
     ];
 
     public $timestamps = true;
@@ -35,7 +37,7 @@ class DataKursus extends Model
     {
         return $this->belongsTo(DataKategori::class, 'kategori_id', 'id'); // Menentukan foreign key dan local key
     }
-    
+
     public function kunjungan(): HasMany
     {
         return $this->hasMany(Kunjungan::class, 'kursus_id', 'id'); // Menentukan foreign key dan local key
@@ -44,5 +46,9 @@ class DataKursus extends Model
     public function ulasan(): HasMany
     {
         return $this->hasMany(DataUlasan::class, 'kursus_id', 'id'); // Menentukan foreign key dan local key
+    }
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id'); // Menentukan foreign key dan local key
     }
 }

@@ -1,5 +1,5 @@
 <x-adminlayout>
-    <div class="container">
+    <div class="">
         <div class="py-10 px-4">
             <div class="pb-4 flex">
                 <a class="px-4 flex text-white text-lg justify-center items-center py-2 rounded-xl bg-[#4F7F81]"
@@ -28,11 +28,10 @@
                                 placeholder="Kampung Inggris LC - Language Center" required />
                         </div>
                         <div class="hidden">
-                            <label for="countries"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pilih
+                            <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 ">Pilih
                                 Popular</label>
                             <select id="countries" name="popular"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
                                 <option selected>{{ $dataKursus->popular }}</option>
                                 @if ($dataKursus->popular === 'popular')
                                     <option value="Tidak">Tidak</option>
@@ -112,15 +111,7 @@
                             placeholder="Write your thoughts here..."></trix-editor>
                     </div>
 
-                    <!-- Fasilitas -->
-                    <div>
-                        <label for="fasilitas" class="block mb-2 text-sm font-medium text-gray-900">Fasilitas</label>
-                        <input id="fasilitas" name="fasilitas" type="hidden"
-                            value="{{ old('fasilitas', $dataKursus->fasilitas) }}" />
-                        <trix-editor input="fasilitas"
-                            class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-                            placeholder="Write your thoughts here..."></trix-editor>
-                    </div>
+
 
                     <!-- Lokasi -->
                     <div>
@@ -131,6 +122,87 @@
                             class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                             placeholder="Write your thoughts here..."></trix-editor>
                     </div>
+                    <!-- Fasilitas -->
+                    <div>
+                        <label for="fasilitas" class="block mb-2 text-sm font-medium text-gray-900">Fasilitas</label>
+                        <input id="fasilitas" name="fasilitas" type="hidden" value='{!! json_encode($fasilitas ?? []) !!}' />
+
+
+
+                        <!-- Inputan dinamis untuk fasilitas -->
+                        <div id="facility-inputs" class="grid grid-cols-4 gap-4">
+                            @foreach ($fasilitas as $index => $item)
+                                <div class="facility-input bg-gray-100 p-2 rounded-lg flex gap-2 items-center">
+                                    <input type="text" name="fasilitas[]" value="{{ $item }}"
+                                        class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm" />
+                                    <button type="button"
+                                        class="remove-facility text-red-500 hover:text-red-700">Hapus</button>
+                                </div>
+                            @endforeach
+                        </div>
+
+                        <!-- Tombol tambah fasilitas -->
+                        <button id="add-facility-btn" type="button"
+                            class="mt-3 px-4 py-2 text-xs bg-blue-500 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            Tambah Fasilitas
+                        </button>
+                    </div>
+
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            const facilityContainer = document.getElementById('facility-inputs');
+                            const hiddenFasilitasInput = document.getElementById('fasilitas');
+
+                            function updateFasilitas() {
+                                let fasilitasArray = [];
+                                facilityContainer.querySelectorAll("input[name='fasilitas[]']").forEach(input => {
+                                    if (input.value.trim() !== '') {
+                                        fasilitasArray.push(input.value.trim());
+                                    }
+                                });
+                                hiddenFasilitasInput.value = JSON.stringify(fasilitasArray);
+                            }
+
+                            // Event listener untuk tombol tambah fasilitas
+                            document.getElementById('add-facility-btn').addEventListener('click', function() {
+                                const div = document.createElement('div');
+                                div.classList.add('facility-input', 'bg-gray-100', 'p-2', 'rounded-lg', 'flex', 'gap-2',
+                                    'items-center');
+
+                                const input = document.createElement('input');
+                                input.type = 'text';
+                                input.name = 'fasilitas[]';
+                                input.classList.add('block', 'w-full', 'px-3', 'py-2', 'border', 'border-gray-300',
+                                    'rounded-md', 'shadow-sm');
+                                input.placeholder = 'Masukkan fasilitas';
+
+                                const deleteButton = document.createElement('button');
+                                deleteButton.type = 'button';
+                                deleteButton.textContent = 'Hapus';
+                                deleteButton.classList.add('text-red-500', 'hover:text-red-700');
+                                deleteButton.addEventListener('click', function() {
+                                    div.remove();
+                                    updateFasilitas();
+                                });
+
+                                div.appendChild(input);
+                                div.appendChild(deleteButton);
+                                facilityContainer.appendChild(div);
+                            });
+
+                            // Event listener untuk tombol hapus
+                            facilityContainer.addEventListener('click', function(event) {
+                                if (event.target.classList.contains('remove-facility')) {
+                                    event.target.parentElement.remove();
+                                    updateFasilitas();
+                                }
+                            });
+
+                            // Perbarui input fasilitas setiap kali terjadi perubahan
+                            facilityContainer.addEventListener('input', updateFasilitas);
+                        });
+                    </script>
+
                     <div>
                         <label for="latitude" class="block mb-2 text-sm font-medium text-gray-900">Upload
                             Gambar</label>
@@ -138,19 +210,19 @@
                             <div class="grid grid-cols-1 gap-4">
                                 <div>
                                     <label for="file_input"
-                                        class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                        class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 ">
                                         <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                                            <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
-                                                aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                            <svg class="w-8 h-8 mb-4 text-gray-500 " aria-hidden="true"
+                                                xmlns="http://www.w3.org/2000/svg" fill="none"
                                                 viewBox="0 0 20 16">
                                                 <path stroke="currentColor" stroke-linecap="round"
                                                     stroke-linejoin="round" stroke-width="2"
                                                     d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
                                             </svg>
-                                            <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span
-                                                    class="font-semibold">Click to
+                                            <p class="mb-2 text-sm text-gray-500 "><span class="font-semibold">Click
+                                                    to
                                                     upload Single</p>
-                                            <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF
+                                            <p class="text-xs text-gray-500 ">SVG, PNG, JPG or GIF
                                             </p>
                                             <input id="file_input" type="file" name="img" class="hidden"
                                                 onchange="previewImage(event)" />
@@ -180,19 +252,19 @@
                             <div class="grid grid-cols-1 gap-4">
                                 <div>
                                     <label for="multiple_files"
-                                        class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                        class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 ">
                                         <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                                            <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
-                                                aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                            <svg class="w-8 h-8 mb-4 text-gray-500 " aria-hidden="true"
+                                                xmlns="http://www.w3.org/2000/svg" fill="none"
                                                 viewBox="0 0 20 16">
                                                 <path stroke="currentColor" stroke-linecap="round"
                                                     stroke-linejoin="round" stroke-width="2"
                                                     d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
                                             </svg>
-                                            <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span
-                                                    class="font-semibold">Click to
+                                            <p class="mb-2 text-sm text-gray-500 "><span class="font-semibold">Click
+                                                    to
                                                     upload Multi</p>
-                                            <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF
+                                            <p class="text-xs text-gray-500 ">SVG, PNG, JPG or GIF
                                             </p>
                                             <input id="multiple_files" type="file" name="img_konten[]" multiple
                                                 onchange="previewMultipleImages(event)" class="hidden" />
@@ -245,8 +317,7 @@
                         <!-- Multiple Files Modal -->
                         <div id="multiple-files-modal" tabindex="-1" aria-hidden="true"
                             class="hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full px-4">
-                            <div
-                                class="relative overflow-x-auto p-4 w-full max-w-2xl max-h-full  rounded-lg">
+                            <div class="relative overflow-x-auto p-4 w-full max-w-2xl max-h-full  rounded-lg">
                                 <div class="flex items-center justify-center">
                                     <!-- Flex container to arrange images horizontally -->
                                     @if (!empty($dataKursus->img_konten))

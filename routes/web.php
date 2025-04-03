@@ -3,17 +3,19 @@
 use App\Models\User;
 use App\Models\PendingUser;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\AdminUserController;
+use App\Http\Controllers\KunjunganController;
 use App\Http\Controllers\PengunjungController;
 use App\Http\Controllers\ProfileNewController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AdminDataKursusController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
-use App\Http\Controllers\KunjunganController;
 
 Route::get('/login', [LoginController::class, 'index'])->name('login'); // Halaman login
 Route::post('/login', [LoginController::class, 'authenticate'])->name('login.process'); // Proses login
@@ -41,23 +43,36 @@ Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])
 Route::post('reset-password', [NewPasswordController::class, 'store'])
     ->name('password.store');
 
-// ADMIN
-Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
 
-    Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('admin.home');
-    Route::get('/data-kursus', [AdminDataKursusController::class, 'dataKursus'])->name('admin.dataKursus');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/password/edit', [ProfileNewController::class, 'edit'])->name('password.edit');
+    Route::put('/password/update', [ProfileNewController::class, 'update'])->name('password.update'); // Ubah dari POST ke PUT
+});
+
+// ADMIN & USER
+Route::prefix('admin')->middleware(['auth'])->group(function () {
+    Route::get('dashboard', [AdminDashboardController::class, 'index'])->name('admin.home');
+    Route::resource('/user', AdminUserController::class);
+});
+
+// Route untuk ADMIN (Hanya Admin)
+Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
+    Route::resource('/kategori', KategoriController::class);
+});
+
+// Route untuk USER (Hanya User)
+Route::prefix('admin')->middleware(['auth', 'role:user'])->group(function () {
     Route::get('/create-data', [AdminDataKursusController::class, 'create'])->name('admin.create');
+    Route::get('/data-kursus', [AdminDataKursusController::class, 'dataKursus'])->name('admin.dataKursus');
     Route::get('/{id}/edit-kursus', [AdminDataKursusController::class, 'edit'])->name('admin.edit');
 
-    // Fungsi di admin
+    // Fungsi CRUD kursus untuk user
     Route::put('/update/{id}', [AdminDataKursusController::class, 'update'])->name('admin.update');
     Route::post('/store', [AdminDataKursusController::class, 'store'])->name('kursus.store');
     Route::delete('/delete/{id}', [AdminDataKursusController::class, 'destroy'])->name('delete');
-    Route::resource('kategori', KategoriController::class);
 });
 
-
-// USER
+// PENGUNJUNG
 Route::get('/', [PengunjungController::class, 'home'])->name('user.home');
 Route::get('/gagal-login', [PengunjungController::class, 'gagal'])->name('gagal.home');
 Route::get('/kursus', [PengunjungController::class, 'kursus'])->name('user.kursus');
@@ -67,12 +82,15 @@ Route::get('/kursus/{id}/detail', [PengunjungController::class, 'detail'])->name
 Route::post('/store-ulasan', [PengunjungController::class, 'storeUlasann'])->name('storeUlasan');
 Route::post('/kursus/{id}/detail', [KunjunganController::class, 'visitCourse'])->name('kursus.visit');
 
+Route::get('/set-locale/{lang}', function ($lang) {
+    Session::put('locale', $lang);
+    return back();
+})->name('set.locale');
 
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/password/edit', [ProfileNewController::class, 'edit'])->name('password.edit');
-    Route::put('/password/update', [ProfileNewController::class, 'update'])->name('password.update'); // Ubah dari POST ke PUT
-});
+
+
+
 
 
 require __DIR__ . '/auth.php';

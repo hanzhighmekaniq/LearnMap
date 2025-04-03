@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 
 <head>
     @vite(['resources/css/app.css', 'resources/js/app.js', 'public/css/font.css'])
     @include('components.navbar')
     @include('partials.font')
+    @include('partials.head')
 
 </head>
 

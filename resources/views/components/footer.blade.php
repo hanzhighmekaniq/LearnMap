@@ -1,5 +1,5 @@
             <footer class="bg-green-900">
-                <div class="mx-auto container w-full py-6 lg:py-8">
+                <div class="mx-auto container w-full px-4 py-6 lg:py-8">
                     <div class="space-y-10 md:flex md:justify-between">
                         <div>
                             <a href="#" class="flex items-start justify-start ml-[-10px]">
@@ -15,7 +15,7 @@
                         </div>
                         <div class="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
                             <div>
-                                <h2 class="mb-6 text-sm poppin-semibold text-white uppercase">Resources
+                                <h2 class="mb-6 text-sm poppins-semibold text-white uppercase">Resources
                                 </h2>
                                 <ul class="text-white poppins-regular space-y-4">
                                     <li class="">
@@ -34,8 +34,7 @@
                                 </h2>
                                 <ul class="text-white poppins-regular space-y-4">
                                     <li class="">
-                                        <a href="#"
-                                            class="hover:underline ">Github</a>
+                                        <a href="#" class="hover:underline ">Github</a>
                                     </li>
                                     <li>
                                         <a href="#" class="hover:underline">Discord</a>

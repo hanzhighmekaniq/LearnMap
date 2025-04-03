@@ -31,7 +31,7 @@ class PengunjungController extends Controller
         $peta = DataKursus::with('kategoris')->get();
 
         // Kembalikan view dengan data yang sudah diproses
-        return view('user.home', compact('landingpage','peta'));
+        return view('user.home', compact('landingpage', 'peta'));
     }
 
 

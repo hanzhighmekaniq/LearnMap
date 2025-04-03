@@ -104,11 +104,16 @@ class KategoriController extends Controller
      */
     public function destroy(string $id)
     {
-        // Temukan kategori berdasarkan ID
-        $kategori = DataKategori::findOrFail($id);
+        try {
+            // Temukan kategori berdasarkan ID
+            $kategori = DataKategori::findOrFail($id);
 
-        // Hapus kategori
-        $kategori->delete();
-        return redirect()->route('kategori.index')->with('success', 'Kategori berhasil dihapus.');
+            // Hapus kategori
+            $kategori->delete();
+
+            return redirect()->route('kategori.index')->with('success', 'Kategori berhasil dihapus.');
+        } catch (\Exception $e) {
+            return redirect()->route('kategori.index')->with('error', 'Gagal menghapus kategori. untuk menghapus kategori tidak boleh ada kursus yang tersambung dengan kategori ');
+        }
     }
 }
