@@ -8,7 +8,37 @@
                 <a class="bg-gradient-to-tr from-[#60BC9D] to-[#12372A] py-2 px-4 rounded-xl shadow-md shadow-gray-600 hover:bg-[#3F6A6B] text-white text-5x1 poppins-regular"
                     href="{{ route('admin.create') }}">Tambah Data</a>
             </div>
+            <div class="flex justify-end items-center pb-4 ">
+                <form class="max-w-lg w-full" method="GET" action="{{ route('admin.dataKursus') }}">
+                    <div class="flex">
+                        <select name="role" id="role"
+                            class="shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 rounded-s-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100">
+                            <option value="" {{ request('role') == '' ? 'selected' : '' }}>All Categories</option>
+                            @foreach ($kategoriList as $kategori)
+                                <option value="{{ $kategori->nama_kategori }}"
+                                    {{ request('role') == $kategori->nama_kategori ? 'selected' : '' }}>
+                                    {{ $kategori->nama_kategori }}
+                                </option>
+                            @endforeach
+                        </select>
+                        <div class="relative w-full">
+                            <input type="search" name="search" value="{{ request('search') }}"
+                                class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                                placeholder="Search kursus..." />
+                            <button type="submit"
+                                class="absolute top-0 end-0 p-2.5 h-full text-white bg-gradient-to-tr from-[#60BC9D] to-[#12372A] rounded-e-lg border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
+                                <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                    fill="none" viewBox="0 0 20 20">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                                </svg>
+                                <span class="sr-only">Search</span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
 
+            </div>
             {{ $courses->links() }}
             <div class="relative overflow-x-auto sm:rounded-lg">
                 <table class="w-full text-sm text-gray-700 shadow-md border border-gray-300 rounded-lg overflow-hidden">
@@ -189,7 +219,7 @@
             class="hidden overflow-y-auto fixed top-0 right-0 left-0 z-50  justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
             <div class="relative p-4 w-full  max-w-2xl xl:max-w-5xl max-h-full">
                 <!-- Modal content -->
-                <div class="relative rounded-lg shadow dark:bg-gray-700 bg-[#4F7F81]">
+                <div class="relative rounded-lg shadow  bg-[#4F7F81]">
                     <!-- Modal body -->
                     <div class="p-4 md:p-5">
                         <div class="">

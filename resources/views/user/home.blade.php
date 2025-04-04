@@ -12,9 +12,9 @@
                 class="absolute inset-0 flex items-center justify-center mb-14 sm:mb-14 md:mb-20 lg:mb-32 xl:mb-44 2xl:mb-72">
                 <div class="text-white">
                     <div>
-                        <h1
-                            class="  text-green-600 text-5xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl
-           font-bold text-center barlow-condensed-semibold drop-shadow-lg">
+                        <h1 class="  text-green-600 text-5xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl
+           font-bold text-center barlow-condensed-semibold drop-shadow-lg"
+                            style="text-shadow: 2px 2px 4px white;">
                             PARE EDUCATION <br> ENGLISH LANGUAGE
                         </h1>
 
@@ -89,7 +89,7 @@
                             Berikut adalah persebaran
                             seluruh wisata saat ini
                         </h5>
-                        <div class="aspect-[5/2]" id="map"></div>
+                        <div class="aspect-[5/3] lg:aspect-[5/2]" id="map"></div>
                     </div>
                 </div>
 
@@ -101,17 +101,32 @@
 
                 <script>
                     document.addEventListener('DOMContentLoaded', function() {
-                        // Pastikan elemen "map" ada dalam dokumen sebelum inisialisasi
-                        var mapElement = document.getElementById('map');
+                        const mapElement = document.getElementById('map');
                         if (!mapElement) {
                             console.warn("Element dengan ID 'map' tidak ditemukan.");
                             return;
                         }
 
-                        // Inisialisasi Leaflet map
-                        var map = L.map('map').setView([-7.7560717, 112.1823541], 15);
+                        // Tentukan zoom level berdasarkan ukuran layar
+                        let zoomLevel = 15; // default
+                        const width = window.innerWidth;
 
-                        // Tambahkan tile layer dari OpenStreetMap
+                        if (width < 640) { // sm
+                            zoomLevel = 13;
+                        } else if (width < 768) { // md
+                            zoomLevel = 13.5;
+                        } else if (width < 1024) { // lg
+                            zoomLevel = 14;
+                        } else if (width < 1280) { // xl
+                            zoomLevel = 14.5;
+                        } else { // 2xl dan ke atas
+                            zoomLevel = 15;
+                        }
+
+                        // Inisialisasi Leaflet map
+                        const map = L.map('map').setView([-7.7560717, 112.1823541], zoomLevel);
+
+                        // Tambahkan tile layer
                         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
                             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                         }).addTo(map);
@@ -121,23 +136,24 @@
                             @foreach ($peta as $latlong)
                                 L.marker([{{ $latlong->latitude }}, {{ $latlong->longitude }}]).addTo(map)
                                     .bindPopup(`
-            <b>{{ addslashes($latlong->nama_kursus) }}</b> <br>
-            <img class="w-32 h-20 object-cover" src="{{ asset('storage/' . $latlong->img) }}" alt="{{ addslashes($latlong->nama_kursus) }}" /> <br>
-            <a href="{{ url('/kursus/' . $latlong->id . '/detail') }}" class="text-blue-500 underline">Selengkapnya</a>
-        `);
+                                            <b>{{ addslashes($latlong->nama_kursus) }}</b> <br>
+                                            <img class="w-32 h-20 object-cover" src="{{ asset('storage/' . $latlong->img) }}" alt="{{ addslashes($latlong->nama_kursus) }}" /> <br>
+                                            <a href="{{ url('/kursus/' . $latlong->id . '/detail') }}" class="text-blue-500 underline">Selengkapnya</a>
+                                        `);
                             @endforeach
                         @else
-                            // Jika tidak ada data, tambahkan titik default di pusat kota Pare
+                            // Jika tidak ada data, tambahkan titik default
                             L.marker([-7.7560717, 112.1823541]).addTo(map)
                                 .bindPopup('<b>Default Marker: Pusat Kota Pare</b>');
                         @endif
 
-                        // Perbaiki ukuran map jika terjadi masalah dengan tampilan
+                        // Pastikan peta menyesuaikan ukuran container
                         setTimeout(() => {
                             map.invalidateSize();
                         }, 500);
                     });
                 </script>
+
 
 
 

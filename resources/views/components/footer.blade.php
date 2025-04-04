@@ -19,7 +19,7 @@
                                 </h2>
                                 <ul class="text-white poppins-regular space-y-4">
                                     <li class="">
-                                        <a href="/beranda" class="hover:underline">Beranda</a>
+                                        <a href="/" class="hover:underline">Beranda</a>
                                     </li>
                                     <li>
                                         <a href="/kursus" class="hover:underline">Kursus</a>

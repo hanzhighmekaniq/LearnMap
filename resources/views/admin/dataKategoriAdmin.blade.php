@@ -10,8 +10,26 @@
                     class="bg-gradient-to-tr from-[#60BC9D] to-[#12372A] py-2 px-4 rounded-md shadow-md shadow-gray-600 hover:bg-[#3F6A6B] text-white text-5x1 poppins-regular"
                     href="{{ route('kategori.create') }}">Tambah Data</button>
             </div>
+            <div class="flex justify-end items-center pb-4 ">
+                <form class="max-w-lg w-full" method="GET" action="{{ route('kategori.index') }}">
+                    <div
+                        class="relative w-full overflow-hidden rounded-lg border border-gray-300 focus-within:ring-2 focus-within:ring-blue-500">
+                        <input type="search" name="search" value="{{ request('search') }}"
+                            class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 border-none focus:ring-0"
+                            placeholder="Search Kategori..." />
+                        <button type="submit"
+                            class="absolute top-0 end-0 p-2.5 h-full text-white bg-gradient-to-tr from-[#60BC9D] to-[#12372A] hover:bg-green-800 focus:ring-2 focus:ring-blue-300">
+                            <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                viewBox="0 0 20 20">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                            </svg>
+                            <span class="sr-only">Search</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
             {{ $kategori->links() }}
-
             <div class="relative overflow-x-auto sm:rounded-lg poppins-regular">
                 <table class="w-full text-sm text-gray-700 shadow-md border border-gray-300 rounded-lg overflow-hidden">
                     <thead class="text-xs uppercase bg-gray-100 border-b border-gray-300">
@@ -118,8 +136,8 @@
                         <button type="button"
                             class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center "
                             data-modal-hide="default-modal-edit-kategori{{ $kategoris->id }}">
-                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                viewBox="0 0 14 14">
+                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                fill="none" viewBox="0 0 14 14">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                     stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
                             </svg>
@@ -130,8 +148,8 @@
                         action="{{ route('kategori.update', $kategoris->id) }}">
                         @csrf <!-- Token CSRF -->
                         @method('PUT') <!-- Menggunakan metode PUT -->
-                        <input hidden value="{{ $kategoris->id }}" type="text" id="edit-idkategori" name="id"
-                            required>
+                        <input hidden value="{{ $kategoris->id }}" type="text" id="edit-idkategori"
+                            name="id" required>
 
                         <div class="px-4 pb-4 items-center">
                             <label for="detail_kategori"

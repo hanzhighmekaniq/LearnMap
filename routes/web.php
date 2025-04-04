@@ -77,9 +77,9 @@ Route::get('/', [PengunjungController::class, 'home'])->name('user.home');
 Route::get('/gagal-login', [PengunjungController::class, 'gagal'])->name('gagal.home');
 Route::get('/kursus', [PengunjungController::class, 'kursus'])->name('user.kursus');
 Route::get('/peta', [PengunjungController::class, 'maps'])->name('user.peta');
+Route::post('/store-ulasan', [PengunjungController::class, 'storeUlasann'])->name('storeUlasan');
 Route::get('/kursus/{id}/rute', [PengunjungController::class, 'rute'])->name('user.rute');
 Route::get('/kursus/{id}/detail', [PengunjungController::class, 'detail'])->name('kursus.detail');
-Route::post('/store-ulasan', [PengunjungController::class, 'storeUlasann'])->name('storeUlasan');
 Route::post('/kursus/{id}/detail', [KunjunganController::class, 'visitCourse'])->name('kursus.visit');
 
 Route::get('/set-locale/{lang}', function ($lang) {

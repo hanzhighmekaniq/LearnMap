@@ -11,14 +11,22 @@ class KategoriController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        // Mengambil semua data kursus dari model DataKursus
-        $kategori = DataKategori::paginate(10);
+        $query = DataKategori::query();
 
-        // Mengirim data courses dengan gambar ke view
+        // Cek apakah ada input pencarian
+        if ($request->has('search') && !empty($request->search)) {
+            $query->where('nama_kategori', 'like', '%' . $request->search . '%');
+        }
+
+        // Ambil data dengan paginasi
+        $kategori = $query->paginate(10);
+
+        // Kirim data ke view
         return view('admin.dataKategoriAdmin', compact('kategori'));
     }
+
 
     /**
      * Show the form for creating a new resource.

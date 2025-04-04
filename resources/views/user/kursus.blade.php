@@ -17,7 +17,7 @@
                 <div class="relative">
                     <input type="text" name="search" id="search-dropdown"
                         class="pr-14 pl-4 p-2.5 w-full text-sm text-black bg-white border border-gray-300 rounded-md poppins-regular"
-                        placeholder="Pencarian Nama Kursus" value="{{ request('search') }}" />
+                        placeholder="Pencarian Kursus" value="{{ request('search') }}" />
                     <button type="submit"
                         class="absolute top-0 end-0 px-4 h-full text-sm font-medium text-white bg-gradient-to-tr from-[#60BC9D] to-[#12372A] rounded-e-lg">
                         🔍

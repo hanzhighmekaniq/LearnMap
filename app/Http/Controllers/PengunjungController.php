@@ -110,7 +110,7 @@ class PengunjungController extends Controller
 
         // Ambil data kursus beserta ulasan dan kategorinya
         $data = DataKursus::with('kategoris', 'ulasan')->find($id);
-
+        $data->fasilitas = json_decode($data->fasilitas, true);
         if (!$data) {
             abort(404, 'Kursus tidak ditemukan');
         }

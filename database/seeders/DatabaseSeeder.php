@@ -50,25 +50,25 @@ class DatabaseSeeder extends Seeder
             ['nama_kategori' => 'Good Evening'],
         ]);
 
-        // // Buat 3 kategori, setiap kategori memiliki banyak kursus
-        // // Buat 3 kategori
-        $kategoris = DataKategori::factory(3)->create();
+        // // // Buat 3 kategori, setiap kategori memiliki banyak kursus
+        // // // Buat 3 kategori
+        // $kategoris = DataKategori::factory(3)->create();
 
-        // Buat kursus hingga total 20 data
-        $totalKursus = 20;
-        $kategoris->each(function ($kategori) use ($totalKursus, $kategoris) {
-            $jumlahKursusPerKategori = floor($totalKursus / $kategoris->count());
-            DataKursus::factory($jumlahKursusPerKategori)->create([
-                'kategori_id' => $kategori->id,
-            ]);
-        });
+        // // Buat kursus hingga total 20 data
+        // $totalKursus = 20;
+        // $kategoris->each(function ($kategori) use ($totalKursus, $kategoris) {
+        //     $jumlahKursusPerKategori = floor($totalKursus / $kategoris->count());
+        //     DataKursus::factory($jumlahKursusPerKategori)->create([
+        //         'kategori_id' => $kategori->id,
+        //     ]);
+        // });
 
-        // Jika ada sisa karena pembagian tidak rata, tambahkan ke kategori pertama
-        $sisa = $totalKursus % $kategoris->count();
-        if ($sisa > 0) {
-            DataKursus::factory($sisa)->create([
-                'kategori_id' => $kategoris->first()->id,
-            ]);
-        }
+        // // Jika ada sisa karena pembagian tidak rata, tambahkan ke kategori pertama
+        // $sisa = $totalKursus % $kategoris->count();
+        // if ($sisa > 0) {
+        //     DataKursus::factory($sisa)->create([
+        //         'kategori_id' => $kategoris->first()->id,
+        //     ]);
+        // }
     }
 }

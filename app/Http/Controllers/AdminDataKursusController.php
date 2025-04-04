@@ -18,22 +18,34 @@ use App\Models\DataKursus; // Pastikan model diimport
 class AdminDataKursusController extends Controller
 {
 
-    // ADMIN FADIAS TUKANG SERVER
-    public function dataKursus()
+    public function dataKursus(Request $request)
     {
-        // Mengambil semua data kursus dari model DataKursus
-        $courses = DataKursus::with('kategoris')
-            ->where('user_id', auth()->id()) // Filter berdasarkan user yang login
-            ->paginate(10);
+        $query = DataKursus::with('kategoris')
+            ->where('user_id', auth()->id()); // Filter berdasarkan user login
 
-        // Mengambil gambar untuk setiap course, jika ada
+        // Filter berdasarkan pencarian
+        if ($request->has('search') && !empty($request->search)) {
+            $query->where('nama_kursus', 'like', '%' . $request->search . '%');
+        }
+
+        // Filter berdasarkan kategori (jika dipilih)
+        if ($request->has('role') && !empty($request->role)) {
+            $query->whereHas('kategoris', function ($q) use ($request) {
+                $q->where('nama_kategori', $request->role);
+            });
+        }
+        $kategoriList = DataKategori::all();
+        // Ambil data dengan paginasi
+        $courses = $query->paginate(10);
+
+        // Ambil gambar untuk setiap course
         foreach ($courses as $course) {
             $course->imageNames = $course->img_konten ? json_decode($course->img_konten, true) : [];
         }
 
-        // Mengirim data courses dengan gambar ke view
-        return view('admin.dataKursusAdmin', ['courses' => $courses]);
+        return view('admin.dataKursusAdmin', compact('courses', 'kategoriList'));
     }
+
 
 
 

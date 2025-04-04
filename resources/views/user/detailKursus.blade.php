@@ -12,41 +12,92 @@
         </div>
     @enderror
 
-    <div class="flex justify-center items-center p-4">
+    <div class="flex justify-center items-center p-4 pt-20 md:pt-4">
         <div class="h-auto w-full relative ">
             <img src="{{ asset('storage/' . $data->img) }}" alt=""
-                class="aspect-[4/2] w-full object-cover rounded-2xl">
+                class="aspect-[4/3] lg:aspect-[655px] 2xl:h-[895px] w-full object-cover brightness-75  rounded-2xl">
             <figcaption class="container w-full">
 
-                <div class="absolute container bottom-12 left-1/2 transform -translate-x-1/2 space-y-10 text-center">
-                    <p class="poppins-bold text-start text-6xl xl:text-8xl text-white pr-16 w-1/2">
+                <div
+                    class="absolute container bottom-4 lg:bottom-12 left-1/2 transform -translate-x-1/2 space-y-10 text-center px-4">
+                    <p class="poppins-bold text-start text-5xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl text-green-800 pr-16 w-3/4 xl:w-1/2"
+                        style="text-shadow: 2px 2px 4px white;">
                         {{ $data->nama_kursus }}
                     </p>
-                    <div class="flex justify-start space-x-4">
-                        <a href="/kursus/{{ $data->id }}/rute" target="_blank"
-                            class="poppins-medium py-3 px-8 bg-[#4F7F81] text-white rounded-xl text-sm shadow-xl">Rute
-                            Terdekat</a>
-                        <button data-modal-target="default-modal-detail-gambar"
-                            data-modal-toggle="default-modal-detail-gambar"
-                            class="poppins-medium py-3 px-8 bg-[#4F7F81] text-white rounded-xl text-sm shadow-xl">Foto
-                            Detail</button>
+
+
+                    <div class="flex justify-between w-full text-white text-[10px] lg:text-sm" id="tab-buttons">
+                        <button data-target="overview"
+                            class="tab-btn px-8 py-1.5 sm:px-12 md:px-16 sm:py-2 2xl:px-20 xl:py-3 poppins-regular border-white border-2 rounded-3xl bg-white/10 backdrop-blur">Deskripsi</button>
+                        <button data-target="paket"
+                            class="tab-btn px-8 py-1.5 sm:px-12 md:px-16 sm:py-2 2xl:px-20 xl:py-3 poppins-regular border-white border-2 rounded-3xl bg-white/10 backdrop-blur">Paket</button>
+                        <button data-target="metode"
+                            class="tab-btn px-8 py-1.5 sm:px-12 md:px-16 sm:py-2 2xl:px-20 xl:py-3 poppins-regular border-white border-2 rounded-3xl bg-white/10 backdrop-blur">Metode</button>
+                        <button data-target="lokasi"
+                            class="tab-btn px-8 py-1.5 sm:px-12 md:px-16 sm:py-2 2xl:px-20 xl:py-3 poppins-regular border-white border-2 rounded-3xl bg-white/10 backdrop-blur">Lokasi</button>
                     </div>
-                    <div class="flex justify-between w-full text-white">
-                        <button
-                            class="px-20 py-3 poppins-regular bg-gradient-to-tr from-[#60BC9D] to-[#12372A] rounded-3xl">Deskripsi</button>
-                        <button
-                            class="px-20 py-3 poppins-regular bg-gradient-to-tr from-[#60BC9D] to-[#12372A] rounded-3xl">Paket</button>
-                        <button
-                            class="px-20 py-3 poppins-regular bg-gradient-to-tr from-[#60BC9D] to-[#12372A] rounded-3xl">Metode</button>
-                        <button
-                            class="px-20 py-3 poppins-regular bg-gradient-to-tr from-[#60BC9D] to-[#12372A] rounded-3xl">Fasilitas</button>
-                        <button
-                            class="px-20 py-3 poppins-regular bg-gradient-to-tr from-[#60BC9D] to-[#12372A] rounded-3xl">Lokasi</button>
-                    </div>
+
+
                 </div>
             </figcaption>
         </div>
     </div>
+    <div class="container px-0 lg:px-4">
+        <div id="overview" class="tab-content">
+            @include('partials.detail.deskripsi')
+        </div>
+        <div id="paket" class="tab-content hidden">
+            @include('partials.detail.paket')
+        </div>
+        <div id="metode" class="tab-content hidden">
+            @include('partials.detail.metode')
+        </div>
+        <div id="lokasi" class="tab-content hidden">
+            @include('partials.detail.lokasi')
+        </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const buttons = document.querySelectorAll('.tab-btn');
+                const contents = document.querySelectorAll('.tab-content');
 
-    @include('partials.detail.deskripsi')
+                function activateTab(targetId) {
+                    // Sembunyikan semua konten
+                    contents.forEach(content => content.classList.add('hidden'));
+
+                    // Reset semua tombol
+                    buttons.forEach(btn => {
+                        btn.classList.remove('bg-gradient-to-tr', 'from-[#60BC9D]', 'to-[#12372A]',
+                            'ring-white', 'scale-105');
+                        btn.classList.add('bg-white/10', 'backdrop-blur');
+                    });
+
+                    // Tampilkan konten sesuai target
+                    const targetContent = document.getElementById(targetId);
+                    if (targetContent) targetContent.classList.remove('hidden');
+
+                    // Aktifkan tombol terkait
+                    const activeButton = document.querySelector(`.tab-btn[data-target="${targetId}"]`);
+                    if (activeButton) {
+                        activeButton.classList.remove('bg-white/10', 'backdrop-blur');
+                        activeButton.classList.add('bg-gradient-to-tr', 'from-[#60BC9D]', 'to-[#12372A]',
+                            'ring-white', 'scale-105');
+                    }
+                }
+
+                // Default tab
+                activateTab('overview');
+
+                // Tambahkan event ke semua tombol
+                buttons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        const target = this.getAttribute('data-target');
+                        activateTab(target);
+                    });
+                });
+            });
+        </script>
+
+
+    </div>
+    {{-- @include('partials.detail.deskripsi') --}}
 </x-layout>
