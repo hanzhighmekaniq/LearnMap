@@ -52,9 +52,9 @@
         </p>
         <p class="poppins-semibold pb-4">{{ $data->nama_kursus }}</p>
         <p class="pl-4 poppins-regular text-lg text-black" id="lokasi-text">
-            {!! htmlspecialchars_decode(Str::limit(strip_tags($data->lokasi, '<br><p><strong><em>'), 250, '...')) !!}
+            {!! htmlspecialchars_decode(Str::limit(strip_tags($data->lokasi, '<br><p><strong><em>'), 400, '...')) !!}
         </p>
-        @if (strlen(strip_tags($data->lokasi)) > 250)
+        @if (strlen(strip_tags($data->lokasi)) > 400)
             <button id="toggle-lokasi" class="pl-4 text-blue-500 hover:underline poppins-medium text-sm mt-2">
                 Lihat Selengkapnya
             </button>
@@ -68,7 +68,7 @@
                 if (lokasiText && toggleButton) {
                     const fullText = `{!! addslashes($data->lokasi) !!}`;
                     const shortText = `{!! addslashes(
-                        htmlspecialchars_decode(Str::limit(strip_tags($data->lokasi, '<br><p><strong><em>'), 250, '...')),
+                        htmlspecialchars_decode(Str::limit(strip_tags($data->lokasi, '<br><p><strong><em>'), 400, '...')),
                     ) !!}`;
                     let expanded = false;
 
