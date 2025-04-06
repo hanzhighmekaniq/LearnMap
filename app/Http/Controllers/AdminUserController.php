@@ -56,6 +56,7 @@ class AdminUserController extends Controller
             $validatedData = $request->validate([
                 'name' => 'required|string|max:255',
                 'email' => 'required|email|unique:users,email',
+                'username' => 'required',
                 'password' => 'required|min:6',
                 'verif_password' => 'required|same:password',
             ]);
@@ -64,6 +65,7 @@ class AdminUserController extends Controller
             User::create([
                 'name' => $validatedData['name'],
                 'email' => $validatedData['email'],
+                'username' => $validatedData['username'],
                 'password' => Hash::make($validatedData['password']), // Hash password untuk keamanan
                 'role' => 'user', // Default role untuk user baru
             ]);

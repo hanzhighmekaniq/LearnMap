@@ -58,6 +58,7 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
 // Route untuk ADMIN (Hanya Admin)
 Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('/kategori', KategoriController::class);
+    Route::resource('/user', AdminUserController::class);
 });
 
 // Route untuk USER (Hanya User)

@@ -58,41 +58,71 @@
 
                             {{-- Tombol +n jika lebih dari 3 gambar --}}
                             @if (count($imageNames) > 3)
-                                <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white text-lg font-bold rounded-lg cursor-pointer"
-                                    onclick="openModal()">
+                                <button data-modal-toggle="imageModal"
+                                    class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white text-lg font-bold rounded-lg cursor-pointer">
                                     +{{ count($imageNames) - 3 }}
-                                </div>
+                                </button>
                             @endif
+
                         @endif
                     </div>
                 </div>
             @endif
 
             {{-- Modal untuk menampilkan semua gambar --}}
-            <div id="imageModal"
-                class="fixed inset-0 hidden bg-black bg-opacity-80 flex items-center justify-center z-50">
-                <div class="bg-white p-5 rounded-lg shadow-lg max-w-3xl w-full relative">
-                    <button onclick="closeModal()"
-                        class="absolute top-2 right-2 text-white bg-red-500 p-2 rounded-full">✖</button>
-                    <div class="grid grid-cols-2 gap-2 max-h-[80vh] overflow-y-auto p-2">
-                        @foreach ($imageNames as $image)
-                            <img src="{{ asset('storage/' . $image) }}" alt="Gambar Detail"
-                                class="w-full h-40 object-cover rounded-lg">
-                        @endforeach
+            <div id="imageModal" tabindex="-1" aria-hidden="true"
+                class="fixed inset-0 hidden z-[999] overflow-y-auto overflow-x-hidden bg-black bg-opacity-80 flex items-center justify-center">
+                <div class="relative p-4 w-full max-w-6xl max-h-full">
+                    <!-- Modal content -->
+                    <div class="relative bg-white rounded-lg shadow">
+
+                        <!-- Close button di pojok kanan atas -->
+                        <button type="button"
+                            class="absolute top-2 right-2 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 inline-flex justify-center items-center z-50"
+                            onclick="toggleModal('imageModal')">
+                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                viewBox="0 0 14 14">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M1 1l6 6m0 0l6 6M7 7l6-6M7 7L1 13" />
+                            </svg>
+                            <span class="sr-only">Tutup modal</span>
+                        </button>
+
+                        <div class="grid grid-cols-1 gap-4 p-6 overflow-y-auto max-h-[80vh]">
+                            @foreach ($imageNames as $image)
+                                <img src="{{ asset('storage/' . $image) }}" alt="Gambar Detail"
+                                    class="w-full h-auto object-contain rounded-lg shadow-md">
+                            @endforeach
+                        </div>
                     </div>
                 </div>
             </div>
 
-            {{-- JavaScript untuk Modal --}}
+
             <script>
-                function openModal() {
-                    document.getElementById('imageModal').classList.remove('hidden');
+                // Toggle modal visibility
+                function toggleModal(id) {
+                    const modal = document.getElementById(id);
+                    modal.classList.toggle('hidden');
                 }
 
-                function closeModal() {
-                    document.getElementById('imageModal').classList.add('hidden');
-                }
+                // Klik di luar modal content = close
+                window.addEventListener('click', function (event) {
+                    const modal = document.getElementById('imageModal');
+                    if (!modal.classList.contains('hidden') && event.target === modal) {
+                        modal.classList.add('hidden');
+                    }
+                });
+
+                // Untuk tombol dengan data-modal-toggle
+                document.querySelectorAll('[data-modal-toggle]').forEach(button => {
+                    button.addEventListener('click', () => {
+                        const targetId = button.getAttribute('data-modal-toggle');
+                        toggleModal(targetId);
+                    });
+                });
             </script>
+
         @else
             <p class="text-gray-500 italic text-center">Tidak ada gambar yang tersedia.</p>
         @endif
@@ -262,8 +292,8 @@
 
         @guest
             <p class="text-sm poppins-regular text-gray-500">
-                Anda harus <a href="{{ route('login') }}"
-                    class="text-green-800 poppins-semibold hover:underline">login</a> untuk
+                Anda harus <a href="{{ route('login') }}" class="text-green-800 poppins-semibold hover:underline">login</a>
+                untuk
                 memberikan ulasan.
             </p>
         @endguest

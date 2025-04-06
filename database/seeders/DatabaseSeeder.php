@@ -15,13 +15,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::create([
-            'name' => 'Salma Admin',
-            'email' => 'salma@gmail.com',
-            'username' => 'salma',
-            'password' => bcrypt('salma281103'), // Ganti dengan password pilihan Anda
-            'role' => 'admin',
-        ]);
+        // User::create([
+        //     'name' => 'Salma Admin',
+        //     'email' => 'salma@gmail.com',
+        //     'username' => 'salma',
+        //     'password' => bcrypt('salma281103'), // Ganti dengan password pilihan Anda
+        //     'role' => 'admin',
+        // ]);
         User::create([
             'name' => 'Admin',
             'email' => 'admin@gmail.com',
@@ -43,12 +43,12 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('pengunjung123'), // Ganti dengan password pilihan Anda
             'role' => 'pengunjung',
         ]);
-        DataKategori::insert([
-            ['nama_kategori' => 'Speaking'],
-            ['nama_kategori' => 'Reading'],
-            ['nama_kategori' => 'Good Looking'],
-            ['nama_kategori' => 'Good Evening'],
-        ]);
+        // DataKategori::insert([
+        //     ['nama_kategori' => 'Speaking'],
+        //     ['nama_kategori' => 'Reading'],
+        //     ['nama_kategori' => 'Good Looking'],
+        //     ['nama_kategori' => 'Good Evening'],
+        // ]);
 
         // // // Buat 3 kategori, setiap kategori memiliki banyak kursus
         // // // Buat 3 kategori

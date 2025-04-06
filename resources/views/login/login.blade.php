@@ -65,9 +65,8 @@
                         <a href="{{ route('password.forget') }}"
                             class="text-sm text-green-800 poppins-regular mt-2 inline-block">Forgot password?</a>
                     </div>
-                    <button
-                        class="w-full bg-gradient-to-tr from-[#60BC9D] to-[#12372A] text-white rounded-lg py-2 poppins-regular"
-                        type="submit">Log In</button>
+                    <button class="w-full bg-gradient-to-tr from-[#60BC9D] to-[#12372A] text-white rounded-lg py-2 poppins-regular
+                    transition delay-100 duration-300 ease-in-out  hover:-translate-y-1 hover:scale-110 hover:bg-green-800" type="submit">Log In</button>
                 </form>
 
                 <p class="mt-4 poppins-regula text-sm text-gray-500">

@@ -24,8 +24,8 @@
                                 placeholder="Search users..." />
                             <button type="submit"
                                 class="absolute top-0 end-0 p-2.5 text-sm font-medium h-full text-white bg-gradient-to-tr from-[#60BC9D] to-[#12372A] rounded-e-lg border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
-                                <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                    fill="none" viewBox="0 0 20 20">
+                                <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                    viewBox="0 0 20 20">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                         stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                                 </svg>
@@ -141,6 +141,12 @@
                             class="w-full px-3 border rounded-lg focus:outline-none focus:ring focus:border-blue-300"
                             placeholder="Masukkan Email" required autocomplete="off">
                     </div>
+                    <div class="p-4 items-center">
+                        <label for="Username" class="block text-gray-700 font-bold mb-1">Username</label>
+                        <input type="Username" id="Username" name="username"
+                            class="w-full px-3 border rounded-lg focus:outline-none focus:ring focus:border-blue-300"
+                            placeholder="Masukkan Username" required autocomplete="off">
+                    </div>
 
                     <div class="p-4 items-center">
                         <label for="password" class="block text-gray-700 font-bold mb-1">Password</label>
@@ -174,8 +180,7 @@
     </div>
     <!-- Modal EDIT Kategori -->
     @foreach ($user as $index)
-        <div id="modal-edit-users-{{ $index->id }}" data-modal-backdrop="static" tabindex="-1"
-            aria-hidden="true"
+        <div id="modal-edit-users-{{ $index->id }}" data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
             class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
             <div class="relative p-4 w-full max-w-2xl max-h-full">
                 <div class="relative bg-white rounded-lg shadow ">
@@ -186,10 +191,10 @@
                         <button type="button"
                             class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center "
                             data-modal-hide="modal-edit-users-{{ $index->id }}">
-                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                fill="none" viewBox="0 0 14 14">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                viewBox="0 0 14 14">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
                             </svg>
                             <span class="sr-only">Close modal</span>
                         </button>
@@ -197,8 +202,7 @@
                     <form id="edit-user-form" method="POST" action="{{ route('user.update', $index->id) }}">
                         @csrf <!-- Token CSRF -->
                         @method('PUT') <!-- Menggunakan metode PUT -->
-                        <input hidden value="{{ $index->id }}" type="text" id="edit-idkategori"
-                            name="id" required>
+                        <input hidden value="{{ $index->id }}" type="text" id="edit-idkategori" name="id" required>
 
                         <div class="px-4 pb-4 items-center">
                             <label for="Name" class="block mt-4 text-gray-700 font-bold mb-1">Nama</label>
@@ -240,16 +244,16 @@
                         id="close-modal">
                         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                             viewBox="0 0 14 14">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
                         </svg>
                         <span class="sr-only">Close modal</span>
                     </button>
                     <div class="p-4 md:p-5 text-center">
                         <svg class="mx-auto mb-4 text-gray-400 w-12 h-12 " aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                         </svg>
                         <h3 class="mb-5 text-lg font-normal text-gray-500 ">Anda yakin ingin
                             menghapus?</h3>
@@ -263,8 +267,7 @@
                                 </button>
                             </form>
 
-                            <button type="button"
-                                id="cancel-logout"data-modal-hide="modal-delete-user-{{ $index->id }}"
+                            <button type="button" id="cancel-logout" data-modal-hide="modal-delete-user-{{ $index->id }}"
                                 class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-red-700 focus:z-10 focus:ring-4 focus:ring-gray-100 ">
                                 Tidak, Batal
                             </button>
