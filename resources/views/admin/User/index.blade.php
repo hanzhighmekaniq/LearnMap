@@ -47,6 +47,7 @@
                             <th scope="col" class="py-3 px-4 text-end border-r border-gray-300">No</th>
                             <th scope="col" class="py-3 px-4 text-end border-r border-gray-300">Nama</th>
                             <th scope="col" class="py-3 px-4 text-end border-r border-gray-300">Email</th>
+                            <th scope="col" class="py-3 px-4 text-end border-r border-gray-300">Username</th>
                             <th scope="col" class="py-3 px-4 text-end border-r border-gray-300">Role</th>
                             <th scope="col" class="py-3 px-4 text-end border-r border-gray-300">Terdaftar</th>
                             <th scope="col" class="py-3 px-4 text-end border-r border-gray-300">Diperbarui</th>
@@ -65,6 +66,9 @@
                                 </td>
                                 <td class="py-4 px-4 text-end border-r border-gray-300">
                                     {{ $index->email }}
+                                </td>
+                                <td class="py-4 px-4 text-end border-r border-gray-300">
+                                    {{ $index->username }}
                                 </td>
                                 <td class="py-4 px-4 text-end border-r border-gray-300">
                                     {{ $index->role }}

@@ -113,92 +113,89 @@
                             placeholder="Write your thoughts here..."></trix-editor>
                     </div>
                     <div>
-                        <label for="fasilitas" class="block mb-2 text-sm font-medium text-gray-900">Fasilitas</label>
-                        <input id="fasilitas" name="fasilitas" type="hidden" value="{{ old('fasilitas') }}" />
+    <label for="fasilitas" class="block mb-2 text-sm font-medium text-gray-900">Fasilitas</label>
+    <input id="fasilitas" name="fasilitas" type="hidden" value="{{ old('fasilitas') }}" />
 
-                        <!-- Tombol tambah fasilitas -->
-                        <div id="facility-inputs" class=" grid grid-cols-4 gap-4">
-                            <!-- Input fasilitas akan ditambahkan di sini -->
-                        </div>
-                        <button id="add-facility-btn" type="button"
-                            class="mt-3 px-4 py-2 text-xs bg-blue-500 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                            Tambah Fasilitas
-                        </button>
-                    </div>
+    <!-- Tombol tambah fasilitas -->
+    <div id="facility-inputs" class="grid grid-cols-4 gap-4">
+        <!-- Input fasilitas akan ditambahkan di sini -->
+    </div>
+    <button id="add-facility-btn" type="button"
+        class="mt-3 px-4 py-2 text-xs bg-blue-500 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+        Tambah Fasilitas
+    </button>
+</div>
 
-                    <!-- Script untuk menambah input fasilitas -->
-                    <script>
-                        let facilityIndex = 0; // Untuk memastikan setiap input memiliki ID unik
+<!-- Script untuk menambah input fasilitas -->
+<script>
+    let facilityIndex = 0; // Untuk memastikan setiap input memiliki ID unik
 
-                        // Fungsi untuk menambahkan input fasilitas
-                        function addFacilityInput() {
-                            // Buat div baru untuk input fasilitas
-                            const facilityDiv = document.createElement('div');
-                            facilityDiv.classList.add('facility-input', 'bg-gray-100', 'rounded-lg');
+    // Fungsi untuk memperbarui nilai JSON di input tersembunyi
+    function updateFasilitasInput() {
+        const fasilitasArray = [];
+        const facilityInputs = document.querySelectorAll('.facility-input input');
 
-                            // Buat label untuk input fasilitas
-                            const label = document.createElement('label');
-                            label.setAttribute('for', 'fasilitas_' + facilityIndex);
-                            label.classList.add('block', 'text-sm', 'font-medium', 'text-gray-700');
+        facilityInputs.forEach(input => {
+            if (input.value.trim() !== '') {
+                fasilitasArray.push(input.value.trim());
+            }
+        });
 
-                            // Buat input untuk fasilitas
-                            const input = document.createElement('input');
-                            input.id = 'fasilitas_' + facilityIndex;
-                            input.name = 'fasilitas_' + facilityIndex;
-                            input.type = 'text';
-                            input.classList.add('block', 'w-full', 'px-3', 'py-2', 'border', 'border-gray-300', 'rounded-md',
-                                'shadow-sm');
-                            input.placeholder = 'Masukkan fasilitas';
+        document.getElementById('fasilitas').value = JSON.stringify(fasilitasArray);
+    }
 
-                            // Buat tombol hapus untuk input fasilitas ini
-                            const deleteButton = document.createElement('button');
-                            deleteButton.type = 'button';
-                            deleteButton.classList.add('ml-2', 'text-red-500', 'hover:text-red-700');
-                            deleteButton.textContent = 'Hapus';
-                            deleteButton.addEventListener('click', function() {
-                                facilityDiv.remove();
-                                updateFasilitasInput();
-                            });
+    // Fungsi untuk menambahkan input fasilitas
+    function addFacilityInput() {
+        const facilityDiv = document.createElement('div');
+        facilityDiv.classList.add('facility-input', 'bg-gray-100', 'rounded-lg');
 
-                            // Menambahkan elemen-elemen ke dalam div fasilitas
-                            facilityDiv.appendChild(label);
-                            facilityDiv.appendChild(input);
-                            facilityDiv.appendChild(deleteButton);
+        const label = document.createElement('label');
+        label.setAttribute('for', 'fasilitas_' + facilityIndex);
+        label.classList.add('block', 'text-sm', 'font-medium', 'text-gray-700');
+        label.textContent = 'Fasilitas ' + (facilityIndex + 1);
 
-                            // Menambahkan div fasilitas ke dalam kontainer
-                            document.getElementById('facility-inputs').appendChild(facilityDiv);
+        const input = document.createElement('input');
+        input.id = 'fasilitas_' + facilityIndex;
+        input.name = 'fasilitas_' + facilityIndex;
+        input.type = 'text';
+        input.classList.add('block', 'w-full', 'px-3', 'py-2', 'border', 'border-gray-300', 'rounded-md', 'shadow-sm');
+        input.placeholder = 'Masukkan fasilitas';
 
-                            // Update indeks fasilitas untuk input selanjutnya
-                            facilityIndex++;
+        // ✅ Update JSON saat user ngetik
+        input.addEventListener('input', updateFasilitasInput);
 
-                            // Update input tersembunyi dengan nilai terbaru JSON
-                            updateFasilitasInput();
-                        }
+        const deleteButton = document.createElement('button');
+        deleteButton.type = 'button';
+        deleteButton.classList.add('ml-2', 'text-red-500', 'hover:text-red-700');
+        deleteButton.textContent = 'Hapus';
+        deleteButton.addEventListener('click', function () {
+            facilityDiv.remove();
+            updateFasilitasInput();
+        });
 
-                        // Tambahkan fasilitas pertama kali saat halaman dimuat
-                        addFacilityInput();
+        facilityDiv.appendChild(label);
+        facilityDiv.appendChild(input);
+        facilityDiv.appendChild(deleteButton);
 
-                        // Event listener untuk tombol tambah fasilitas
-                        document.getElementById('add-facility-btn').addEventListener('click', function() {
-                            addFacilityInput();
-                        });
+        document.getElementById('facility-inputs').appendChild(facilityDiv);
 
-                        // Fungsi untuk memperbarui nilai JSON di input tersembunyi
-                        function updateFasilitasInput() {
-                            const fasilitasArray = [];
-                            const facilityInputs = document.querySelectorAll('.facility-input input');
+        facilityIndex++;
+    }
 
-                            // Ambil nilai dari semua input fasilitas
-                            facilityInputs.forEach(input => {
-                                if (input.value.trim() !== '') {
-                                    fasilitasArray.push(input.value.trim());
-                                }
-                            });
+    // Tambahkan satu fasilitas saat halaman pertama kali dimuat
+    addFacilityInput();
 
-                            // Setel nilai JSON di input tersembunyi
-                            document.getElementById('fasilitas').value = JSON.stringify(fasilitasArray);
-                        }
-                    </script>
+    // Tombol tambah fasilitas
+    document.getElementById('add-facility-btn').addEventListener('click', function () {
+        addFacilityInput();
+    });
+
+    // Saat form disubmit, update hidden input dulu
+    document.getElementById("my-form").addEventListener("submit", function () {
+        updateFasilitasInput();
+    });
+</script>
+
                     <div>
                         <label for="latitude" class="block mb-2 text-sm font-medium text-gray-900">Uplaud
                             Gambar</label>
@@ -325,6 +322,8 @@
                         </div>
                     @endif
                 </div>
+               
+
             </form>
 
             <!-- Modal Konfirmasi -->

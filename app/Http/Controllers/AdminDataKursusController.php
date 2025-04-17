@@ -65,7 +65,6 @@ class AdminDataKursusController extends Controller
                 'deskripsi' => 'required',
                 'paket' => 'required',
                 'metode' => 'required',
-                'fasilitas' => 'required',
                 'lokasi' => 'required',
                 'latitude' => 'required', // Ubah menjadi wajib diisi
                 'longitude' => 'required', // Ubah menjadi wajib diisi
@@ -80,7 +79,6 @@ class AdminDataKursusController extends Controller
                 'deskripsi.required' => 'Deskripsi wajib diisi.',
                 'paket.required' => 'Paket wajib diisi.',
                 'metode.required' => 'Metode wajib diisi.',
-                'fasilitas.required' => 'Fasilitas wajib diisi.',
                 'lokasi.required' => 'Lokasi wajib diisi.',
                 'latitude.required' => 'Latitude wajib diisi.', // Pesan error custom
                 'longitude.required' => 'Longitude wajib diisi.', // Pesan error custom
@@ -114,7 +112,7 @@ class AdminDataKursusController extends Controller
                 'deskripsi' => $request->deskripsi,
                 'paket' => $request->paket,
                 'metode' => $request->metode,
-                'fasilitas' => json_encode(json_decode($request->fasilitas, true)), // Pastikan data tersimpan sebagai JSON valid
+                'fasilitas' => $request->fasilitas,
                 'lokasi' => $request->lokasi,
                 'latitude' => $request->latitude,
                 'longitude' => $request->longitude,
@@ -123,6 +121,7 @@ class AdminDataKursusController extends Controller
             ]);
 
             // Redirect setelah berhasil
+            // dd($request->fasilitas);
             return redirect('admin/data-kursus')->with('success', 'Data berhasil disimpan.');
         } catch (\Exception $e) {
             // Tangani kesalahan
@@ -163,8 +162,6 @@ class AdminDataKursusController extends Controller
             'longitude' => 'required|numeric',
             'paket' => 'required|string',
             'metode' => 'required|string',
-            'fasilitas' => 'required|array', // Mengizinkan array
-            'fasilitas.*' => 'required|string', // Setiap elemen harus string
             'lokasi' => 'required|string',
         ], [
             'nama_kursus.required' => 'Nama kursus wajib diisi.',
@@ -178,8 +175,6 @@ class AdminDataKursusController extends Controller
             'longitude.numeric' => 'Longitude harus berupa angka.',
             'paket.required' => 'Paket wajib diisi.',
             'metode.required' => 'Metode wajib diisi.',
-            'fasilitas.required' => 'Fasilitas wajib diisi.',
-            'fasilitas.array' => 'Fasilitas harus dalam format array.',
             'lokasi.required' => 'Lokasi wajib diisi.',
         ]);
 

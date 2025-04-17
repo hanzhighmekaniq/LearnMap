@@ -102,12 +102,17 @@
                                 <td class="py-4 text-end px-4 border-r border-gray-300">{!! Str::limit($course->metode, 50, '...') !!}</td>
                                 <td class="py-4 text-end px-4 border-r border-gray-300">{!! Str::limit($course->lokasi, 50, '...') !!}</td> --}}
                                 <td class="py-4 text-end px-4 border-r border-gray-300 uppercase">
-                                    @php
-                                        $fasilitasArray = json_decode($course->fasilitas, true);
-                                        $fasilitasText = $fasilitasArray ? implode(', ', $fasilitasArray) : '-';
-                                    @endphp
-                                    {!! Str::limit($fasilitasText, 50, '...') !!}
-                                </td>
+    @php
+        $fasilitasArray = json_decode($course->fasilitas, true);
+        if (is_array($fasilitasArray) && !empty($fasilitasArray)) {
+            $fasilitasText = implode(', ', $fasilitasArray);
+        } else {
+            $fasilitasText = '-';
+        }
+    @endphp
+    {!! Str::limit($fasilitasText, 50, '...') !!}
+</td>
+
 
                                 <td class="py-4 text-end px-4 border-r border-gray-300">
                                     {{ $course->latitude }},{{ $course->longitude }}</td>

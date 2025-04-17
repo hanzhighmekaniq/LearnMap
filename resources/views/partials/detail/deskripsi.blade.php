@@ -1,7 +1,7 @@
 <div class="grid lg:grid-cols-2 gap-10 pb-10 px-4 md:px-0">
     <div class=" space-y-4 lg:pr-28">
         <div class="">
-            <div class="flex justify-start mb-4 mt-2">
+            <!-- <div class="flex justify-start mb-4 mt-2">
                 <a href="/kursus/{{ $data->id }}/rute" target="_blank"
                     class="inline-flex items-center gap-2 px-5 py-2 text-white bg-gradient-to-tr from-[#60BC9D] to-[#12372A] hover:brightness-110 transition-all duration-200 rounded-full shadow-md poppins-medium text-sm">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24"
@@ -11,7 +11,7 @@
                     </svg>
                     Lihat Rute
                 </a>
-            </div>
+            </div> -->
 
             <p class="font-bold pb-2">
                 {{ $data->nama_kursus }}

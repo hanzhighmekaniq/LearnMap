@@ -20,7 +20,7 @@
 
                 <div
                     class="absolute container bottom-4 lg:bottom-12 left-1/2 transform -translate-x-1/2 space-y-10 text-center px-4">
-                    <p class="poppins-bold text-start text-5xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl text-green-800 pr-16 w-3/4 xl:w-1/2"
+                    <p class="poppins-bold text-start text-4xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl text-green-800 pr-16 w-3/4 xl:w-1/2"
                         style="text-shadow: 2px 2px 4px white;">
                         {{ $data->nama_kursus }}
                     </p>
