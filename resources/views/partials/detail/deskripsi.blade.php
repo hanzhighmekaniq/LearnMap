@@ -1,5 +1,5 @@
-<div class="grid lg:grid-cols-2 gap-10 pb-10 px-4 md:px-0">
-    <div class=" space-y-4 lg:pr-28">
+<div class="grid lg:grid-cols-2 gap-10 pb-10 px-4 md:px-0 border">
+    <div class=" p-4 space-y-4 lg:pr-28">
         <div class="">
             <!-- <div class="flex justify-start mb-4 mt-2">
                 <a href="/kursus/{{ $data->id }}/rute" target="_blank"
@@ -34,7 +34,7 @@
 
 
     </div>
-    <div class=" space-y-2">
+    <div class="p-4 space-y-2">
         @if (!empty($imageNames) && is_array($imageNames) && count($imageNames) > 0)
             {{-- Gambar utama di atas --}}
             <div>

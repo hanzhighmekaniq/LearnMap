@@ -3,7 +3,6 @@
 
 <!-- CSS Aplikasi -->
 @vite(['resources/css/app.css', 'resources/js/app.js'])
-<link href="{{ mix('css/app.css') }}" rel="stylesheet">
 
 <!-- Viewport untuk Responsif -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
