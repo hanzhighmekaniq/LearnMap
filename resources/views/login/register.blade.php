@@ -32,6 +32,12 @@
                         placeholder="Full Name" required />
                 </div>
                 <div class="mb-5">
+                    <label for="username" class="block mb-2 text-sm poppins-regular text-gray-900">Username</label>
+                    <input type="text" id="username" name="username" value="{{ old('username') }}"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm poppins-regular rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                        placeholder="username" required />
+                </div>
+                <div class="mb-5">
                     <label for="email" class="block mb-2 text-sm poppins-regular text-gray-900">Your Email</label>
                     <input type="email" id="email" name="email"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm poppins-regular rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"

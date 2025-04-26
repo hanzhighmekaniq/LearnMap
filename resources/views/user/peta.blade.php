@@ -3,7 +3,8 @@
         #map1 {
             max-width: 100%;
         }
-    </style>
+    </style><!-- Leaflet CSS dan JS -->
+
     <div class="container py-14 px-4">
         <div class="py-10 lg:py-16 2xl:py-20">
             <!-- Peta Leaflet -->
@@ -40,12 +41,7 @@
         </div>
     </div>
 
-    <!-- Leaflet CSS dan JS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
-    <!-- Flowbite JS -->
-    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.js"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -61,7 +57,7 @@
 
             // Tambahkan tile layer dari OpenStreetMap
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                attribution: ''
             }).addTo(map);
 
             // Tambahkan marker dari data Blade

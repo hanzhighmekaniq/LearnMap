@@ -18,6 +18,7 @@ class PendingUser extends Authenticatable implements MustVerifyEmail
      */
     protected $fillable = [
         'name',
+        'username',
         'email',
         'password',
         'email_verified_at',
