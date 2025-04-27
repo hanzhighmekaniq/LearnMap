@@ -6,7 +6,7 @@
     {{-- <script src="../path/to/flowbite/dist/flowbite.min.js"></script> --}}
     {{-- <script src="https://cdn.jsdelivr.net/npm/flowbite@3.0.0/dist/flowbite.min.js"></script> --}}
     @include('partials.head')
-    @vite(['resources/css/app.css', 'resources/js/app.js', 'public/css/font.css'])
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     @include('partials.font')
     @include('partials.notification')
 </head>

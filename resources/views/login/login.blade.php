@@ -80,11 +80,11 @@
             style="background-image: url('{{ asset('img/bg-login.jpg') }}'); background-size: object-contain;">
             <div class="absolute inset-0  opacity-25"></div>
             <div class="relative z-10 p-8">
-                <h2 class="text-5xl barlow-condensed-semibold text-green-800 mb-4">MARI TEMUKAN KURSUS IMPIANMU BERSAMA
+                <!--<h2 class="text-5xl barlow-condensed-semibold text-green-800 mb-4">MARI TEMUKAN KURSUS IMPIANMU BERSAMA
                     LEARN MAP.</h2>
                 <p class="text-black poppins-regular ">Jelajahi kursus berkualitas bersama Learn Map, sekarang juga.
                     Temukan berbagai pilihan kursus yang dirancang untuk meningkatkan keterampilan dan pengetahuanmu.
-                </p>
+                </p>-->
             </div>
         </div>
     </div>
