@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Kunjungan;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class DataKursus extends Model
 {
@@ -12,6 +15,7 @@ class DataKursus extends Model
     protected $table = 'data_kursus';
 
     protected $fillable = [
+        'kategori_id',
         'nama_kursus',
         'img',
         'deskripsi',
@@ -21,8 +25,30 @@ class DataKursus extends Model
         'lokasi',
         'latitude',
         'longitude', // Pastikan nama kolom sesuai dengan migrasi
-        'img_konten'
+        'popular', // Pastikan nama kolom sesuai dengan migrasi
+        'img_konten',
+        'user_id'
+
     ];
 
     public $timestamps = true;
+
+    public function kategoris(): BelongsTo
+    {
+        return $this->belongsTo(DataKategori::class, 'kategori_id', 'id'); // Menentukan foreign key dan local key
+    }
+
+    public function kunjungan(): HasMany
+    {
+        return $this->hasMany(Kunjungan::class, 'kursus_id', 'id'); // Menentukan foreign key dan local key
+    }
+
+    public function ulasan(): HasMany
+    {
+        return $this->hasMany(DataUlasan::class, 'kursus_id', 'id'); // Menentukan foreign key dan local key
+    }
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id'); // Menentukan foreign key dan local key
+    }
 }

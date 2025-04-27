@@ -1,101 +1,213 @@
 <x-layout>
-    <div class="py-10 bg-white ">
-        <div class="bg-[#EBFEA1] container poppins-extrabold m-auto flex items-center justify-center p-2">
-            <p>Halaman ini berisi tentang kursus di Pare! </p>
-        </div>
-    </div>
+    {{-- @include('partials.detail.lokasi') --}}
 
-    <div class="container flex justify-end items-center pb-16">
-        <div id="default-carousel" class="relative w-full" data-carousel="slide">
-            <!-- Carousel wrapper -->
-                <div class="relative h-48 sm:h-[250px] md:h-[350px] lg:h-[450px] xl:h-[500px] 2xl:h-[600px] overflow-hidden rounded-lg">
-                    @foreach ($imageNames as $index => $imageName)
-                        <div class="hidden duration-1000 ease-in-out" data-carousel-item>
-                            <img src="{{ asset('storage/' . $imageName) }}"
-                                class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-                                alt="...">
+    <!--@if (session('error'))-->
+    <!--    <div-->
+    <!--        class="fixed top-32 left-1/2 transform -translate-x-1/2 bg-red-500 text-white px-6 py-3 rounded-md shadow-lg z-[1000]">-->
+    <!--        {{ session('error') }}-->
+    <!--    </div>-->
+    <!--@endif-->
+    <!--@error('rating')-->
+    <!--    <div-->
+    <!--        class="fixed top-32 left-1/2 transform -translate-x-1/2 bg-red-500 text-white px-6 py-3 rounded-md shadow-lg z-[1000]">-->
+    <!--        {{ $message }}-->
+    <!--    </div>-->
+    <!--@enderror-->
+
+    <div class="flex justify-center items-center p-4 pt-20 md:pt-4">
+        <div class="h-auto w-full relative">
+            <img src="{{ asset('storage/' . $data->img) }}" alt=""
+                class="aspect-[4/3] lg:aspect-[655px] 2xl:h-[895px] w-full object-cover brightness-75 rounded-2xl">
+            <figcaption class="container w-full">
+                <div
+                    class="absolute container bottom-4 lg:bottom-12 left-1/2 transform -translate-x-1/2 space-y-10 text-center px-4">
+
+                    <!-- Judul -->
+                    <p class="poppins-bold text-start text-4xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl text-green-800 pr-16 w-3/4 xl:w-1/2"
+                        style="text-shadow: 2px 2px 4px white;">
+                        {{ $data->nama_kursus }}
+                    </p>
+
+                    <!-- Tab buttons with full width and scroll -->
+                    <div class="w-full overflow-x-auto h-auto">
+                        <div class="grid grid-cols-4 h-auto gap-4 lg:gap-20 min-w-[640px] sm:min-w-0 w-full p-4"
+                            id="tab-buttons">
+                            <button data-target="overview"
+                                class="tab-btn w-full px-4 py-2 poppins-regular border-white border-2 rounded-3xl bg-white/10 backdrop-blur text-white text-xs sm:text-sm md:text-base">
+                                Deskripsi
+                            </button>
+                            <button data-target="paket"
+                                class="tab-btn w-full px-4 py-2 poppins-regular border-white border-2 rounded-3xl bg-white/10 backdrop-blur text-white text-xs sm:text-sm md:text-base">
+                                Paket
+                            </button>
+                            <button data-target="metode"
+                                class="tab-btn w-full px-4 py-2 poppins-regular border-white border-2 rounded-3xl bg-white/10 backdrop-blur text-white text-xs sm:text-sm md:text-base">
+                                Metode
+                            </button>
+                            <button data-target="lokasi"
+                                class="tab-btn w-full px-4 py-2 poppins-regular border-white border-2 rounded-3xl bg-white/10 backdrop-blur text-white text-xs sm:text-sm md:text-base">
+                                Lokasi
+                            </button>
                         </div>
-                    @endforeach
+                    </div>
+
 
                 </div>
-                <!-- Slider indicators -->
-                <div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
-                    @for ($i = 0; $i < count($imageNames); $i++)
-                        <button type="button" class="w-3 h-3 rounded-full" aria-current="{{ $i === 0 ? 'true' : 'false' }}" aria-label="Slide {{ $i + 1 }}" data-carousel-slide-to="{{ $i }}"></button>
-                    @endfor   
-                </div>
-            <!-- Slider controls -->
-            <button type="button"
-                class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
-                data-carousel-prev>
-                <span
-                    class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30  group-hover:bg-white/50  group-focus:ring-4 group-focus:ring-white group-focus:outline-none">
-                    <svg class="w-4 h-4 text-white  rtl:rotate-180" aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M5 1 1 5l4 4" />
-                    </svg>
-                    <span class="sr-only">Previous</span>
-                </span>
+            </figcaption>
+        </div>
+    </div>
 
-            </button>
-            <button type="button"
-                class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
-                data-carousel-next>
-                <span
-                    class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30  group-hover:bg-white/50 group-focus:ring-4 group-focus:ring-white  group-focus:outline-none">
-                    <svg class="w-4 h-4 text-white  rtl:rotate-180" aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="m1 9 4-4-4-4" />
-                    </svg>
-                    <span class="sr-only">Next</span>
-                </span>
-            </button>
+    <div class="container px-0 lg:px-4">
+        <!-- Tab Overview -->
+        <div id="overview" class="tab-content block transition-all duration-300">
+
+            @include('partials.detail.deskripsi')
+        </div>
+
+        <!-- Tab Paket -->
+        <div id="paket" class="tab-content hidden transition-all duration-300">
+
+            @include('partials.detail.paket')
+        </div>
+
+        <!-- Tab Metode -->
+        <div id="metode" class="tab-content hidden transition-all duration-300">
+
+            @include('partials.detail.metode')
+        </div>
+
+        <!-- Tab Lokasi -->
+        <div id="lokasi" class="tab-content hidden transition-all duration-300">
+
+            <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
+            <link rel="stylesheet" href="node_modules/leaflet/dist/leaflet.css">
+
+            <div class="p-4 border mb-10">
+                <div id="map-id" class="h-96 lg:h-[500px]"></div>
+
+
+                <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+                <script>
+                    // Fungsi untuk menginisialisasi peta jika belum ada
+                    let myMap;
+
+                    function initializeMap() {
+                        if (!myMap) {
+                            myMap = L.map('map-id').setView([{{ $data->latitude }}, {{ $data->longitude }}], 13); // Posisi awal map
+
+                            // Tile Layer dari OpenStreetMap
+                            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                                attribution: ''
+                            }).addTo(myMap);
+
+                            // Icon Marker Custom
+                            const customIcon = L.icon({
+                                iconUrl: 'https://cdn-icons-png.flaticon.com/512/684/684908.png',
+                                iconSize: [38, 38],
+                                iconAnchor: [19, 38],
+                                popupAnchor: [0, -35]
+                            });
+
+                            // Tambahkan Marker di lokasi Yogyakarta
+                            const marker = L.marker([{{ $data->latitude }}, {{ $data->longitude }}], {
+                                icon: customIcon
+                            }).addTo(myMap);
+                            marker.bindPopup(`
+                            <b>{{ $data->nama_kursus }}</b><br>
+                            {{ $data->kategoris->nama_kategori }}<br>
+                            <a href="/kursus/{{ $data->id }}/rute" target="_blank">Lihat Rute</a>
+                        `);
+                        } else {
+                            // Jika peta sudah ada, refresh ukuran peta
+                            myMap.invalidateSize();
+                        }
+                    }
+
+                    // Inisialisasi atau refresh peta saat tab lokasi dibuka
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const buttons = document.querySelectorAll('.tab-btn');
+                        const contents = document.querySelectorAll('.tab-content');
+
+                        // Fungsi untuk menampilkan tab yang aktif
+                        function activateTab(targetId) {
+                            contents.forEach(content => {
+                                content.classList.add('hidden');
+                                content.classList.remove('block');
+                            });
+
+
+                            buttons.forEach(btn => {
+                                btn.classList.remove('bg-gradient-to-tr', 'from-[#60BC9D]', 'to-[#12372A]',
+                                    'ring-white', 'scale-105');
+                                btn.classList.add('bg-white/10', 'backdrop-blur');
+                            });
+
+                            const targetContent = document.getElementById(targetId);
+                            if (targetContent) {
+                                targetContent.classList.remove('hidden');
+                                targetContent.classList.add('block');
+                            }
+
+
+                            const activeButton = document.querySelector(`.tab-btn[data-target="${targetId}"]`);
+                            if (activeButton) {
+                                activeButton.classList.remove('bg-white/10', 'backdrop-blur');
+                                activeButton.classList.add('bg-gradient-to-tr', 'from-[#60BC9D]', 'to-[#12372A]', 'ring-white',
+                                    'scale-105');
+                            }
+
+                            // Inisialisasi atau refresh map jika tab "lokasi" dibuka
+                            if (targetId === 'lokasi') {
+                                setTimeout(() => {
+                                    initializeMap(); // Pastikan peta diinisialisasi atau disegarkan
+                                }, 300); // Delay supaya tab ditampilkan dulu
+                            }
+                        }
+
+                        // Default tab
+                        activateTab('overview');
+
+                        // Event listener untuk setiap tombol tab
+                        buttons.forEach(button => {
+                            button.addEventListener('click', function() {
+                                const target = this.getAttribute('data-target');
+                                activateTab(target);
+                            });
+                        });
+                    });
+                </script>
+                <div class="p-4">
+                    <p class="poppins-semibold text-2xl text-black">
+                        Lokasi
+                    </p>
+                    <div class="flex justify-start mb-4 mt-2">
+                        <a href="/kursus/{{ $data->id }}/rute" target="_blank"
+                            class="inline-flex items-center gap-2 px-5 py-2 text-white bg-gradient-to-tr from-[#60BC9D] to-[#12372A] hover:brightness-110 transition-all duration-200 rounded-full shadow-md poppins-medium text-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M9 20l-5.447-2.724A2 2 0 013 15.382V8.618a2 2 0 01.553-1.382L9 4m6 16l5.447-2.724A2 2 0 0021 15.382V8.618a2 2 0 00-.553-1.382L15 4M9 4v16m6-16v16" />
+                            </svg>
+                            Lihat Rute
+                        </a>
+                    </div>
+                    <p class="poppins-semibold pb-4">{{ $data->nama_kursus }}</p>
+                    <p class="pl-4 poppins-regular text-lg text-black" id="lokasi-text">
+                        {!! htmlspecialchars_decode(Str::limit(strip_tags($data->lokasi, '<br><p><strong><em>'), 2000, '...')) !!}
+                    </p>
+                    @if (strlen(strip_tags($data->lokasi)) > 2000)
+                        <button id="toggle-lokasi"
+                            class="pl-4 text-blue-500 hover:underline poppins-medium text-sm mt-2">
+                            Lihat Selengkapnya
+                        </button>
+                    @endif
+                </div>
+                {{-- @include('partials.detail.lokasi') --}}
+            </div>
         </div>
     </div>
-    <div class="container">
-        <p class="poppins-medium text-3xl text-black py-4">Kampung Inggris LC - Language Center </p>
-        <button class="poppins-regular py-2 px-4 bg-[#4F7F81] text-white rounded-xl text-xl shadow-xl">Rute
-            Terdekat</button>
-        <p class="text-black text-lg py-4 poppins-semibold">Deskripsi</p>
-        <p class="poppins-regular text-black text-2xl pb-2 max-w-7xl">
-            {{ $data->deskripsi }}
-        </p>
-        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-20 py-14">
-            
-            <div class="max-w-max space-y-2">
-                <p class="poppins-semibold text-2xl text-black underline">
-                    Paket
-                </p>
-                <h1 class="popins-reguler text-2xl text-black">
-                    {!! $data->paket !!}
-                </h1>
-            </div>
-            <div class="max-w-max space-y-2">
-                <p class="poppins-semibold text-2xl text-black underline">
-                    Metode Pembelajaran
-                </p>
-                <h1 class="popins-reguler text-2xl text-black">
-                    {!! $data->metode !!}
-                </h1>
-                <p class="poppins-semibold text-2xl text-black pt-6 underline">
-                    Fasilitas
-                </p>
-                <h1 class="popins-reguler text-2xl text-black">
-                    {!! $data->fasilitas !!}
-                </h1>
-            </div>
-            <div class="max-w-max space-y-2">
-                <p class="poppins-semibold text-2xl text-black underline">
-                    Lokasi
-                </p>
-                <h1 class="popins-reguler text-2xl text-black">
-                    {!! $data->lokasi !!}
-                </h1>
-            </div>
-        </div>
-        
-    </div>
+
+
 
 </x-layout>

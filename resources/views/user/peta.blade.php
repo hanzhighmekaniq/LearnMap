@@ -1,83 +1,79 @@
 <x-layout>
     <style>
-        /* Set the height of the map */
-        #map {
-            /* Height will be controlled by Tailwind CSS classes */
+        #map1 {
             max-width: 100%;
         }
-    </style>
-    <div class="container">
-        <div class="py-10 bg-white">
-            <div class="bg-[#EBFEA1] poppins-extrabold m-auto flex items-center justify-center p-2">
-                <p>Halaman ini berisi tentang kursus di Pare!</p>
+    </style><!-- Leaflet CSS dan JS -->
+
+    <div class="container py-14 px-4">
+        <div class="py-10 lg:py-16 2xl:py-20">
+            <!-- Peta Leaflet -->
+            <div id="map1"
+                class="w-full h-56 sm:h-64 md:h-96 lg:h-[500px] xl:h-[650px] max-w-4xl rounded-lg shadow-lg"></div>
+        </div>
+        <div class="">
+            <h2 class="text-2xl lg:text-3xl 2xl:text-5xl barlow-condensed-semibold text-green-800 font-bold mb-1">
+                PETA LEARN-MAP
+            </h2>
+            <h2 class="text-start poppins-regular text-xs lg:text-base 2xl:text-xl text-gray-600 mb-2 lg:mb-6">
+
+                LearnMap adalah sebuah aplikasi website Sistem Informasi Geografis (SIG) yang dirancang
+                khusus
+                untuk memudahkan Anda menemukan tempat bimbingan belajar bahasa Inggris terbaik di Kecamatan
+                Pare,
+                Kabupaten Kediri. Kami menyediakan berbagai pilihan kursus berkualitas tinggi dengan tutor
+                berpengalaman,
+                metode pembelajaran yang interaktif dan menarik, serta akses yang mudah dan cepat melalui
+                platform digital
+                kami. Dengan LearnMap, Anda dapat menjelajahi informasi lengkap tentang lokasi, program, dan
+                fasilitas
+                bimbingan belajar, sehingga membantu Anda meningkatkan keterampilan bahasa Inggris secara
+                efektif dan
+                mewujudkan mimpi Anda untuk menguasai bahasa internasional ini dengan lebih percaya diri.
+            </h2>
+            <div class="flex">
+
+                <a class="text-xs lg:text-sm 2xl:text-lg poppins-regular bg-gradient-to-tr from-[#60BC9D] to-[#12372A] text-white px-4 py-2 2xl:px-6 2xl:py-3 rounded-md"
+                    href="">
+                    Pelajari Lebih Lanjut
+                </a>
             </div>
         </div>
-        <div class="pb-10">
-            <!-- Apply Tailwind CSS classes for responsive width and height -->
-            <div id="map"
-                class="w-full h-56 sm:h-64 md:h-96 lg:h-[500px] xl:h-[650px] max-w-4xl rounded-lg shadow-lg"></div>
-
-            <!-- Leaflet JS -->
-            <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-            <script>
-                // Initialize the map with default center and zoom level
-                const map = L.map('map').setView([-7.7523414, 112.1700522], 15); // Latitude and Longitude
-
-                // Add a tile layer from OpenStreetMap
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                }).addTo(map);
-
-                // Array to hold markers data from the database
-                const markers = [
-                    @foreach ($latilongti as $latilongti)
-                        {
-                            coords: [{{ $latilongti->latitude }}, {{ $latilongti->longitude }}],
-                            popupText: '{{ $latilongti->nama_kursus }}',
-                            href: '{{ route ('admin.dataKursus') }}' // Menambahkan href
-                        },
-                    @endforeach
-                ];
-
-
-                // Add markers to the map
-                markers.forEach(marker => {
-                    L.marker(marker.coords).addTo(map)
-                        .bindPopup(marker.popupText);
-                });
-
-                // Function to handle the successful retrieval of the user's location
-                function onLocationFound(e) {
-                    // Create a custom icon for the user's location
-                    const userIcon = L.icon({
-                        iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-red.png', // Red marker icon
-                        iconSize: [25, 41], // Size of the icon
-                        iconAnchor: [12, 41], // Point of the icon which will correspond to marker's location
-                        popupAnchor: [1, -34], // Point from which the popup should open relative to the iconAnchor
-                    });
-
-                    // Add a marker for the user's location with the custom red icon
-                    const userMarker = L.marker(e.latlng, {
-                        icon: userIcon
-                    }).addTo(map);
-                    userMarker.bindPopup("You are here").openPopup();
-
-                    // Center the map on the user's location
-                    map.setView(e.latlng, 15);
-                }
-
-                // Function to handle the error in retrieving the user's location
-                function onLocationError(e) {
-                    alert("Unable to retrieve your location.");
-                }
-
-                // Request the user's location
-                if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(onLocationFound, onLocationError);
-                } else {
-                    alert("Geolocation is not supported by this browser.");
-                }
-            </script>
-        </div>
     </div>
+
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Pastikan elemen "map1" ada sebelum inisialisasi
+            var mapElement = document.getElementById('map1');
+            if (!mapElement) {
+                console.warn("Elemen dengan ID 'map1' tidak ditemukan.");
+                return;
+            }
+
+            // Inisialisasi Leaflet Map
+            const map = L.map('map1').setView([-7.7560717, 112.1823541], 15);
+
+            // Tambahkan tile layer dari OpenStreetMap
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: ''
+            }).addTo(map);
+
+            // Tambahkan marker dari data Blade
+            @foreach ($latilongti as $data)
+                L.marker([{{ $data->latitude }}, {{ $data->longitude }}]).addTo(map)
+                    .bindPopup(`
+                        <div class="h-auto w-full">
+                            <img src="{{ asset('storage/' . $data->img) }}" alt="{{ addslashes($data->nama_kursus) }}" class="w-full h-20 object-contain">
+                        </div>
+                        <p>
+                            <b>{{ addslashes($data->nama_kursus) }}</b> <br>
+                            <a href="{{ url('/kursus/' . $data->id . '/detail') }}" class="text-blue-500 underline">Selengkapnya</a>
+                        </p>
+                    `);
+            @endforeach
+        });
+    </script>
+
 </x-layout>

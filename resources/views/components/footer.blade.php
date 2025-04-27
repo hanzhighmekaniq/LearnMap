@@ -1,48 +1,50 @@
-            <footer class="bg-[#85A7A8]">
-                <div class="mx-auto container w-full py-6 lg:py-8">
+            <footer class="bg-green-900">
+                <div class="mx-auto container w-full px-4 py-6 lg:py-8">
                     <div class="space-y-10 md:flex md:justify-between">
                         <div>
                             <a href="#" class="flex items-start justify-start ml-[-10px]">
-                                <img src="{{ asset('img/Rectangle 65.png') }}" class="h-20 w-20 object-cover"
+                                <img src="{{ asset('img/logo2.png') }}" class="h-20 w-20 object-cover"
                                     alt="Flowbite Logo" />
                                 <span
-                                    class="self-center pt-6 text-4xl text-white font-semibold whitespace-nowrap aclonica-regular">LearnMap</span>
+                                    class="self-center pt-6 text-4xl text-white barlow-condensed-semibold whitespace-nowrap aclonica-regular">LearnMap</span>
                             </a>
-                            <p class="md:px-4 max-w-3xl xl:text-xl aclonica-regular">
+                            <p class="md:px-4 max-w-3xl xl:text-2x1 poppins-regular text-white">
                                 LearnMap adalah aplikasi web SIG pemetaan lokasi bimbingan belajar bahasa Inggris yang
                                 membantu Anda menemukan tempat kursus terbaik di sekitar Anda.
                             </p>
                         </div>
                         <div class="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
                             <div>
-                                <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase">Resources
+                                <h2 class="mb-6 text-sm poppins-semibold text-white uppercase">Resources
                                 </h2>
-                                <ul class="text-gray-600 font-medium">
-                                    <li class="mb-4">
-                                        <a href="https://flowbite.com/" class="hover:underline">Flowbite</a>
+                                <ul class="text-white poppins-regular space-y-4">
+                                    <li class="">
+                                        <a href="/" class="hover:underline">Beranda</a>
                                     </li>
                                     <li>
-                                        <a href="https://tailwindcss.com/" class="hover:underline">Tailwind CSS</a>
+                                        <a href="/kursus" class="hover:underline">Kursus</a>
+                                    </li>
+                                    <li>
+                                        <a href="/peta" class="hover:underline">Peta</a>
                                     </li>
                                 </ul>
                             </div>
                             <div>
-                                <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase">Follow us
+                                <h2 class="mb-6 text-sm poppins-semibold text-white uppercase">Follow us
                                 </h2>
-                                <ul class="text-gray-600 font-medium">
-                                    <li class="mb-4">
-                                        <a href="https://github.com/themesberg/flowbite"
-                                            class="hover:underline ">Github</a>
+                                <ul class="text-white poppins-regular space-y-4">
+                                    <li class="">
+                                        <a href="#" class="hover:underline ">Github</a>
                                     </li>
                                     <li>
-                                        <a href="https://discord.gg/4eeurUVvTy" class="hover:underline">Discord</a>
+                                        <a href="#" class="hover:underline">Discord</a>
                                     </li>
                                 </ul>
                             </div>
                             <div>
-                                <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase">Legal
+                                <h2 class="mb-6 text-sm poppins-semibold text-white uppercase">Legal
                                 </h2>
-                                <ul class="text-gray-600 font-medium">
+                                <ul class="text-white poppins-regular">
                                     <li class="mb-4">
                                         <a href="#" class="hover:underline">Privacy Policy</a>
                                     </li>
@@ -55,11 +57,11 @@
                     </div>
                     <hr class="my-6 border-gray-200 sm:mx-auto lg:my-8" />
                     <div class="sm:flex sm:items-center sm:justify-between">
-                        <span class="text-sm text-gray-600 sm:text-center">© 2024 <a href="https://flowbite.com/"
-                                class="hover:underline">LearnMap™</a>. All Rights Reserved.
+                        <span class="text-sm text-white sm:text-center">© 2024 <a href="https://flowbite.com/"
+                                class="hover:underline ">LearnMap™</a>. All Rights Reserved.
                         </span>
                         <div class="flex mt-4 sm:justify-center sm:mt-0">
-                            <a href="#" class="text-gray-600 hover:text-gray-900">
+                            <a href="#" class="text-white hover:text-gray-900">
                                 <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                                     fill="currentColor" viewBox="0 0 8 19">
                                     <path fill-rule="evenodd"
@@ -68,7 +70,7 @@
                                 </svg>
                                 <span class="sr-only">Facebook page</span>
                             </a>
-                            <a href="#" class="text-gray-600 hover:text-gray-900 ms-5">
+                            <a href="#" class="text-white hover:text-gray-900 ms-5">
                                 <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                                     fill="currentColor" viewBox="0 0 21 16">
                                     <path
@@ -76,7 +78,7 @@
                                 </svg>
                                 <span class="sr-only">Discord community</span>
                             </a>
-                            <a href="#" class="text-gray-600 hover:text-gray-900 ms-5">
+                            <a href="#" class="text-white hover:text-gray-900 ms-5">
                                 <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                                     fill="currentColor" viewBox="0 0 20 17">
                                     <path fill-rule="evenodd"
@@ -85,7 +87,7 @@
                                 </svg>
                                 <span class="sr-only">Twitter page</span>
                             </a>
-                            <a href="#" class="text-gray-600 hover:text-gray-900 ms-5">
+                            <a href="#" class="text-white hover:text-gray-900 ms-5">
                                 <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                                     fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd"
@@ -94,7 +96,7 @@
                                 </svg>
                                 <span class="sr-only">GitHub account</span>
                             </a>
-                            <a href="#" class="text-gray-600 hover:text-gray-900 ms-5">
+                            <a href="#" class="text-white hover:text-gray-900 ms-5">
                                 <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                                     fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd"
