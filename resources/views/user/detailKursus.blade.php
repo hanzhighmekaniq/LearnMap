@@ -1,18 +1,18 @@
 <x-layout>
     {{-- @include('partials.detail.lokasi') --}}
 
-    @if (session('error'))
-        <div
-            class="fixed top-5 left-1/2 transform -translate-x-1/2 bg-red-500 text-white px-6 py-3 rounded-md shadow-lg z-50">
-            {{ session('error') }}
-        </div>
-    @endif
-    @error('rating')
-        <div
-            class="fixed top-5 left-1/2 transform -translate-x-1/2 bg-red-500 text-white px-6 py-3 rounded-md shadow-lg z-50">
-            {{ $message }}
-        </div>
-    @enderror
+    <!--@if (session('error'))-->
+    <!--    <div-->
+    <!--        class="fixed top-32 left-1/2 transform -translate-x-1/2 bg-red-500 text-white px-6 py-3 rounded-md shadow-lg z-[1000]">-->
+    <!--        {{ session('error') }}-->
+    <!--    </div>-->
+    <!--@endif-->
+    <!--@error('rating')-->
+    <!--    <div-->
+    <!--        class="fixed top-32 left-1/2 transform -translate-x-1/2 bg-red-500 text-white px-6 py-3 rounded-md shadow-lg z-[1000]">-->
+    <!--        {{ $message }}-->
+    <!--    </div>-->
+    <!--@enderror-->
 
     <div class="flex justify-center items-center p-4 pt-20 md:pt-4">
         <div class="h-auto w-full relative">

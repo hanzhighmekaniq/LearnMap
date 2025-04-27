@@ -1,5 +1,5 @@
-<div class="flex justify-center ">
-    <nav class="w-full  md:container md:px-4  md:top-4 fixed z-[999] ">
+<div class="flex justify-center   ">
+    <nav class="w-full  md:container md:px-4  md:top-4 fixed z-[999]">
         <div class="flex justify-between py-1 md:py-2 items-center  shadow-lg bg-white px-4 md:rounded-full text-white">
             <a href="#" class="flex items-center">
                 <svg class="h-7 w-7 text-green-700" viewBox="0 0 24 24" fill="currentColor"

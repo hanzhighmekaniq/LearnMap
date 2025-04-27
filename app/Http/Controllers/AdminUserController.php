@@ -31,7 +31,7 @@ class AdminUserController extends Controller
             ->whereIn('role', ['user', 'pengunjung']) // Pastikan hanya user & pengunjung
             ->paginate(10);
 
-        return view('admin.user.index', compact('user'));
+        return view('admin.User.index', compact('user'));
     }
 
 

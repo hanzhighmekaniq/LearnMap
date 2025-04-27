@@ -147,7 +147,7 @@
                     </div>
                     <div class="p-4 items-center">
                         <label for="Username" class="block text-gray-700 font-bold mb-1">Username</label>
-                        <input type="Username" id="Username" name="username"
+                        <input type="text" id="Username" name="username"
                             class="w-full px-3 border rounded-lg focus:outline-none focus:ring focus:border-blue-300"
                             placeholder="Masukkan Username" required autocomplete="off">
                     </div>
