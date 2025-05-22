@@ -10,6 +10,9 @@
 <!-- Leaflet CSS dan JS -->
 <script src="https://cdn.jsdelivr.net/npm/leaflet@1.8.0/dist/leaflet.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.8.0/dist/leaflet.min.css">
+<!-- Leaflet Geocoder Plugin -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
 
 <!-- Flowbite JS -->
 <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.js"></script>

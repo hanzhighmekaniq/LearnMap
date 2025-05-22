@@ -57,7 +57,7 @@
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                             placeholder="KAMPUNG INGGRIS LC – LANGUAGE CENTER Adalah . . . ." required>{{ old('deskripsi') }}</textarea>
                     </div>
-                    <div class="flex justify-between w-full gap-4">
+                    {{-- <div class="flex justify-between w-full gap-4">
 
                         <div class="w-full">
                             <label for="latitude" class="block mb-2 text-sm font-medium text-gray-900">Latitude</label>
@@ -76,7 +76,92 @@
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                 placeholder="Longitude" value="{{ old('longitude') }}" />
                         </div>
+                    </div> --}}
+                    <div class="w-full">
+                        <label class="block mb-2 text-sm font-medium text-gray-900">Pilih Lokasi di Peta</label>
+                        <div id="map" class="w-full h-96 rounded-lg mb-4"></div>
+                        <button type="button" id="locateBtn"
+                            class="mb-3 text-white bg-blue-600 hover:bg-blue-700 font-medium rounded-lg text-sm px-4 py-2">
+                            Gunakan Lokasi Saya
+                        </button>
+                        <div class="flex gap-4">
+                            <div class="w-full">
+                                <label for="latitude"
+                                    class="block mb-2 text-sm font-medium text-gray-900">Latitude</label>
+                                <input type="text" id="latitude" name="latitude"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
+                                    placeholder="Latitude" value="{{ old('latitude') }}" readonly required />
+                            </div>
+
+                            <div class="w-full">
+                                <label for="longitude"
+                                    class="block mb-2 text-sm font-medium text-gray-900">Longitude</label>
+                                <input type="text" id="longitude" name="longitude"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
+                                    placeholder="Longitude" value="{{ old('longitude') }}" readonly required />
+                            </div>
+                        </div>
+
+
                     </div>
+                    <script>
+                        const map = L.map('map').setView([-7.54, 112.23], 13);
+
+                        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                            attribution: '&copy; OpenStreetMap contributors'
+                        }).addTo(map);
+
+                        let marker = null;
+
+                        function setLatLng(lat, lng) {
+                            if (marker) {
+                                marker.setLatLng([lat, lng]);
+                            } else {
+                                marker = L.marker([lat, lng], {
+                                    draggable: true
+                                }).addTo(map);
+
+                                marker.on('dragend', function(e) {
+                                    const position = marker.getLatLng();
+                                    document.getElementById('latitude').value = position.lat.toFixed(6);
+                                    document.getElementById('longitude').value = position.lng.toFixed(6);
+                                });
+                            }
+
+                            document.getElementById('latitude').value = lat.toFixed(6);
+                            document.getElementById('longitude').value = lng.toFixed(6);
+                        }
+
+                        map.on('click', function(e) {
+                            setLatLng(e.latlng.lat, e.latlng.lng);
+                        });
+
+                        document.getElementById('locateBtn').addEventListener('click', function() {
+                            if (navigator.geolocation) {
+                                navigator.geolocation.getCurrentPosition(function(position) {
+                                    const lat = position.coords.latitude;
+                                    const lng = position.coords.longitude;
+                                    map.setView([lat, lng], 15);
+                                    setLatLng(lat, lng);
+                                }, function() {
+                                    alert('Gagal mendapatkan lokasi.');
+                                });
+                            } else {
+                                alert('Geolokasi tidak didukung oleh browser Anda.');
+                            }
+                        });
+
+                        // 🔍 Tambahkan kontrol pencarian lokasi
+                        L.Control.geocoder({
+                                defaultMarkGeocode: false
+                            })
+                            .on('markgeocode', function(e) {
+                                const latlng = e.geocode.center;
+                                map.setView(latlng, 15);
+                                setLatLng(latlng.lat, latlng.lng);
+                            })
+                            .addTo(map);
+                    </script>
 
 
 
@@ -113,88 +198,88 @@
                             placeholder="Write your thoughts here..."></trix-editor>
                     </div>
                     <div>
-    <label for="fasilitas" class="block mb-2 text-sm font-medium text-gray-900">Fasilitas</label>
-    <input id="fasilitas" name="fasilitas" type="hidden" value="{{ old('fasilitas') }}" />
+                        <label for="fasilitas" class="block mb-2 text-sm font-medium text-gray-900">Fasilitas</label>
+                        <input id="fasilitas" name="fasilitas" type="hidden" value="{{ old('fasilitas') }}" />
 
-    <!-- Tombol tambah fasilitas -->
-    <div id="facility-inputs" class="grid grid-cols-4 gap-4">
-        <!-- Input fasilitas akan ditambahkan di sini -->
-    </div>
-    <button id="add-facility-btn" type="button"
-        class="mt-3 px-4 py-2 text-xs bg-blue-500 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
-        Tambah Fasilitas
-    </button>
-</div>
+                        <!-- Tombol tambah fasilitas -->
+                        <div id="facility-inputs" class="grid grid-cols-4 gap-4">
+                            <!-- Input fasilitas akan ditambahkan di sini -->
+                        </div>
+                        <button id="add-facility-btn" type="button"
+                            class="mt-3 px-4 py-2 text-xs bg-blue-500 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            Tambah Fasilitas
+                        </button>
+                    </div>
 
-<!-- Script untuk menambah input fasilitas -->
-<script>
-    let facilityIndex = 0; // Untuk memastikan setiap input memiliki ID unik
+                    <!-- Script untuk menambah input fasilitas -->
+                    <script>
+                        let facilityIndex = 0; // Untuk memastikan setiap input memiliki ID unik
 
-    // Fungsi untuk memperbarui nilai JSON di input tersembunyi
-    function updateFasilitasInput() {
-        const fasilitasArray = [];
-        const facilityInputs = document.querySelectorAll('.facility-input input');
+                        // Fungsi untuk memperbarui nilai JSON di input tersembunyi
+                        function updateFasilitasInput() {
+                            const fasilitasArray = [];
+                            const facilityInputs = document.querySelectorAll('.facility-input input');
 
-        facilityInputs.forEach(input => {
-            if (input.value.trim() !== '') {
-                fasilitasArray.push(input.value.trim());
-            }
-        });
+                            facilityInputs.forEach(input => {
+                                if (input.value.trim() !== '') {
+                                    fasilitasArray.push(input.value.trim());
+                                }
+                            });
 
-        document.getElementById('fasilitas').value = JSON.stringify(fasilitasArray);
-    }
+                            document.getElementById('fasilitas').value = JSON.stringify(fasilitasArray);
+                        }
 
-    // Fungsi untuk menambahkan input fasilitas
-    function addFacilityInput() {
-        const facilityDiv = document.createElement('div');
-        facilityDiv.classList.add('facility-input', 'bg-gray-100', 'rounded-lg');
+                        // Fungsi untuk menambahkan input fasilitas
+                        function addFacilityInput() {
+                            const facilityDiv = document.createElement('div');
+                            facilityDiv.classList.add('facility-input', 'bg-gray-100', 'rounded-lg');
 
-        const label = document.createElement('label');
-        label.setAttribute('for', 'fasilitas_' + facilityIndex);
-        label.classList.add('block', 'text-sm', 'font-medium', 'text-gray-700');
-        label.textContent = 'Fasilitas ' + (facilityIndex + 1);
+                            const label = document.createElement('label');
+                            label.setAttribute('for', 'fasilitas_' + facilityIndex);
+                            label.classList.add('block', 'text-sm', 'font-medium', 'text-gray-700');
+                            label.textContent = 'Fasilitas ' + (facilityIndex + 1);
 
-        const input = document.createElement('input');
-        input.id = 'fasilitas_' + facilityIndex;
-        input.name = 'fasilitas_' + facilityIndex;
-        input.type = 'text';
-        input.classList.add('block', 'w-full', 'px-3', 'py-2', 'border', 'border-gray-300', 'rounded-md', 'shadow-sm');
-        input.placeholder = 'Masukkan fasilitas';
+                            const input = document.createElement('input');
+                            input.id = 'fasilitas_' + facilityIndex;
+                            input.name = 'fasilitas_' + facilityIndex;
+                            input.type = 'text';
+                            input.classList.add('block', 'w-full', 'px-3', 'py-2', 'border', 'border-gray-300', 'rounded-md', 'shadow-sm');
+                            input.placeholder = 'Masukkan fasilitas';
 
-        // ✅ Update JSON saat user ngetik
-        input.addEventListener('input', updateFasilitasInput);
+                            // ✅ Update JSON saat user ngetik
+                            input.addEventListener('input', updateFasilitasInput);
 
-        const deleteButton = document.createElement('button');
-        deleteButton.type = 'button';
-        deleteButton.classList.add('ml-2', 'text-red-500', 'hover:text-red-700');
-        deleteButton.textContent = 'Hapus';
-        deleteButton.addEventListener('click', function () {
-            facilityDiv.remove();
-            updateFasilitasInput();
-        });
+                            const deleteButton = document.createElement('button');
+                            deleteButton.type = 'button';
+                            deleteButton.classList.add('ml-2', 'text-red-500', 'hover:text-red-700');
+                            deleteButton.textContent = 'Hapus';
+                            deleteButton.addEventListener('click', function() {
+                                facilityDiv.remove();
+                                updateFasilitasInput();
+                            });
 
-        facilityDiv.appendChild(label);
-        facilityDiv.appendChild(input);
-        facilityDiv.appendChild(deleteButton);
+                            facilityDiv.appendChild(label);
+                            facilityDiv.appendChild(input);
+                            facilityDiv.appendChild(deleteButton);
 
-        document.getElementById('facility-inputs').appendChild(facilityDiv);
+                            document.getElementById('facility-inputs').appendChild(facilityDiv);
 
-        facilityIndex++;
-    }
+                            facilityIndex++;
+                        }
 
-    // Tambahkan satu fasilitas saat halaman pertama kali dimuat
-    addFacilityInput();
+                        // Tambahkan satu fasilitas saat halaman pertama kali dimuat
+                        addFacilityInput();
 
-    // Tombol tambah fasilitas
-    document.getElementById('add-facility-btn').addEventListener('click', function () {
-        addFacilityInput();
-    });
+                        // Tombol tambah fasilitas
+                        document.getElementById('add-facility-btn').addEventListener('click', function() {
+                            addFacilityInput();
+                        });
 
-    // Saat form disubmit, update hidden input dulu
-    document.getElementById("my-form").addEventListener("submit", function () {
-        updateFasilitasInput();
-    });
-</script>
+                        // Saat form disubmit, update hidden input dulu
+                        document.getElementById("my-form").addEventListener("submit", function() {
+                            updateFasilitasInput();
+                        });
+                    </script>
 
                     <div>
                         <label for="latitude" class="block mb-2 text-sm font-medium text-gray-900">Uplaud
@@ -322,7 +407,7 @@
                         </div>
                     @endif
                 </div>
-               
+
 
             </form>
 

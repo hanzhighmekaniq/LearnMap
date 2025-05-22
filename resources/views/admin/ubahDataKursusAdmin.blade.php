@@ -68,27 +68,102 @@
 
 
 
-                    <div class="grid md:grid-cols-2 gap-4">
+                    <div class="w-full">
+                        <label class="block mb-2 text-sm font-medium text-gray-900">Pilih Lokasi di Peta</label>
+                        <div id="map" class="w-full h-96 rounded-lg mb-4"></div>
 
-                        <!-- Latitude -->
-                        <div>
-                            <label for="latitude" class="block mb-2 text-sm font-medium text-gray-900">Latitude</label>
-                            <input type="text" id="latitude" value="{{ old('latitude', $dataKursus->latitude) }}"
-                                name="latitude"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                placeholder="Latitude" required />
-                        </div>
+                        <button type="button" id="locateBtn"
+                            class="mb-3 text-white bg-blue-600 hover:bg-blue-700 font-medium rounded-lg text-sm px-4 py-2">
+                            Gunakan Lokasi Saya
+                        </button>
 
-                        <!-- Longitude -->
-                        <div>
-                            <label for="longitude"
-                                class="block mb-2 text-sm font-medium text-gray-900">Longitude</label>
-                            <input type="text" id="longitude" value="{{ old('longitude', $dataKursus->longitude) }}"
-                                name="longitude"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                placeholder="Longitude" />
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <label for="latitude"
+                                    class="block mb-2 text-sm font-medium text-gray-900">Latitude</label>
+                                <input type="text" id="latitude" name="latitude"
+                                    value="{{ old('latitude', $dataKursus->latitude) }}"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
+                                    placeholder="Latitude" readonly required />
+                            </div>
+
+                            <div>
+                                <label for="longitude"
+                                    class="block mb-2 text-sm font-medium text-gray-900">Longitude</label>
+                                <input type="text" id="longitude" name="longitude"
+                                    value="{{ old('longitude', $dataKursus->longitude) }}"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
+                                    placeholder="Longitude" readonly required />
+                            </div>
                         </div>
                     </div>
+                        <!-- Leaflet & Geocoder CDN -->
+                        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+                        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+                        <link rel="stylesheet"
+                            href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+                        <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+
+                        <script>
+                            const lat = parseFloat("{{ old('latitude', $dataKursus->latitude) }}") || -7.54;
+                            const lng = parseFloat("{{ old('longitude', $dataKursus->longitude) }}") || 112.23;
+
+                            const map = L.map('map').setView([lat, lng], 13);
+
+                            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                                attribution: '&copy; OpenStreetMap contributors'
+                            }).addTo(map);
+
+                            let marker = L.marker([lat, lng], {
+                                draggable: true
+                            }).addTo(map);
+
+                            marker.on('dragend', function(e) {
+                                const pos = marker.getLatLng();
+                                document.getElementById('latitude').value = pos.lat.toFixed(6);
+                                document.getElementById('longitude').value = pos.lng.toFixed(6);
+                            });
+
+                            map.on('click', function(e) {
+                                const {
+                                    lat,
+                                    lng
+                                } = e.latlng;
+                                marker.setLatLng([lat, lng]);
+                                document.getElementById('latitude').value = lat.toFixed(6);
+                                document.getElementById('longitude').value = lng.toFixed(6);
+                            });
+
+                            document.getElementById('locateBtn').addEventListener('click', function() {
+                                if (navigator.geolocation) {
+                                    navigator.geolocation.getCurrentPosition(function(position) {
+                                        const lat = position.coords.latitude;
+                                        const lng = position.coords.longitude;
+                                        map.setView([lat, lng], 15);
+                                        marker.setLatLng([lat, lng]);
+                                        document.getElementById('latitude').value = lat.toFixed(6);
+                                        document.getElementById('longitude').value = lng.toFixed(6);
+                                    }, function() {
+                                        alert('Gagal mendapatkan lokasi.');
+                                    });
+                                } else {
+                                    alert('Browser tidak mendukung geolokasi.');
+                                }
+                            });
+
+                            // Pencarian lokasi
+                            const geocoder = L.Control.geocoder({
+                                defaultMarkGeocode: false
+                            }).on('markgeocode', function(e) {
+                                const latlng = e.geocode.center;
+                                map.setView(latlng, 15);
+                                marker.setLatLng(latlng);
+                                document.getElementById('latitude').value = latlng.lat.toFixed(6);
+                                document.getElementById('longitude').value = latlng.lng.toFixed(6);
+                            }).addTo(map);
+                        </script>
+
 
 
                     <!-- Paket -->
