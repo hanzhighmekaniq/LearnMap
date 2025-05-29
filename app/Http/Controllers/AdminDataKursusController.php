@@ -66,46 +66,47 @@ class AdminDataKursusController extends Controller
                 'paket' => 'required',
                 'metode' => 'required',
                 'lokasi' => 'required',
-                'latitude' => 'required', // Ubah menjadi wajib diisi
-                'longitude' => 'required', // Ubah menjadi wajib diisi
-                'img_konten.*' => 'nullable|image', // Gambar konten tetap opsional
+                'fasilitas' => 'required',
+                'latitude' => 'required',
+                'longitude' => 'required',
+                'img_konten.*' => 'nullable|image',
             ], [
                 'nama_kursus.required' => 'Nama kursus wajib diisi.',
                 'kategori_id.required' => 'Kategori kursus wajib diisi.',
+                'kategori_id.exists' => 'Kategori tidak valid.',
                 'img.required' => 'Gambar utama wajib di-upload.',
-                'img.file' => 'File yang di-upload harus berupa gambar.',
+                'img.image' => 'File yang di-upload harus berupa gambar.',
                 'img.mimes' => 'Gambar harus berekstensi jpeg, png, atau jpg.',
                 'img.max' => 'Ukuran gambar tidak boleh lebih dari 2MB.',
                 'deskripsi.required' => 'Deskripsi wajib diisi.',
                 'paket.required' => 'Paket wajib diisi.',
                 'metode.required' => 'Metode wajib diisi.',
                 'lokasi.required' => 'Lokasi wajib diisi.',
-                'latitude.required' => 'Latitude wajib diisi.', // Pesan error custom
-                'longitude.required' => 'Longitude wajib diisi.', // Pesan error custom
-                'img_konten.*.nullable' => 'Gambar konten bersifat opsional.',
-                'img_konten.*.file' => 'File yang di-upload harus berupa gambar.',
+                'fasilitas.required' => 'Fasilitas wajib diisi.',
+                'latitude.required' => 'Latitude wajib diisi.',
+                'longitude.required' => 'Longitude wajib diisi.',
+                'img_konten.*.image' => 'File konten harus berupa gambar.',
+                'img_konten.*.mimes' => 'Gambar konten harus berekstensi jpeg, png, atau jpg.',
+                'img_konten.*.max' => 'Ukuran gambar konten tidak boleh lebih dari 2MB.',
             ]);
 
-
-            // Cek apakah validasi gagal
             if ($validator->fails()) {
                 return redirect()->back()->withErrors($validator)->withInput();
             }
 
-            // Menyimpan file gambar utama
+            // Upload gambar utama
             $imgPath = $request->file('img')->store('konten', 'public');
-            $imgKontenPaths = [];
 
-            // Menyimpan file gambar konten
+            // Upload gambar konten (jika ada)
+            $imgKontenPaths = [];
             if ($request->hasFile('img_konten')) {
                 foreach ($request->file('img_konten') as $file) {
                     $imgKontenPaths[] = $file->store('logo', 'public');
                 }
             }
 
-            // Simpan data ke dalam database
-            // Simpan data ke dalam database
-            $result = DataKursus::create([
+            // Simpan ke database
+            DataKursus::create([
                 'nama_kursus' => $request->nama_kursus,
                 'kategori_id' => $request->kategori_id,
                 'img' => $imgPath,
@@ -120,14 +121,12 @@ class AdminDataKursusController extends Controller
                 'user_id' => Auth::id(),
             ]);
 
-            // Redirect setelah berhasil
-            // dd($request->fasilitas);
             return redirect('admin/data-kursus')->with('success', 'Data berhasil disimpan.');
         } catch (\Exception $e) {
-            // Tangani kesalahan
             return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }
     }
+
 
 
     public function edit($id)

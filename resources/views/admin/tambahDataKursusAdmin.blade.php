@@ -21,6 +21,9 @@
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                 placeholder="Kampung Inggris LC - Language Center" value="{{ old('nama_kursus') }}"
                                 required />
+                            @error('nama_kursus')
+                                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                            @enderror
                         </div>
 
                         <div class="hidden">
@@ -32,6 +35,9 @@
                                 <option value="Popular" {{ old('popular') == 'Popular' ? 'selected' : '' }}>Popular
                                 </option>
                             </select>
+                            @error('popular')
+                                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                            @enderror
                         </div>
                         <div>
                             <label for="kategori" class="block mb-2 text-sm font-medium text-gray-900">Pilih
@@ -46,6 +52,9 @@
                                     </option>
                                 @endforeach
                             </select>
+                            @error('kategori_id')
+                                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                            @enderror
                         </div>
                     </div>
                     <!-- Input File Single -->
@@ -56,27 +65,11 @@
                         <textarea id="deskripsi" name="deskripsi" rows="4"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                             placeholder="KAMPUNG INGGRIS LC – LANGUAGE CENTER Adalah . . . ." required>{{ old('deskripsi') }}</textarea>
+                        @error('deskripsi')
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        @enderror
                     </div>
-                    {{-- <div class="flex justify-between w-full gap-4">
 
-                        <div class="w-full">
-                            <label for="latitude" class="block mb-2 text-sm font-medium text-gray-900">Latitude</label>
-                            <input type="text" id="latitude" name="latitude" pattern="-?\d*\.?\d+"
-                                title="Latitude can include numbers, a dot (.) for decimal, and a minus (-) for negative values."
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                placeholder="Latitude" value="{{ old('latitude') }}" required />
-                        </div>
-
-                        <!-- Longitude -->
-                        <div class="w-full">
-                            <label for="longitude"
-                                class="block mb-2 text-sm font-medium text-gray-900">Longitude</label>
-                            <input type="text" id="longitude" name="longitude" pattern="-?\d*\.?\d+"
-                                title="Longitude can include numbers, a dot (.) for decimal, and a minus (-) for negative values."
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                placeholder="Longitude" value="{{ old('longitude') }}" />
-                        </div>
-                    </div> --}}
                     <div class="w-full">
                         <label class="block mb-2 text-sm font-medium text-gray-900">Pilih Lokasi di Peta</label>
                         <div id="map" class="w-full h-96 rounded-lg mb-4"></div>
@@ -84,6 +77,7 @@
                             class="mb-3 text-white bg-blue-600 hover:bg-blue-700 font-medium rounded-lg text-sm px-4 py-2">
                             Gunakan Lokasi Saya
                         </button>
+
                         <div class="flex gap-4">
                             <div class="w-full">
                                 <label for="latitude"
@@ -91,6 +85,9 @@
                                 <input type="text" id="latitude" name="latitude"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
                                     placeholder="Latitude" value="{{ old('latitude') }}" readonly required />
+                                @error('latitude')
+                                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                @enderror
                             </div>
 
                             <div class="w-full">
@@ -99,6 +96,9 @@
                                 <input type="text" id="longitude" name="longitude"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
                                     placeholder="Longitude" value="{{ old('longitude') }}" readonly required />
+                                @error('longitude')
+                                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
 
@@ -175,6 +175,9 @@
                         <trix-editor input="paket"
                             class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                             placeholder="Write your thoughts here..."></trix-editor>
+                        @error('paket')
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        @enderror
                     </div>
 
                     <!-- Metode -->
@@ -184,6 +187,9 @@
                         <trix-editor input="metode"
                             class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                             placeholder="Write your thoughts here..."></trix-editor>
+                        @error('metode')
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        @enderror
                     </div>
 
                     <!-- Fasilitas -->
@@ -196,26 +202,37 @@
                         <trix-editor input="lokasi"
                             class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                             placeholder="Write your thoughts here..."></trix-editor>
+                        @error('lokasi')
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        @enderror
                     </div>
                     <div>
                         <label for="fasilitas" class="block mb-2 text-sm font-medium text-gray-900">Fasilitas</label>
-                        <input id="fasilitas" name="fasilitas" type="hidden" value="{{ old('fasilitas') }}" />
+
+                        <!-- Hidden input untuk menyimpan array fasilitas dalam bentuk JSON -->
+                        <input id="fasilitas" name="fasilitas" type="hidden" value="{{ old('fasilitas') }}"
+                            required />
+
+                        <!-- Tempat input-input fasilitas ditambahkan -->
+                        <div id="facility-inputs" class="grid grid-cols-4 gap-4">
+                            <!-- Input fasilitas akan muncul di sini -->
+                        </div>
+                        @error('fasilitas')
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        @enderror
 
                         <!-- Tombol tambah fasilitas -->
-                        <div id="facility-inputs" class="grid grid-cols-4 gap-4">
-                            <!-- Input fasilitas akan ditambahkan di sini -->
-                        </div>
                         <button id="add-facility-btn" type="button"
                             class="mt-3 px-4 py-2 text-xs bg-blue-500 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
                             Tambah Fasilitas
                         </button>
+
                     </div>
 
                     <!-- Script untuk menambah input fasilitas -->
                     <script>
-                        let facilityIndex = 0; // Untuk memastikan setiap input memiliki ID unik
+                        let facilityIndex = 0;
 
-                        // Fungsi untuk memperbarui nilai JSON di input tersembunyi
                         function updateFasilitasInput() {
                             const fasilitasArray = [];
                             const facilityInputs = document.querySelectorAll('.facility-input input');
@@ -229,10 +246,9 @@
                             document.getElementById('fasilitas').value = JSON.stringify(fasilitasArray);
                         }
 
-                        // Fungsi untuk menambahkan input fasilitas
-                        function addFacilityInput() {
+                        function addFacilityInput(value = '') {
                             const facilityDiv = document.createElement('div');
-                            facilityDiv.classList.add('facility-input', 'bg-gray-100', 'rounded-lg');
+                            facilityDiv.classList.add('facility-input', 'bg-gray-100', 'rounded-lg', 'p-2');
 
                             const label = document.createElement('label');
                             label.setAttribute('for', 'fasilitas_' + facilityIndex);
@@ -243,15 +259,15 @@
                             input.id = 'fasilitas_' + facilityIndex;
                             input.name = 'fasilitas_' + facilityIndex;
                             input.type = 'text';
+                            input.value = value;
                             input.classList.add('block', 'w-full', 'px-3', 'py-2', 'border', 'border-gray-300', 'rounded-md', 'shadow-sm');
                             input.placeholder = 'Masukkan fasilitas';
 
-                            // ✅ Update JSON saat user ngetik
                             input.addEventListener('input', updateFasilitasInput);
 
                             const deleteButton = document.createElement('button');
                             deleteButton.type = 'button';
-                            deleteButton.classList.add('ml-2', 'text-red-500', 'hover:text-red-700');
+                            deleteButton.classList.add('mt-2', 'text-red-500', 'hover:text-red-700');
                             deleteButton.textContent = 'Hapus';
                             deleteButton.addEventListener('click', function() {
                                 facilityDiv.remove();
@@ -267,92 +283,131 @@
                             facilityIndex++;
                         }
 
-                        // Tambahkan satu fasilitas saat halaman pertama kali dimuat
-                        addFacilityInput();
+                        // Load data lama dari old('fasilitas') jika ada
+                        document.addEventListener("DOMContentLoaded", function() {
+                            const oldFasilitas = document.getElementById('fasilitas').value;
+                            try {
+                                const fasilitasArray = JSON.parse(oldFasilitas);
+                                if (Array.isArray(fasilitasArray) && fasilitasArray.length > 0) {
+                                    fasilitasArray.forEach(fasilitas => {
+                                        addFacilityInput(fasilitas);
+                                    });
+                                } else {
+                                    addFacilityInput(); // Jika tidak ada data, tambahkan satu kosong
+                                }
+                            } catch (e) {
+                                addFacilityInput(); // Jika gagal parse (null atau bukan JSON), tetap tambahkan input
+                            }
+                        });
 
-                        // Tombol tambah fasilitas
                         document.getElementById('add-facility-btn').addEventListener('click', function() {
                             addFacilityInput();
                         });
 
-                        // Saat form disubmit, update hidden input dulu
                         document.getElementById("my-form").addEventListener("submit", function() {
                             updateFasilitasInput();
                         });
                     </script>
 
                     <div>
-                        <label for="latitude" class="block mb-2 text-sm font-medium text-gray-900">Uplaud
-                            Gambar</label>
+                        <label class="block mb-2 text-sm font-medium text-gray-900">Upload Gambar</label>
                         <div class="grid md:grid-cols-2 gap-4">
+                            {{-- Single Image Upload --}}
                             <div class="grid grid-cols-1 gap-4">
-                                <div>
-                                    <label for="file_input"
-                                        class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 ">
-                                        <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                                            <svg class="w-8 h-8 mb-4 text-gray-500 " aria-hidden="true"
-                                                xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                viewBox="0 0 20 16">
-                                                <path stroke="currentColor" stroke-linecap="round"
-                                                    stroke-linejoin="round" stroke-width="2"
-                                                    d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
-                                            </svg>
-                                            <p class="mb-2 text-sm text-gray-500 "><span class="font-semibold">Click
-                                                    to upload Single</p>
-                                            <p class="text-xs text-gray-500 ">SVG, PNG, JPG or GIF
-                                            </p>
-                                            <input id="file_input" type="file" name="img" class="hidden"
-                                                onchange="previewImage(event)" />
-                                        </div>
-                                    </label>
-                                </div>
+                                <label for="file_input"
+                                    class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50">
+                                    <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                        <svg class="w-8 h-8 mb-4 text-gray-500" xmlns="http://www.w3.org/2000/svg"
+                                            fill="none" viewBox="0 0 20 16">
+                                            <path stroke="currentColor" stroke-linecap="round"
+                                                stroke-linejoin="round" stroke-width="2"
+                                                d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5A5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
+                                        </svg>
+                                        <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Click to
+                                                upload Single</span></p>
+                                        <p class="text-xs text-gray-500">SVG, PNG, JPG or GIF</p>
+                                        <input id="file_input" type="file" name="img" class="hidden"
+                                            onchange="previewImage(event)" />
+                                        @error('img')
+                                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </label>
 
-                                <!-- Preview image -->
                                 <div id="image_preview_single" class="hidden border p-4">
                                     <div class="flex justify-center">
                                         <img id="image_preview_single_img" src="" alt="Image Preview"
                                             class="aspect-video h-40 object-contain" />
+
                                     </div>
                                 </div>
+
+                                {{-- Tampilkan preview dari session jika ada --}}
+                                @if (session('img_preview'))
+                                    <script>
+                                        window.addEventListener('DOMContentLoaded', () => {
+                                            const img = document.getElementById('image_preview_single_img');
+                                            img.src = '{{ session('img_preview') }}';
+                                            document.getElementById('image_preview_single').classList.remove('hidden');
+                                        });
+                                    </script>
+                                @endif
                             </div>
 
-                            <!-- Input File Multiple -->
+                            {{-- Multiple Image Upload --}}
                             <div class="grid grid-cols-1 gap-4">
-                                <div>
-                                    <label for="multiple_files"
-                                        class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 ">
-                                        <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                                            <svg class="w-8 h-8 mb-4 text-gray-500 " aria-hidden="true"
-                                                xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                viewBox="0 0 20 16">
-                                                <path stroke="currentColor" stroke-linecap="round"
-                                                    stroke-linejoin="round" stroke-width="2"
-                                                    d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
-                                            </svg>
-                                            <p class="mb-2 text-sm text-gray-500 "><span class="font-semibold">Click
-                                                    to upload Multi</p>
-                                            <p class="text-xs text-gray-500 ">SVG, PNG, JPG or GIF
-                                            </p>
-                                            <input id="multiple_files" type="file" name="img_konten[]" multiple
-                                                onchange="previewMultipleImages(event)" class="hidden" />
-                                        </div>
-                                    </label>
-                                </div>
-                                <!-- Multiple Images Preview -->
+                                <label for="multiple_files"
+                                    class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50">
+                                    <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                        <svg class="w-8 h-8 mb-4 text-gray-500" xmlns="http://www.w3.org/2000/svg"
+                                            fill="none" viewBox="0 0 20 16">
+                                            <path stroke="currentColor" stroke-linecap="round"
+                                                stroke-linejoin="round" stroke-width="2"
+                                                d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5A5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
+                                        </svg>
+                                        <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Click to
+                                                upload Multi</span></p>
+                                        <p class="text-xs text-gray-500">SVG, PNG, JPG or GIF</p>
+                                        <input id="multiple_files" type="file" name="img_konten[]" multiple
+                                            class="hidden" onchange="previewMultipleImages(event)" />
+                                        @error('img_konten.0')
+                                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                        @enderror
+
+
+                                    </div>
+                                </label>
+
                                 <div id="image_preview_multiple" class="hidden p-4 flex justify-center border">
                                     <div id="multiple_images_preview"
-                                        class=" aspect-video h-40 object-contain overflow-x-auto flex gap-4">
+                                        class="aspect-video h-40 object-contain overflow-x-auto flex gap-4">
                                     </div>
                                 </div>
+
+                                {{-- Tampilkan preview multiple dari session --}}
+                                @if (session('img_konten_preview'))
+                                    <script>
+                                        window.addEventListener('DOMContentLoaded', () => {
+                                            const container = document.getElementById('multiple_images_preview');
+                                            container.innerHTML = '';
+                                            @foreach (session('img_konten_preview') as $img)
+                                                const imgEl = document.createElement('img');
+                                                imgEl.src = '{{ $img }}';
+                                                imgEl.classList.add('h-40', 'object-contain');
+                                                container.appendChild(imgEl);
+                                            @endforeach
+                                            document.getElementById('image_preview_multiple').classList.remove('hidden');
+                                        });
+                                    </script>
+                                @endif
                             </div>
                         </div>
 
+                        {{-- Scripts for live preview --}}
                         <script>
-                            // Preview single image
                             function previewImage(event) {
                                 const file = event.target.files[0];
                                 const reader = new FileReader();
-
                                 reader.onload = function() {
                                     const image = document.getElementById('image_preview_single_img');
                                     image.src = reader.result;
@@ -363,30 +418,27 @@
                                 }
                             }
 
-                            // Preview multiple images
                             function previewMultipleImages(event) {
                                 const files = event.target.files;
                                 const previewContainer = document.getElementById('multiple_images_preview');
-                                previewContainer.innerHTML = ''; // Clear previous previews
+                                previewContainer.innerHTML = '';
 
                                 Array.from(files).forEach(file => {
                                     const reader = new FileReader();
-
                                     reader.onload = function() {
                                         const img = document.createElement('img');
                                         img.src = reader.result;
+                                        img.classList.add('h-40', 'object-contain');
                                         previewContainer.appendChild(img);
                                     }
-
-                                    if (file) {
-                                        reader.readAsDataURL(file);
-                                    }
+                                    reader.readAsDataURL(file);
                                 });
+
                                 document.getElementById('image_preview_multiple').classList.remove('hidden');
                             }
                         </script>
-
                     </div>
+
 
                     <div>
                         <button type="button" data-modal-target="popup-modal-tambah"
@@ -395,7 +447,7 @@
                             Submit
                         </button>
                     </div>
-                    @if ($errors->any())
+                    {{-- @if ($errors->any())
                         <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4"
                             role="alert">
                             <strong class="font-bold">Error:</strong>
@@ -405,7 +457,7 @@
                                 @endforeach
                             </ul>
                         </div>
-                    @endif
+                    @endif --}}
                 </div>
 
 
