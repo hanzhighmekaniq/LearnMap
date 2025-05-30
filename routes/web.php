@@ -52,17 +52,7 @@ Route::middleware(['auth'])->group(function () {
 // ADMIN & USER
 Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::get('dashboard', [AdminDashboardController::class, 'index'])->name('admin.home');
-    Route::resource('/user', AdminUserController::class);
-});
-
-// Route untuk ADMIN (Hanya Admin)
-Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
-    Route::resource('/kategori', KategoriController::class);
-    Route::resource('/user', AdminUserController::class);
-});
-
-// Route untuk USER (Hanya User)
-Route::prefix('admin')->middleware(['auth', 'role:user'])->group(function () {
+    // Route::resource('/user', AdminUserController::class);
     Route::get('/create-data', [AdminDataKursusController::class, 'create'])->name('admin.create');
     Route::get('/data-kursus', [AdminDataKursusController::class, 'dataKursus'])->name('admin.dataKursus');
     Route::get('/{id}/edit-kursus', [AdminDataKursusController::class, 'edit'])->name('admin.edit');
@@ -72,6 +62,24 @@ Route::prefix('admin')->middleware(['auth', 'role:user'])->group(function () {
     Route::post('/store', [AdminDataKursusController::class, 'store'])->name('kursus.store');
     Route::delete('/delete/{id}', [AdminDataKursusController::class, 'destroy'])->name('delete');
 });
+
+// Route untuk ADMIN (Hanya Admin)
+Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
+    Route::resource('/kategori', KategoriController::class);
+    Route::resource('/user', AdminUserController::class);
+});
+
+// Route untuk USER (Hanya User)
+// Route::prefix('admin')->middleware(['auth', 'role:user'])->group(function () {
+//     Route::get('/create-data', [AdminDataKursusController::class, 'create'])->name('admin.create');
+//     Route::get('/data-kursus', [AdminDataKursusController::class, 'dataKursus'])->name('admin.dataKursus');
+//     Route::get('/{id}/edit-kursus', [AdminDataKursusController::class, 'edit'])->name('admin.edit');
+
+//     // Fungsi CRUD kursus untuk user
+//     Route::put('/update/{id}', [AdminDataKursusController::class, 'update'])->name('admin.update');
+//     Route::post('/store', [AdminDataKursusController::class, 'store'])->name('kursus.store');
+//     Route::delete('/delete/{id}', [AdminDataKursusController::class, 'destroy'])->name('delete');
+// });
 
 // PENGUNJUNG
 Route::get('/', [PengunjungController::class, 'home'])->name('user.home');

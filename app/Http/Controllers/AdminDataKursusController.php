@@ -14,14 +14,20 @@ use PhpParser\Node\Expr\Cast\String_;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use App\Models\DataKursus; // Pastikan model diimport
+use App\Models\User;
 
 class AdminDataKursusController extends Controller
 {
 
     public function dataKursus(Request $request)
     {
-        $query = DataKursus::with('kategoris')
-            ->where('user_id', auth()->id()); // Filter berdasarkan user login
+        $user = auth()->user();
+        $query = DataKursus::with('kategoris');
+
+        // Filter berdasarkan user_id jika bukan admin
+        if ($user->role !== 'admin') {
+            $query->where('user_id', $user->id);
+        }
 
         // Filter berdasarkan pencarian
         if ($request->has('search') && !empty($request->search)) {
@@ -34,7 +40,9 @@ class AdminDataKursusController extends Controller
                 $q->where('nama_kategori', $request->role);
             });
         }
+
         $kategoriList = DataKategori::all();
+
         // Ambil data dengan paginasi
         $courses = $query->paginate(10);
 
@@ -49,10 +57,13 @@ class AdminDataKursusController extends Controller
 
 
 
+
+
     public function create()
     {
         $kategori = DataKategori::all();
-        return view('admin.tambahDataKursusAdmin', compact('kategori'));
+        $users = User::where('role', 'user')->get();
+        return view('admin.tambahDataKursusAdmin', compact('kategori', 'users'));
     }
 
     public function store(Request $request)
@@ -69,6 +80,7 @@ class AdminDataKursusController extends Controller
                 'fasilitas' => 'required',
                 'latitude' => 'required',
                 'longitude' => 'required',
+                'user_id' => 'required',
                 'img_konten.*' => 'nullable|image',
             ], [
                 'nama_kursus.required' => 'Nama kursus wajib diisi.',
@@ -85,6 +97,7 @@ class AdminDataKursusController extends Controller
                 'fasilitas.required' => 'Fasilitas wajib diisi.',
                 'latitude.required' => 'Latitude wajib diisi.',
                 'longitude.required' => 'Longitude wajib diisi.',
+                'user_id.required' => 'User wajib diisi.',
                 'img_konten.*.image' => 'File konten harus berupa gambar.',
                 'img_konten.*.mimes' => 'Gambar konten harus berekstensi jpeg, png, atau jpg.',
                 'img_konten.*.max' => 'Ukuran gambar konten tidak boleh lebih dari 2MB.',
@@ -118,7 +131,7 @@ class AdminDataKursusController extends Controller
                 'latitude' => $request->latitude,
                 'longitude' => $request->longitude,
                 'img_konten' => json_encode($imgKontenPaths),
-                'user_id' => Auth::id(),
+                'user_id' => $request->user_id,
             ]);
 
             return redirect('admin/data-kursus')->with('success', 'Data berhasil disimpan.');

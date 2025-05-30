@@ -37,10 +37,9 @@
                         </div>
                     </div>
                 </form>
-
             </div>
             {{ $courses->links() }}
-            <div class="relative overflow-x-auto sm:rounded-lg">
+            <div class="relative overflow-x-auto sm:rounded-lg pt-4">
                 <table class="w-full text-sm text-gray-700 shadow-md border border-gray-300 rounded-lg overflow-hidden">
                     <thead class="text-xs uppercase bg-gray-100 border-b border-gray-300">
                         <tr>

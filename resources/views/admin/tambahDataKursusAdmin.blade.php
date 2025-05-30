@@ -40,6 +40,23 @@
                             @enderror
                         </div>
                         <div>
+                            <label for="user_id" class="block mb-2 text-sm font-medium text-gray-900">Pilih
+                                User</label>
+                            <select id="user_id" name="user_id"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                                @foreach ($users as $user)
+                                    <option value="{{ $user->id }}"
+                                        {{ old('user_id') == $user->id ? 'selected' : '' }}>
+                                        {{ $user->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('user_id')
+                                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div>
                             <label for="kategori" class="block mb-2 text-sm font-medium text-gray-900">Pilih
                                 Kategori</label>
                             <select id="popular" name="kategori_id"
