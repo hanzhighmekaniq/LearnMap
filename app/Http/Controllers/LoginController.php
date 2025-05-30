@@ -54,7 +54,7 @@ class LoginController extends Controller
 
             if ($role === 'user') {
                 session(['is_user_logged_in' => true]); // Status user
-                return redirect()->route('user.home'); // Redirect ke halaman user
+                return redirect()->route('admin.home'); // Redirect ke halaman user
             }
 
             if ($role === 'pengunjung') {
