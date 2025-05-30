@@ -82,8 +82,8 @@
                             onclick="toggleModal('imageModal')">
                             <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                                 viewBox="0 0 14 14">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M1 1l6 6m0 0l6 6M7 7l6-6M7 7L1 13" />
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="M1 1l6 6m0 0l6 6M7 7l6-6M7 7L1 13" />
                             </svg>
                             <span class="sr-only">Tutup modal</span>
                         </button>
@@ -107,7 +107,7 @@
                 }
 
                 // Klik di luar modal content = close
-                window.addEventListener('click', function (event) {
+                window.addEventListener('click', function(event) {
                     const modal = document.getElementById('imageModal');
                     if (!modal.classList.contains('hidden') && event.target === modal) {
                         modal.classList.add('hidden');
@@ -122,7 +122,6 @@
                     });
                 });
             </script>
-
         @else
             <p class="text-gray-500 italic text-center">Tidak ada gambar yang tersedia.</p>
         @endif
@@ -133,40 +132,34 @@
 
 
 </div>
-<div class="grid grid-cols-6 gap-4 py-20 ">
+<div class="grid grid-cols-1 lg:grid-cols-6 gap-4 py-20 space-y-4 lg:space-y-0">
     <!-- Left Column: Comment Form -->
     <!-- Right Column: Ratings and Reviews -->
-    <div class="col-span-4 ">
+    <div class="lg:col-span-4 px-4">
         <!-- Ratings Section -->
-        <div class="bg-gray-50">
-            <div class=" flex justify-between items-center">
-                <div class="flex w-full items-center">
-                    <div class="flex items-center">
-                        @for ($i = 1; $i <= 5; $i++)
-                            <svg class="w-5 h-5 {{ $i <= round($averageRating) ? 'text-yellow-400' : 'text-gray-300' }}"
-                                xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                                <path
-                                    d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-                            </svg>
-                        @endfor
-                        <span class="text-sm pl-4">Rata-rata: {{ round($averageRating, 1) }} / 5</span>
-                    </div>
-                    <div class=" md:ml-4">
-                        <p class="poppins-medium poppins-regular text-sm xl:text-xl text-black">
-                            (Total: {{ $totalRatings }} ulasan)
-                        </p>
-                    </div>
+        <div class="bg-gray-50 w-full">
+            <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center w-full">
+                <!-- Rating -->
+                <div class="flex items-center w-full lg:w-1/2 mb-4 lg:mb-0">
+                    @for ($i = 1; $i <= 5; $i++)
+                        <svg class="w-5 h-5 {{ $i <= round($averageRating) ? 'text-yellow-400' : 'text-gray-300' }}"
+                            xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                            <path
+                                d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                        </svg>
+                    @endfor
+                    <span class="text-sm pl-4">Rata-rata: {{ round($averageRating, 1) }} / 5</span>
+                    <p class="ml-4 text-sm xl:text-xl text-black">(Total: {{ $totalRatings }} ulasan)</p>
                 </div>
 
-                <div class="w-full">
-
+                <!-- Pagination -->
+                <div class="w-full lg:w-auto py-2">
                     {{ $ulasan->links() }}
                 </div>
-
             </div>
-            <!-- Reviews Section -->
         </div>
-        <div class="grid lg:grid-cols-3 w-full gap-4 items-center justify-start lg:justify-end rtl">
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 w-full gap-4 items-center justify-start lg:justify-end rtl">
             @foreach ($ulasan as $review)
                 <div class="mb-6 mt-4 p-4 bg-white rounded-lg shadow-xl w-full">
                     <!-- Reviewer Info -->
@@ -222,7 +215,7 @@
         <!-- Pagination Links -->
 
     </div>
-    <div class="col-span-2">
+    <div class="lg:col-span-2 px-4">
         @auth
             <form action="{{ route('storeUlasan') }}" method="POST">
                 @csrf
@@ -292,7 +285,8 @@
 
         @guest
             <p class="text-sm poppins-regular text-gray-500">
-                Anda harus <a href="{{ route('login') }}" class="text-green-800 poppins-semibold hover:underline">login</a>
+                Anda harus <a href="{{ route('login') }}"
+                    class="text-green-800 poppins-semibold hover:underline">login</a>
                 untuk
                 memberikan ulasan.
             </p>

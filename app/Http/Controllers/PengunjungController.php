@@ -107,25 +107,27 @@ class PengunjungController extends Controller
             ]);
         }
 
-
         // Ambil data kursus beserta ulasan dan kategorinya
         $data = DataKursus::with('kategoris', 'ulasan')->find($id);
-        $data->fasilitas = json_decode($data->fasilitas, true);
         if (!$data) {
             abort(404, 'Kursus tidak ditemukan');
         }
 
-        // Ambil data ulasan terkait, urutkan berdasarkan created_at terbaru
+        $data->fasilitas = json_decode($data->fasilitas, true);
         $imageNames = json_decode($data->img_konten, true);
-        $ulasan = $data->ulasan()->orderBy('created_at', 'desc')->paginate(3);
 
-        // Hitung rata-rata rating
-        $averageRating = $ulasan->avg('rating');
-        $totalRatings = $ulasan->count();
+        // Ambil semua ulasan terkait untuk perhitungan total dan rata-rata
+        $allUlasan = $data->ulasan;
+        $averageRating = $allUlasan->avg('rating');
+        $totalRatings = $allUlasan->count();
+
+        // Ambil data ulasan yang dipaginasi (untuk tampilan)
+        $ulasan = $data->ulasan()->orderBy('created_at', 'desc')->paginate(3);
 
         // Kirim data ke view
         return view('user.detailKursus', compact('data', 'imageNames', 'ulasan', 'averageRating', 'totalRatings'));
     }
+
 
 
 
