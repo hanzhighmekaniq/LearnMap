@@ -40,6 +40,27 @@
                                 @endif
                             </select>
                         </div>
+                        @if (Auth::check() && Auth::user()->role === 'admin')
+                            <div>
+                                <label for="user_id" class="block mb-2 text-sm font-medium text-gray-900">Pilih
+                                    User</label>
+                                <select id="user_id" name="user_id"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                                    @foreach ($users as $user)
+                                        <option value="{{ $user->id }}"
+                                            {{ old('user_id', $dataKursus->user_id ?? '') == $user->id ? 'selected' : '' }}>
+                                            {{ $user->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('user_id')
+                                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+                        @else
+                            <input type="hidden" name="user_id" value="{{ Auth::id() }}">
+                        @endif
+
                         <div>
                             <label for="kategori_id" class="block mb-2 text-sm font-medium text-gray-900">Pilih
                                 Kategori</label>
@@ -97,72 +118,72 @@
                             </div>
                         </div>
                     </div>
-                        <!-- Leaflet & Geocoder CDN -->
-                        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-                        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+                    <!-- Leaflet & Geocoder CDN -->
+                    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+                    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-                        <link rel="stylesheet"
-                            href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
-                        <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+                    <link rel="stylesheet"
+                        href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+                    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
 
-                        <script>
-                            const lat = parseFloat("{{ old('latitude', $dataKursus->latitude) }}") || -7.54;
-                            const lng = parseFloat("{{ old('longitude', $dataKursus->longitude) }}") || 112.23;
+                    <script>
+                        const lat = parseFloat("{{ old('latitude', $dataKursus->latitude) }}") || -7.54;
+                        const lng = parseFloat("{{ old('longitude', $dataKursus->longitude) }}") || 112.23;
 
-                            const map = L.map('map').setView([lat, lng], 13);
+                        const map = L.map('map').setView([lat, lng], 13);
 
-                            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                                attribution: '&copy; OpenStreetMap contributors'
-                            }).addTo(map);
+                        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                            attribution: '&copy; OpenStreetMap contributors'
+                        }).addTo(map);
 
-                            let marker = L.marker([lat, lng], {
-                                draggable: true
-                            }).addTo(map);
+                        let marker = L.marker([lat, lng], {
+                            draggable: true
+                        }).addTo(map);
 
-                            marker.on('dragend', function(e) {
-                                const pos = marker.getLatLng();
-                                document.getElementById('latitude').value = pos.lat.toFixed(6);
-                                document.getElementById('longitude').value = pos.lng.toFixed(6);
-                            });
+                        marker.on('dragend', function(e) {
+                            const pos = marker.getLatLng();
+                            document.getElementById('latitude').value = pos.lat.toFixed(6);
+                            document.getElementById('longitude').value = pos.lng.toFixed(6);
+                        });
 
-                            map.on('click', function(e) {
-                                const {
-                                    lat,
-                                    lng
-                                } = e.latlng;
-                                marker.setLatLng([lat, lng]);
-                                document.getElementById('latitude').value = lat.toFixed(6);
-                                document.getElementById('longitude').value = lng.toFixed(6);
-                            });
+                        map.on('click', function(e) {
+                            const {
+                                lat,
+                                lng
+                            } = e.latlng;
+                            marker.setLatLng([lat, lng]);
+                            document.getElementById('latitude').value = lat.toFixed(6);
+                            document.getElementById('longitude').value = lng.toFixed(6);
+                        });
 
-                            document.getElementById('locateBtn').addEventListener('click', function() {
-                                if (navigator.geolocation) {
-                                    navigator.geolocation.getCurrentPosition(function(position) {
-                                        const lat = position.coords.latitude;
-                                        const lng = position.coords.longitude;
-                                        map.setView([lat, lng], 15);
-                                        marker.setLatLng([lat, lng]);
-                                        document.getElementById('latitude').value = lat.toFixed(6);
-                                        document.getElementById('longitude').value = lng.toFixed(6);
-                                    }, function() {
-                                        alert('Gagal mendapatkan lokasi.');
-                                    });
-                                } else {
-                                    alert('Browser tidak mendukung geolokasi.');
-                                }
-                            });
+                        document.getElementById('locateBtn').addEventListener('click', function() {
+                            if (navigator.geolocation) {
+                                navigator.geolocation.getCurrentPosition(function(position) {
+                                    const lat = position.coords.latitude;
+                                    const lng = position.coords.longitude;
+                                    map.setView([lat, lng], 15);
+                                    marker.setLatLng([lat, lng]);
+                                    document.getElementById('latitude').value = lat.toFixed(6);
+                                    document.getElementById('longitude').value = lng.toFixed(6);
+                                }, function() {
+                                    alert('Gagal mendapatkan lokasi.');
+                                });
+                            } else {
+                                alert('Browser tidak mendukung geolokasi.');
+                            }
+                        });
 
-                            // Pencarian lokasi
-                            const geocoder = L.Control.geocoder({
-                                defaultMarkGeocode: false
-                            }).on('markgeocode', function(e) {
-                                const latlng = e.geocode.center;
-                                map.setView(latlng, 15);
-                                marker.setLatLng(latlng);
-                                document.getElementById('latitude').value = latlng.lat.toFixed(6);
-                                document.getElementById('longitude').value = latlng.lng.toFixed(6);
-                            }).addTo(map);
-                        </script>
+                        // Pencarian lokasi
+                        const geocoder = L.Control.geocoder({
+                            defaultMarkGeocode: false
+                        }).on('markgeocode', function(e) {
+                            const latlng = e.geocode.center;
+                            map.setView(latlng, 15);
+                            marker.setLatLng(latlng);
+                            document.getElementById('latitude').value = latlng.lat.toFixed(6);
+                            document.getElementById('longitude').value = latlng.lng.toFixed(6);
+                        }).addTo(map);
+                    </script>
 
 
 

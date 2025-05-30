@@ -13,7 +13,7 @@
                 <ul class="flex space-x-8 text-sm lg:text-base 2xl:text-lg poppins-regular">
                     <li>
                         <a href="{{ route('user.home') }}"
-                            class="text-black hover:text-green-600 {{ Request::routeIs('user.home') ? 'text-green-700 ' : '' }}">
+                        class="text-black hover:text-green-600 {{ Request::routeIs('user.home') ? 'text-green-700 ' : '' }}">
                             Beranda
                         </a>
                     </li>

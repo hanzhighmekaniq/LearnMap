@@ -1,4 +1,4 @@
-in<x-layout>
+<x-layout>
     <div class="bg-gray-100">
 
         <!-- Hero Section -->

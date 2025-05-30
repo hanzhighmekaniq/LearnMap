@@ -152,12 +152,12 @@ class AdminDataKursusController extends Controller
 
         // Decode JSON fasilitas agar bisa ditampilkan dalam bentuk array
         $fasilitas = json_decode($dataKursus->fasilitas, true) ?? [];
-
+        $users = User::where('role', 'user')->get();
         // Decode JSON untuk daftar gambar konten (jika ada)
         $imageName = $dataKursus->img_konten ? json_decode($dataKursus->img_konten, true) : [];
 
         // Kirim data ke view
-        return view('admin.ubahDataKursusAdmin', compact('dataKursus', 'imageName', 'kategori', 'fasilitas'));
+        return view('admin.ubahDataKursusAdmin', compact('dataKursus', 'imageName', 'kategori', 'fasilitas', 'users'));
     }
 
 
@@ -208,6 +208,7 @@ class AdminDataKursusController extends Controller
                 'metode' => $request->input('metode'),
                 'fasilitas' => json_encode($request->input('fasilitas')), // Simpan sebagai JSON
                 'lokasi' => $request->input('lokasi'),
+                'user_id' => $request->input('user_id'),
             ]);
 
             // Update gambar utama jika ada file baru
