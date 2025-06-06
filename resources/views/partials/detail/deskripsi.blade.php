@@ -127,20 +127,16 @@
         @endif
 
     </div>
-
-
-
-
 </div>
-<div class="grid grid-cols-1 lg:grid-cols-6 gap-4 py-20 space-y-4 lg:space-y-0">
-    <!-- Left Column: Comment Form -->
-    <!-- Right Column: Ratings and Reviews -->
-    <div class="lg:col-span-4 px-4">
-        <!-- Ratings Section -->
-        <div class="bg-gray-50 w-full">
-            <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center w-full">
-                <!-- Rating -->
-                <div class="flex items-center w-full lg:w-1/2 mb-4 lg:mb-0">
+
+
+<div class="grid grid-cols-1 lg:grid-cols-6 gap-6 py-16 px-4">
+    <!-- LEFT / Reviews -->
+    <div class="lg:col-span-4 space-y-6">
+        <!-- RATING OVERVIEW -->
+        <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+            <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
+                <div class="flex items-center flex-wrap">
                     @for ($i = 1; $i <= 5; $i++)
                         <svg class="w-5 h-5 {{ $i <= round($averageRating) ? 'text-yellow-400' : 'text-gray-300' }}"
                             xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
@@ -148,35 +144,32 @@
                                 d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
                         </svg>
                     @endfor
-                    <span class="text-sm pl-4">Rata-rata: {{ round($averageRating, 1) }} / 5</span>
-                    <p class="ml-4 text-sm xl:text-xl text-black">(Total: {{ $totalRatings }} ulasan)</p>
+                    <span class="ml-4 text-sm text-gray-700">Rata-rata: <strong>{{ round($averageRating, 1) }}</strong>
+                        / 5</span>
+                    <span class="ml-4 text-sm text-gray-500">(Total: {{ $totalRatings }} ulasan)</span>
                 </div>
-
                 <!-- Pagination -->
-                <div class="w-full lg:w-auto py-2">
+                <div class="w-full lg:w-auto">
                     {{ $ulasan->links() }}
                 </div>
             </div>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-3 w-full gap-4 items-center justify-start lg:justify-end rtl">
+        <!-- REVIEW CARDS -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
             @foreach ($ulasan as $review)
-                <div class="mb-6 mt-4 p-4 bg-white rounded-lg shadow-xl w-full">
-                    <!-- Reviewer Info -->
-                    <div class="flex items-center mb-3 w-full">
-                        <img src="/img/profil.png" alt="User Avatar" class="w-10 h-10 rounded-full mr-4">
+                <div class="bg-white rounded-lg shadow p-4">
+                    <div class="flex items-center mb-2">
+                        <img src="/img/profil.png" alt="User Avatar" class="w-10 h-10 rounded-full mr-3">
                         <div>
-                            <h4 class="font-bold text-gray-800">{{ $review->user->name ?? 'Anonim' }}</h4>
-                            <p class="text-sm text-gray-500">
-                                {{ $review->created_at->diffForHumans() }}
-                            </p>
+                            <p class="text-sm font-semibold text-gray-800">{{ $review->user->name ?? 'Anonim' }}</p>
+                            <p class="text-xs text-gray-500">{{ $review->created_at->diffForHumans() }}</p>
                         </div>
                     </div>
 
-                    <!-- Reviewer Rating -->
-                    <div class="flex items-center mb-2">
+                    <div class="flex mb-2">
                         @for ($i = 1; $i <= 5; $i++)
-                            <svg class="w-5 h-5 {{ $i <= $review->rating ? 'text-yellow-400' : 'text-gray-300' }}"
+                            <svg class="w-4 h-4 {{ $i <= $review->rating ? 'text-yellow-400' : 'text-gray-300' }}"
                                 xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
                                 <path
                                     d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
@@ -184,10 +177,10 @@
                         @endfor
                     </div>
 
-                    <p id="comment-text-{{ $review->id }}" class="text-gray-700">
+                    <p id="comment-text-{{ $review->id }}" class="text-gray-700 text-sm">
                         @if (strlen($review->comment) > 100)
                             {{ Str::limit($review->comment, 100) }}
-                            <button class="text-blue-600 underline ml-2" data-id="{{ $review->id }}"
+                            <button class="text-blue-600 underline ml-2 text-xs" data-id="{{ $review->id }}"
                                 data-full="{{ e($review->comment) }}" onclick="showFullComment(this)">
                                 Lihat Selengkapnya
                             </button>
@@ -195,112 +188,83 @@
                             {{ $review->comment }}
                         @endif
                     </p>
-
-
-                    <script>
-                        function showFullComment(button) {
-                            const id = button.getAttribute('data-id');
-                            const fullText = button.getAttribute('data-full');
-                            const el = document.getElementById('comment-text-' + id);
-                            el.innerHTML = fullText.replace(/\n/g, "<br>");
-                        }
-                    </script>
-
-
-
                 </div>
             @endforeach
         </div>
-
-        <!-- Pagination Links -->
-
     </div>
-    <div class="lg:col-span-2 px-4">
+
+    <!-- RIGHT / FORM -->
+    <div class="lg:col-span-2 space-y-6">
         @auth
-            <form action="{{ route('storeUlasan') }}" method="POST">
+            <form action="{{ route('storeUlasan') }}" method="POST"
+                class="bg-white rounded-lg shadow p-6 border border-gray-200">
                 @csrf
-                <div class="max-w-xl mb-4 border border-gray-200 rounded-lg bg-gray-50">
-                    <!-- Comment Input -->
-                    <div class="hidden">
-                        <input name="user_id" value="{{ Auth::user()->id }}" type="text">
-                        <input name="kursus_id" value="{{ $data->id }}" type="text">
+                <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+                <input type="hidden" name="kursus_id" value="{{ $data->id }}">
+
+                <textarea name="comment" rows="4"
+                    class="w-full text-sm border border-gray-300 rounded-md p-3 focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="Tulis ulasan Anda..." required></textarea>
+
+                <div class="flex items-center justify-between mt-4">
+                    <div class="flex space-x-1" id="rating-stars">
+                        @for ($i = 1; $i <= 5; $i++)
+                            <svg data-index="{{ $i }}"
+                                class="w-6 h-6 text-gray-300 cursor-pointer transition-colors duration-200"
+                                xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                                <path
+                                    d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                            </svg>
+                        @endfor
+                        <input type="hidden" name="rating" id="rating-input" value="0">
                     </div>
-                    <div class="px-4 py-2 bg-white rounded-t-lg">
-                        <label for="comment" class="sr-only">Your comment</label>
-                        <textarea id="comment" name="comment" rows="4"
-                            class="w-full px-0 text-sm text-gray-900 bg-white border-0 focus:ring-0 placeholder-gray-400"
-                            placeholder="Write a comment..." required></textarea>
-                    </div>
-                    <!-- Rating Stars and Submit Button -->
-                    <div class="flex items-center justify-between px-3 py-2 border-t border-gray-200">
-                        <!-- Rating Stars -->
-                        <div class="flex items-center space-x-2" id="rating-stars">
-                            @for ($i = 1; $i <= 5; $i++)
-                                <label class="cursor-pointer">
-                                    <input type="radio" name="rating" value="{{ $i }}" class="hidden" />
-                                    <svg class="w-6 h-6 text-gray-300 hover:text-yellow-400 transition-colors duration-200"
-                                        xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                                        <path
-                                            d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-                                    </svg>
-                                </label>
-                            @endfor
 
-                        </div>
+                    <script>
+                        const stars = document.querySelectorAll('#rating-stars svg');
+                        const ratingInput = document.getElementById('rating-input');
 
-                        <script>
-                            // JavaScript for managing star ratings
-                            const starsContainer = document.getElementById('rating-stars');
-                            const stars = starsContainer.querySelectorAll('svg');
-                            const inputs = starsContainer.querySelectorAll('input[type="radio"]');
+                        stars.forEach((star, index) => {
+                            star.addEventListener('click', () => {
+                                const rating = index + 1;
+                                ratingInput.value = rating;
 
-                            stars.forEach((star, index) => {
-                                star.addEventListener('click', () => {
-                                    // Set all previous stars to active
-                                    stars.forEach((s, i) => {
-                                        if (i <= index) {
-                                            s.classList.add('text-yellow-400');
-                                            s.classList.remove('text-gray-300');
-                                        } else {
-                                            s.classList.add('text-gray-300');
-                                            s.classList.remove('text-yellow-400');
-                                        }
-                                    });
-
-                                    // Set the corresponding radio input
-                                    inputs[index].checked = true;
+                                stars.forEach((s, i) => {
+                                    s.classList.toggle('text-yellow-400', i < rating);
+                                    s.classList.toggle('text-gray-300', i >= rating);
                                 });
                             });
-                        </script>
+                        });
+                    </script>
 
-                        <!-- Submit Button -->
-                        <button type="submit"
-                            class="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 hover:bg-blue-800">
-                            Post Comment
-                        </button>
-                    </div>
+
+                    <button type="submit"
+                        class="px-4 py-2 bg-blue-600 text-white text-sm rounded hover:bg-blue-700 transition">
+                        Kirim Ulasan
+                    </button>
                 </div>
             </form>
         @endauth
 
         @guest
-            <p class="text-sm poppins-regular text-gray-500">
-                Anda harus <a href="{{ route('login') }}"
-                    class="text-green-800 poppins-semibold hover:underline">login</a>
-                untuk
-                memberikan ulasan.
+            <p class="text-sm text-gray-500">
+                Anda harus <a href="{{ route('login') }}" class="text-blue-600 hover:underline font-semibold">login</a>
+                untuk memberi ulasan.
             </p>
         @endguest
 
-
-
-        <!-- Community Guidelines -->
-        <p class="ms-auto text-xs poppins-regular text-gray-500">
-            Remember, contributions to this topic should follow our
-            <a href="#" class="text-green-800 poppins-semibold hover:underline">Community
-                Guidelines</a>.
+        <p class="text-xs text-gray-400">
+            Pastikan ulasan Anda sesuai dengan <a href="#" class="text-blue-500 underline">pedoman
+                komunitas</a>.
         </p>
     </div>
-
-
 </div>
+
+<!-- JS for expanding comment -->
+<script>
+    function showFullComment(button) {
+        const id = button.getAttribute('data-id');
+        const fullText = button.getAttribute('data-full');
+        const el = document.getElementById('comment-text-' + id);
+        el.innerHTML = fullText.replace(/\n/g, "<br>");
+    }
+</script>
