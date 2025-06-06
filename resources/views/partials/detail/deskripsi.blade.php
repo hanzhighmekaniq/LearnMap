@@ -135,7 +135,7 @@
     <div class="lg:col-span-4 space-y-6">
         <!-- RATING OVERVIEW -->
         <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
-            <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
+            <div class="grid grid-cols-1 lg:grid-cols-2 lg:flex-row justify-between items-start lg:items-center gap-4">
                 <div class="flex items-center flex-wrap">
                     @for ($i = 1; $i <= 5; $i++)
                         <svg class="w-5 h-5 {{ $i <= round($averageRating) ? 'text-yellow-400' : 'text-gray-300' }}"
@@ -149,7 +149,7 @@
                     <span class="ml-4 text-sm text-gray-500">(Total: {{ $totalRatings }} ulasan)</span>
                 </div>
                 <!-- Pagination -->
-                <div class="w-full lg:w-auto">
+                <div class="w-full">
                     {{ $ulasan->links() }}
                 </div>
             </div>
