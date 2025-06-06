@@ -10,19 +10,53 @@
                     class="self-center text-4xl text-white font-semibold whitespace-nowrap pt-4 aclonica-regular">LearnMap</span>
             </a>
         </div> -->
-    </nav>
+</nav>
 </div>
 
 <body>
     <div class="container py-10 px-8 lg:px-0 max-w-2xl">
         @if (session('error'))
-            <div class="mb-4 text-sm text-red-600">
+            <div id="toas"
+                class="fixed top-5 left-1/2 transform -translate-x-1/2 bg-red-600 text-white px-4 py-3 rounded shadow-lg z-50 animate-fade-in-out">
                 {{ session('error') }}
             </div>
+
+            <style>
+                @keyframes fade-in-out {
+
+                    0%,
+                    100% {
+                        opacity: 0;
+                        transform: translateX(-50%) translateY(-20px);
+                    }
+
+                    10%,
+                    90% {
+                        opacity: 1;
+                        transform: translateX(-50%) translateY(0);
+                    }
+                }
+
+                .animate-fade-in-out {
+                    animation: fade-in-out 4s ease forwards;
+                }
+            </style>
+
+            <script>
+                setTimeout(() => {
+                    const toast = document.getElementById('toast');
+                    if (toast) {
+                        toast.remove();
+                    }
+                }, 4000);
+            </script>
         @endif
 
+
+
         <div class="border border-slate-500 pb-4">
-            <p class="p-8 flex justify-center items-center barlow-condensed-semibold text-green-800 text-6xl">REGISTER</p>
+            <p class="p-8 flex justify-center items-center barlow-condensed-semibold text-green-800 text-6xl">REGISTER
+            </p>
             <form class="px-8 mx-auto" method="POST" action="{{ route('register.account') }}">
                 @csrf
                 <div class="mb-5">
@@ -39,14 +73,13 @@
                 </div>
                 <div class="mb-5">
                     <label for="email" class="block mb-2 text-sm poppins-regular text-gray-900">Your Email</label>
-                    <input type="email" id="email" name="email"
+                    <input type="email" id="email" name="email" value="{{ old('email') }}"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm poppins-regular rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                         placeholder="email@example.com" required />
-
                 </div>
                 <div class="mb-5">
-                    <label for="email_confirmation" class="block mb-2 text-sm poppins-regular text-gray-900">Confirm Your
-                        Email</label>
+                    <label for="email_confirmation" class="block mb-2 text-sm poppins-regular text-gray-900">Confirm
+                        Your Email</label>
                     <input type="email" id="email_confirmation" name="email_confirmation"
                         value="{{ old('email_confirmation') }}"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm poppins-regular rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
@@ -55,7 +88,7 @@
 
                 <div class="mb-5">
                     <label for="password" class="block mb-2 text-sm poppins-regular text-gray-900">Your Password</label>
-                    <input type="password" id="password" name="password" value="{{ old('password') }}"
+                    <input type="password" id="password" name="password"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                         placeholder="********" required />
                 </div>
@@ -63,26 +96,30 @@
                     <label for="password_confirmation" class="block mb-2 text-sm poppins-regular text-gray-900">Confirm
                         Password</label>
                     <input type="password" id="password_confirmation" name="password_confirmation"
-                        value="{{ old('password_confirmation') }}"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                         placeholder="********" required />
                 </div>
+
                 @if ($errors->any())
                     <div class="mb-4 text-sm text-red-600">
-                        <ul>
+                        <ul class="list-disc list-inside">
                             @foreach ($errors->all() as $error)
                                 <li>{{ $error }}</li>
                             @endforeach
                         </ul>
                     </div>
                 @endif
+
                 <button type="submit"
-                    class="text-white bg-gradient-to-tr from-[#60BC9D] to-[#12372A] hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 poppins-regular rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Register</button>
+                    class="text-white bg-gradient-to-tr from-[#60BC9D] to-[#12372A] hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 poppins-regular rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">
+                    Register
+                </button>
             </form>
             <div class="text-center mt-4">
                 <p class="text-sm poppins-regular text-gray-600">Already have an account?</p>
                 <a href="{{ route('login') }}" class="text-green-700 hover:text-blue-800 poppins-regular">Login here</a>
             </div>
         </div>
+
     </div>
 </body>

@@ -1,7 +1,7 @@
 @include('partials.head')
 @include('partials.font')
 
-<!--
+
 <div class="bg-[#4F7F81]">
     <nav class="border-gray-200 container bg-[#4F7F81]">
         <div class="max-w-screen-2xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -10,7 +10,7 @@
                 <span
                     class="self-center text-4xl text-white font-semibold whitespace-nowrap pt-4 aclonica-regular">LearnMap</span>
             </a>
-        </div> -->
+        </div>
     </nav>
 </div>
 

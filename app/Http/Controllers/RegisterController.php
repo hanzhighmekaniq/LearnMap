@@ -25,7 +25,7 @@ class RegisterController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'username' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email|confirmed',
+            'email' => 'required|email|max:255',
             'password' => 'required|string|min:8|confirmed',
         ]);
 
@@ -33,35 +33,28 @@ class RegisterController extends Controller
             return back()->withErrors($validator)->withInput();
         }
 
-        // Cek manual jika username sudah ada di salah satu tabel
-        $usernameExistsInUsers = User::where('username', $request->username)->exists();
-        $usernameExistsInPending = PendingUser::where('username', $request->username)->exists();
+        // ❌ Cek apakah email sudah aktif di tabel users
+        if (User::where('email', $request->email)->exists()) {
+            return back()->with('error', 'Email ini sudah terdaftar dan aktif. Silakan login.');
+        }
 
-        if ($usernameExistsInUsers || $usernameExistsInPending) {
+        // ✅ Cek jika email ada di pending_users → kirim ulang verifikasi
+        $pendingUser = PendingUser::where('email', $request->email)->first();
+        if ($pendingUser) {
+            Notification::send($pendingUser, new EmailVerificationNotification($pendingUser));
+            return redirect()->route('cekEmail')->with('success', 'Email verifikasi telah dikirim ulang. Silakan cek inbox.');
+        }
+
+        // ❌ Cek apakah username sudah dipakai di salah satu tabel
+        if (
+            User::where('username', $request->username)->exists() ||
+            PendingUser::where('username', $request->username)->exists()
+        ) {
             return back()->with('error', 'Username sudah digunakan. Silakan pilih username lain.')->withInput();
         }
 
         try {
-            // Cek apakah email sudah ada di pending user
-            $pendingUser = PendingUser::where('email', $request->email)->first();
-
-            if ($pendingUser) {
-                if (!$pendingUser->email_verified_at) {
-                    Notification::send($pendingUser, new EmailVerificationNotification($pendingUser));
-                    return redirect()->route('cekEmail')->with('success', 'A verification email has been sent again. Please check your inbox.');
-                } else {
-                    return back()->with('success', 'This email is already verified, you can log in now.');
-                }
-            }
-
-            // Cek apakah email sudah ada di user
-            $user = User::where('email', $request->email)->first();
-
-            if ($user) {
-                return back()->with('success', 'This email is already registered and verified, you can log in now.');
-            }
-
-            // Simpan ke pending_users
+            // ✅ Simpan user baru ke pending_users dan kirim email verifikasi
             $pendingUser = PendingUser::create([
                 'name' => $request->name,
                 'email' => $request->email,
@@ -73,15 +66,12 @@ class RegisterController extends Controller
 
             Notification::send($pendingUser, new EmailVerificationNotification($pendingUser));
 
-            return redirect()->route('cekEmail')->with('success', 'A verification email has been sent to your email address. Please check your inbox.');
+            return redirect()->route('cekEmail')->with('success', 'Link verifikasi telah dikirim ke email Anda.');
         } catch (QueryException $e) {
-            if ($e->getCode() === '23000') {
-                return back()->with('error', 'Data duplikat terdeteksi. Silakan coba lagi dengan informasi yang berbeda.')->withInput();
-            }
-
-            return back()->with('error', 'Terjadi kesalahan saat mendaftarkan akun. Silakan coba lagi.')->withInput();
+            return back()->with('error', 'Terjadi kesalahan saat mendaftar. Coba lagi nanti.')->withInput();
         }
     }
+
 
 
     public function verifyEmail($id, $token)
